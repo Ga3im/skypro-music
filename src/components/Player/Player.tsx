@@ -67,7 +67,7 @@ export const Player = ()=>{
                 </div>
               </div>
             </div>
-            <div className="bar__volume-block volume">
+            <div className={s.barVolumeBlock}>
               <div className={s.volumeContent}>
                 <div className={s.volumeImage}>
                   <svg className={s.volumeSvg}>
