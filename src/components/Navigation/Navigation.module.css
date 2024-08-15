@@ -39,6 +39,7 @@
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
     justify-content: space-between;
+    cursor: pointer;
   }
   
   .navMenu {
@@ -47,8 +48,6 @@
   }
   
   .logoImage {
-    width: 113.33px;
-    height: 17px;
     color: #181818;
   }
   
