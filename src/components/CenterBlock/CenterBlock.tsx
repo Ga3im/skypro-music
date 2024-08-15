@@ -6,7 +6,7 @@ export const CenterBlock = () => {
     <div className="main__centerblock centerblock">
       <div className={s.centerblockSearch}>
         <svg className={s.searchSvg}>
-          <use xlinkHref="/imgicon/sprite.svg#icon-search"></use>
+          <use xlinkHref="/icon/sprite.svg#icon-search"></use>
         </svg>
         <input
           className={s.searchText}
