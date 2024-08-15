@@ -1,6 +1,7 @@
 import s from '@/components/CenterBlock/CenterBlock.module.css'
 import classNames from 'classnames'
 import { Playlist } from '../Playlist/Playlist';
+import { MusicFilter } from '../MusicFilter/MusicFilter';
 export const CenterBlock = () => {
   return (
     <div className="main__centerblock centerblock">
@@ -16,14 +17,7 @@ export const CenterBlock = () => {
         />
       </div>
       <h2 className={s.centerblockH2}>Треки</h2>
-      <div className={s.centerblockFilter}>
-        <div className={s.filterTitle}>Искать по:</div>
-        <div className={classNames(s.filterButton, s.btnText) }> 
-          исполнителю
-        </div>
-        <div className={classNames(s.filterButton, s.btnText) }>году выпуска</div>
-        <div className={classNames(s.filterButton, s.btnText) }>жанру</div>
-      </div>
+     <MusicFilter/>
       <div className={s.centerblockContent}>
         <div className={s.contentTitle}>
           <div className={classNames(s.playlistTitleCol, s.col01)}>Трек</div>

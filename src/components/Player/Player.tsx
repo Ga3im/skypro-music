@@ -1,4 +1,5 @@
 import s from "@/components/Player/Player.module.css"
+import classNames from "classnames"
 export const Player = ()=>{
     return(
         <div className={s.bar}>
@@ -22,7 +23,7 @@ export const Player = ()=>{
                     <use xlinkHref="/icon/sprite.svg#icon-next"></use>
                   </svg>
                 </div>
-                <div className={classNames( s.playerBtnRepeat, s.btnIcon)>
+                <div className={classNames( s.playerBtnRepeat, s.btnIcon)}>
                   <svg className={s.playerBtnRepeatSvg}>
                     <use xlinkHref="/icon/sprite.svg#icon-repeat"></use>
                   </svg>
@@ -54,12 +55,12 @@ export const Player = ()=>{
                 </div>
 
                 <div className={s.trackPlayLikeDis}>
-                  <div {classNames(s.trackPlayLike, s.btnIcon)>
+                  <div className={classNames(s.trackPlayLike, s.btnIcon)}>
                     <svg className={s.trackPlayLikeSvg}>
                       <use xlinkHref="/icon/sprite.svg#icon-like"></use>
                     </svg>
                   </div>
-                  <div {classNames(s.trackPlayDislike, s.btnIcon)}>
+                  <div className={classNames(s.trackPlayDislike, s.btnIcon)}>
                     <svg className={s.trackPlayDislikeSvg}>
                       <use xlinkHref="/icon/sprite.svg#icon-dislike"></use>
                     </svg>
