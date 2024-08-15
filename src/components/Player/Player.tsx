@@ -22,12 +22,12 @@ export const Player = ()=>{
                     <use xlinkHref="/icon/sprite.svg#icon-next"></use>
                   </svg>
                 </div>
-                <div className={s.playerBtnRepeat}>
+                <div className={classNames( s.playerBtnRepeat, s.btnIcon)>
                   <svg className={s.playerBtnRepeatSvg}>
                     <use xlinkHref="/icon/sprite.svg#icon-repeat"></use>
                   </svg>
                 </div>
-                <div className={s.playerBtnShuffle}>
+                <div className={ classNames(s.playerBtnShuffle, s.btnIcon)}>
                   <svg className={s.playerBtnShuffleSvg}>
                     <use xlinkHref="/icon/sprite.svg#icon-shuffle"></use>
                   </svg>
@@ -54,12 +54,12 @@ export const Player = ()=>{
                 </div>
 
                 <div className={s.trackPlayLikeDis}>
-                  <div className={s.trackPlayLike}>
+                  <div {classNames(s.trackPlayLike, s.btnIcon)>
                     <svg className={s.trackPlayLikeSvg}>
                       <use xlinkHref="/icon/sprite.svg#icon-like"></use>
                     </svg>
                   </div>
-                  <div className={s.trackPlayDislike}>
+                  <div {classNames(s.trackPlayDislike, s.btnIcon)}>
                     <svg className={s.trackPlayDislikeSvg}>
                       <use xlinkHref="/icon/sprite.svg#icon-dislike"></use>
                     </svg>
