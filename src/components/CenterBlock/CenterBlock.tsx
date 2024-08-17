@@ -4,9 +4,12 @@ import { Playlist } from '../Playlist/Playlist';
 import { MusicFilter } from '@/components/MusicFilter/MusicFilter';
 import { getTracks } from '@/api/api';
 import { TrackType } from '@/types/tracks';
+
 export const CenterBlock = async () => {
+
   let tracks: TrackType[] = []
   let err : string | null = null
+
   try {
    tracks = await getTracks() 
     console.log(tracks)
@@ -46,6 +49,5 @@ export const CenterBlock = async () => {
         <Playlist tracks={tracks}/>
       </div>
     </div>
-    
   );
 };

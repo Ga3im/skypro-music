@@ -2,6 +2,7 @@ import { TrackType } from "@/types/tracks";
 import s from './Track.module.css';
 
 type TrackProps = { track: TrackType };
+
 export const Track = ({ track }: TrackProps) => {
   return (
     <div key={track._id} className={s.playlistItem}>
@@ -25,14 +26,14 @@ export const Track = ({ track }: TrackProps) => {
         </div>
         <div className={s.trackAlbum}>
           <a className={s.trackAlbumLink} href="http://">
-            Welcome Reality
+            {track.album}
           </a>
         </div>
         <div className="track__time">
           <svg className={s.trackTimeSvg}>
             <use xlinkHref="/icon/sprite.svg#icon-like"></use>
           </svg>
-          <span className={s.trackTimeText}>4:44</span>
+          <span className={s.trackTimeText}>{track.duration_in_seconds}</span>
         </div>
       </div>
     </div>

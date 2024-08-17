@@ -1,9 +1,13 @@
-import classNames from "classnames";
+"use client"
 import s from "@/components/MusicFilter/MusicFilter.module.css";
 import { TrackType } from "@/types/tracks";
 import { useState } from "react";
+import { FilterItem } from "../FilterItem/FilterItem";
+
 type FilterProp = { tracks: TrackType[] };
+
 export const MusicFilter = ({ tracks }: FilterProp) => {
+
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const getUniqValues = <T, K extends keyof T>(
     items: T[],
@@ -15,10 +19,11 @@ export const MusicFilter = ({ tracks }: FilterProp) => {
     });
     return Array.from(uniqValues);
   };
-  const filterOptions = ["По умолчанию", "Новые", "Старые"];
+
+  const filterOptions = ["По умолчанию", "Сначала новые", "Сначала старые"];
   const filters = [
     {
-      title: "испольнителью",
+      title: "испольнителю",
       key: "author",
       list: getUniqValues(tracks, "author"),
     },
@@ -33,15 +38,18 @@ export const MusicFilter = ({ tracks }: FilterProp) => {
       list: filterOptions,
     },
   ];
+
   return (
     <div className={s.centerblockFilter}>
       <div className={s.filterTitle}>Искать по:</div>
-      <div className={classNames(s.filterButton, s.btnText)}>
-        {/*пройтись по filters и на каждой отображать title список показать только если activeFilter = author   */}
-        исполнителю
-      </div>
-      <div className={classNames(s.filterButton, s.btnText)}>году выпуска</div>
-      <div className={classNames(s.filterButton, s.btnText)}>жанру</div>
+      {filters.map((item)=>(
+        <FilterItem 
+          key={item.key}
+          title={item.title}
+          list={item.list}
+          isActive={item.key === activeFilter}
+        />
+      ))}
     </div>
   );
 };
