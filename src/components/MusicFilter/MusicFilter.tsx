@@ -44,7 +44,9 @@ export const MusicFilter = ({ tracks }: FilterProp) => {
       <div className={s.filterTitle}>Искать по:</div>
       {filters.map((item)=>(
         <FilterItem 
+          item={item}
           key={item.key}
+          setActiveFilter={setActiveFilter}
           title={item.title}
           list={item.list}
           isActive={item.key === activeFilter}
