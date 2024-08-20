@@ -24,6 +24,17 @@
     color: #ad61ff;
     cursor: pointer;
   }
+  .count{
+    width: 26px;
+    aspect-ratio: 1;
+    background: #AD61FF;
+    border-radius: 100%;
+    margin-left: -25px;
+    margin-top: -10px;
+    padding-top: 2px;
+    text-align: center;
+  }
+
   .list{
     width: 250px;
     height: 305px;
@@ -31,10 +42,11 @@
     background: #313131;
     border-radius: 12px;
     overflow-y: auto;
-    scrollbar-width: none;
     position: absolute;
     margin-top: 50px;
+    scrollbar-color: #FFFFFF #4B4949;
   }
+
   .listName{
     padding-bottom: 28px;
     font-family: StratosSkyeng;
