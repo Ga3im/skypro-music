@@ -6,7 +6,6 @@ type TrackProps = { track: TrackType };
 export const Track = ({ track }: TrackProps) => {
   let minutes: number = Math.floor( track.duration_in_seconds / 60);
   let seconds: number = track.duration_in_seconds % 60;
-  console.log(track.duration_in_seconds)
   return (
     <div key={track._id} className={s.playlistItem}>
       <div className={s.playlistTrack}>
@@ -36,7 +35,7 @@ export const Track = ({ track }: TrackProps) => {
           <svg className={s.trackTimeSvg}>
             <use xlinkHref="/icon/sprite.svg#icon-like"></use>
           </svg>
-          <span className={s.trackTimeText}>{minutes}:{seconds}</span>
+          <span className={s.trackTimeText}>{minutes}:{seconds.toString().padStart(2, "0")}</span>
         </div>
       </div>
     </div>
