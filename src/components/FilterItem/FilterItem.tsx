@@ -2,13 +2,13 @@
 import classNames from "classnames";
 import s from "./FilterItem.module.css";
 
-type ItemProp = {item:string[], title:string, list: unknown, key:string, isActive: boolean, setActiveFilter: string[]}
-export const FilterItem = ({title, item, list, isActive, setActiveFilter}:ItemProp) => {
+type ItemProp = { title:string, list: string[], id:string, activeFilter: string  | null, setActiveFilter: string | null}
+export const FilterItem = ({title, list, id, setActiveFilter, activeFilter}:ItemProp) => {
 
     const openFindFilter = () => {
-        setActiveFilter((prev:unknown)=>(prev === item ? null : item))
+      setActiveFilter(()=> activeFilter === id ? null : id)
     };
-    
+  
   return (
     <div className={s.contentBlock}>
     <div
@@ -17,7 +17,13 @@ export const FilterItem = ({title, item, list, isActive, setActiveFilter}:ItemPr
     >
       {title}
     </div>
-    {isActive &&  <div className={s.list}>{list}</div>}
+    {
+    activeFilter === id && <div className={s.list}>
+      {list.map((i)=> 
+        <p className={s.listName}>{i}</p>
+        )}
+      </div>}
+     
     </div>
   );
 };

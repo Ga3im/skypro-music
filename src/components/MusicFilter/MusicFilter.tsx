@@ -1,14 +1,14 @@
 "use client"
 import s from "@/components/MusicFilter/MusicFilter.module.css";
 import { TrackType } from "@/types/tracks";
-import { useState } from "react";
+import React, { useState } from "react";
 import { FilterItem } from "../FilterItem/FilterItem";
 
 type FilterProp = { tracks: TrackType[] };
 
 export const MusicFilter = ({ tracks }: FilterProp) => {
+  const [activeFilter, setActiveFilter] = React.useState<string | null>(null);
 
-  const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const getUniqValues = <T, K extends keyof T>(
     items: T[],
     key: K
@@ -43,13 +43,13 @@ export const MusicFilter = ({ tracks }: FilterProp) => {
     <div className={s.centerblockFilter}>
       <div className={s.filterTitle}>Искать по:</div>
       {filters.map((item)=>(
-        <FilterItem 
-          item={item}
+        <FilterItem
           key={item.key}
+          id={item.key}
           setActiveFilter={setActiveFilter}
+          activeFilter={activeFilter}
           title={item.title}
           list={item.list}
-          isActive={item.key === activeFilter}
         />
       ))}
     </div>

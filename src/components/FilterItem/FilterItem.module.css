@@ -32,4 +32,18 @@
     border-radius: 12px;
     overflow-y: auto;
     scrollbar-width: none;
+    position: absolute;
+    margin-top: 50px;
+  }
+  .listName{
+    padding-bottom: 28px;
+    font-family: StratosSkyeng;
+    font-size: 20px;
+    width: 152px;
+  }
+  .listName:hover{
+    cursor: pointer;
+    text-decoration: underline;
+    color: #B672FF
+    ;
   }
