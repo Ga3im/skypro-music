@@ -24,6 +24,7 @@
     color: #ad61ff;
     cursor: pointer;
   }
+  
   .count{
     width: 26px;
     aspect-ratio: 1;
@@ -53,6 +54,7 @@
     font-size: 20px;
     width: 152px;
   }
+
   .listName:hover{
     cursor: pointer;
     text-decoration: underline;

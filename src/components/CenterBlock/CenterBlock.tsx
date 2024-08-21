@@ -15,7 +15,6 @@ export const CenterBlock = async () => {
     console.log(tracks)
   } catch (error) {
     if (error instanceof Error) {
-      console.log(error.message)
       err = error.message;
     }
   }
@@ -47,6 +46,7 @@ export const CenterBlock = async () => {
           </div>
         </div>
         <Playlist tracks={tracks}/>
+        <p>{err}</p>
       </div>
     </div>
   );
