@@ -1,8 +1,24 @@
 import s from '@/components/CenterBlock/CenterBlock.module.css'
 import classNames from 'classnames'
 import { Playlist } from '../Playlist/Playlist';
-import { MusicFilter } from '../MusicFilter/MusicFilter';
-export const CenterBlock = () => {
+import { MusicFilter } from '@/components/MusicFilter/MusicFilter';
+import { getTracks } from '@/api/api';
+import { TrackType } from '@/types/tracks';
+
+export const CenterBlock = async () => {
+
+  let tracks: TrackType[] = []
+  let err : string | null = null
+
+  try {
+   tracks = await getTracks() 
+    console.log(tracks)
+  } catch (error) {
+    if (error instanceof Error) {
+      err = error.message;
+    }
+  }
+
   return (
     <div className="main__centerblock centerblock">
       <div className={s.centerblockSearch}>
@@ -17,7 +33,7 @@ export const CenterBlock = () => {
         />
       </div>
       <h2 className={s.centerblockH2}>Треки</h2>
-     <MusicFilter/>
+     <MusicFilter tracks={tracks}/>
       <div className={s.centerblockContent}>
         <div className={s.contentTitle}>
           <div className={classNames(s.playlistTitleCol, s.col01)}>Трек</div>
@@ -29,7 +45,8 @@ export const CenterBlock = () => {
             </svg>
           </div>
         </div>
-        <Playlist/>
+        <Playlist tracks={tracks}/>
+        <p>{err}</p>
       </div>
     </div>
   );

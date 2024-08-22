@@ -55,7 +55,7 @@ export const Player = ()=>{
                 </div>
 
                 <div className={s.trackPlayLikeDis}>
-                  <div className={classNames(s.trackPlayLike, s.btnIcon)}>
+                  <div className={classNames(s.trackPlayLike, s.btnIcon) }>
                     <svg className={s.trackPlayLikeSvg}>
                       <use xlinkHref="/icon/sprite.svg#icon-like"></use>
                     </svg>
@@ -68,7 +68,7 @@ export const Player = ()=>{
                 </div>
               </div>
             </div>
-            <div className="bar__volume-block volume">
+            <div className={s.barVolumeBlock}>
               <div className={s.volumeContent}>
                 <div className={s.volumeImage}>
                   <svg className={s.volumeSvg}>

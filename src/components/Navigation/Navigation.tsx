@@ -1,7 +1,13 @@
+'use client'
 import Image from "next/image"
 import s from "@/components/Navigation/Navigation.module.css"
+import { useState } from "react"
 
 export const Navigation = () =>{
+  const [navIsOpen, setNavIsOpen] = useState(false);
+  const openNav = ()=>{
+    setNavIsOpen(!navIsOpen)
+  }
     return(
         <nav className={s.mainNav}>
         <div className={s.navLogo}>
@@ -13,12 +19,12 @@ export const Navigation = () =>{
             height={17}
           />
         </div>
-        <div className={s.navBurger}>
+        <div className={s.navBurger} onClick={openNav}>
           <span className={s.burgerLine}></span>
           <span className={s.burgerLine}></span>
           <span className={s.burgerLine}></span>
         </div>
-        <div className={s.navMenu}>
+        {navIsOpen && <div className={s.navMenu}>
           <ul className={s.menuList}>
             <li className={s.menuItem}>
               <a href="#" className={s.menuLink}>
@@ -36,7 +42,8 @@ export const Navigation = () =>{
               </a>
             </li>
           </ul>
-        </div>
+        </div>}
+        
       </nav>
     )
 }

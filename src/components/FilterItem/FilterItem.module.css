@@ -1,0 +1,63 @@
+.contentBlock{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.filterButton {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    border: 1px solid #ffffff;
+    border-radius: 60px;
+    padding: 6px 20px;
+  }
+  .btnText:hover {
+    border-color: #d9b6ff;
+    color: #d9b6ff;
+    cursor: pointer;
+  }
+
+  .btnText:active {
+    border-color: #ad61ff;
+    color: #ad61ff;
+    cursor: pointer;
+  }
+  
+  .count{
+    width: 26px;
+    aspect-ratio: 1;
+    background: #AD61FF;
+    border-radius: 100%;
+    margin-left: -25px;
+    margin-top: -10px;
+    padding-top: 2px;
+    text-align: center;
+  }
+
+  .list{
+    width: 250px;
+    height: 305px;
+    padding: 34px;
+    background: #313131;
+    border-radius: 12px;
+    overflow-y: auto;
+    position: absolute;
+    margin-top: 50px;
+    scrollbar-color: #FFFFFF #4B4949;
+  }
+
+  .listName{
+    padding-bottom: 28px;
+    font-family: StratosSkyeng;
+    font-size: 20px;
+    width: 152px;
+  }
+
+  .listName:hover{
+    cursor: pointer;
+    text-decoration: underline;
+    color: #B672FF
+    ;
+  }
