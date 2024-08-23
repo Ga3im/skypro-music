@@ -1,13 +1,20 @@
 import { TrackType } from "@/types/tracks";
 import s from './Track.module.css';
 
-type TrackProps = { track: TrackType };
+type TrackProps = { track: TrackType ;
+  setCurrentTrack: (track: TrackType) => void
+}
 
-export const Track = ({ track }: TrackProps) => {
+
+export const Track = ( { track, setCurrentTrack }: TrackProps) => {
   let minutes: number = Math.floor( track.duration_in_seconds / 60);
   let seconds: number = track.duration_in_seconds % 60;
+
+  const playTrack = ()=>{
+    setCurrentTrack(track)
+  }
   return (
-    <div key={track._id} className={s.playlistItem}>
+    <div onClick={playTrack} key={track._id} className={s.playlistItem}>
       <div className={s.playlistTrack}>
         <div className={s.trackTitle}>
           <div className={s.trackTitleImage}>

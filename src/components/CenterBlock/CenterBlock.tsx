@@ -1,23 +1,35 @@
+'use client'
 import s from '@/components/CenterBlock/CenterBlock.module.css'
 import classNames from 'classnames'
 import { Playlist } from '../Playlist/Playlist';
 import { MusicFilter } from '@/components/MusicFilter/MusicFilter';
 import { getTracks } from '@/api/api';
 import { TrackType } from '@/types/tracks';
+import { useEffect, useState } from 'react';
 
-export const CenterBlock = async () => {
+type props = {
+  setCurrentTrack: (track: TrackType) => void
+}
 
-  let tracks: TrackType[] = []
-  let err : string | null = null
+export const CenterBlock = ({setCurrentTrack}:props) => {
 
-  try {
-   tracks = await getTracks() 
-    console.log(tracks)
-  } catch (error) {
-    if (error instanceof Error) {
-      err = error.message;
-    }
+  const [tracks, setTracks] = useState<TrackType[]>([])
+  const [err, setErr] = useState<string | null>(null)
+
+useEffect(()=>{
+  const getData = async () =>{
+    try {
+      const res = await getTracks()
+      setTracks(res) 
+     } catch (error) { 
+       if (error instanceof Error) {
+         setErr(error.message);
+       }
+     }
   }
+ getData()
+}, [])
+ 
 
   return (
     <div className="main__centerblock centerblock">
@@ -45,7 +57,7 @@ export const CenterBlock = async () => {
             </svg>
           </div>
         </div>
-        <Playlist tracks={tracks}/>
+        <Playlist tracks={tracks} setCurrentTrack={setCurrentTrack}/>
         <p>{err}</p>
       </div>
     </div>
