@@ -1,3 +1,6 @@
+.displayNone{
+  display: none;
+}
 .bar {
   position: absolute;
   bottom: 0;
@@ -22,6 +25,10 @@
   height: 5px;
   background: #2e2e2e;
 }
+.barPlayerProgress::-webkit-progress-value{
+  background: #b82424;
+}
+
 
 .barPlayerBlock {
   height: 73px;
@@ -274,6 +281,11 @@
 
 .trackPlayDislike {
   margin-left: 28.5px;
+}
+.trackTime{
+  display: flex;
+  gap: 640px;
+  align-items: center;
 }
 
 .trackPlayDislikeSvg {

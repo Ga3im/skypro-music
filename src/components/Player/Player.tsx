@@ -9,21 +9,20 @@ type props = {
 };
 
 export const Player = ({ currentTrack }: props) => {
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [repeat, setRepeat] = useState<boolean>(false);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [progress, setProgress] = useState({
     currentTime: 0,
     duration: 0,
   });
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
-
   const onPlay = () => {
     const audio = audioRef.current;
     if (isPlaying) {
-      audio.pause();
+      audio?.pause();
     } else {
-      audio.play();
+      audio?.play();
     }
     setIsPlaying((prev) => !prev);
   };
@@ -42,17 +41,36 @@ export const Player = ({ currentTrack }: props) => {
   };
 
   const onRepeat = () => {
+    const audio = audioRef.current;
     if (repeat) {
-      audioRef.current.loop = false;
+      audio.loop = false;
     } else {
-      audioRef.current.loop = true;
+      audio.loop = true;
     }
     setRepeat(!repeat);
   };
 
+  const NextTrack = () => {
+    alert("Еще не реализовано");
+  };
+
+  const PrevTrack = () => {
+    alert("Еще не реализовано");
+  };
+
+  const progressBar = (e: SyntheticEvent<HTMLAudioElement, Event>) => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = Number(e.target.value);
+    }
+  };
+
+  let minutes = Math.floor(progress.duration / 60);
+  let seconds = Math.floor(progress.duration % 60);
+
   return (
     <>
       <audio
+        // className={s.displayNone}
         onTimeUpdate={onChangeTime}
         ref={audioRef}
         controls
@@ -60,11 +78,16 @@ export const Player = ({ currentTrack }: props) => {
       />
       <div className={s.bar}>
         <div className={s.barContent}>
-          <div className={s.barPlayerProgress}></div>
+          <progress
+            onClick={progressBar}
+            max={progress.duration}
+            value={progress.currentTime}
+            className={s.barPlayerProgress}
+          ></progress>
           <div className={s.barPlayerBlock}>
             <div className={s.barPlayer}>
               <div className={s.playerControls}>
-                <div className={s.playerBtnPrev}>
+                <div onClick={PrevTrack} className={s.playerBtnPrev}>
                   <svg className={s.playerBtnPrevSvg}>
                     <use xlinkHref="/icon/sprite.svg#icon-prev"></use>
                   </svg>
@@ -82,12 +105,12 @@ export const Player = ({ currentTrack }: props) => {
                     </svg>
                   </div>
                 )}
-                <div className={s.playerBtnNext}>
+                <div onClick={NextTrack} className={s.playerBtnNext}>
                   <svg className={s.playerBtnNextSvg}>
                     <use xlinkHref="/icon/sprite.svg#icon-next"></use>
                   </svg>
                 </div>
-                
+
                 {repeat ? (
                   <div
                     onClick={onRepeat}
@@ -147,6 +170,16 @@ export const Player = ({ currentTrack }: props) => {
                 </div>
               </div>
             </div>
+
+            <div className={s.trackTime}>
+              <p >
+                {Math.floor(progress.currentTime / 60)}:{Math.floor(progress.currentTime % 60).toString().padStart(2, "0")}
+              </p>
+              <p >
+                {minutes}:{seconds.toString().padStart(2, "0")}
+              </p>
+            </div>
+          
             <div className={s.barVolumeBlock}>
               <div className={s.volumeContent}>
                 <div className={s.volumeImage}>

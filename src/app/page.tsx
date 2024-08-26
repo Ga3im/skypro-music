@@ -17,7 +17,7 @@ export default function Home() {
             <CenterBlock setCurrentTrack={setCurrentTrack}/>
             <Sidebar/>
           </main>
-          {currentTrack && <Player currentTrack={currentTrack} />}      
+          {currentTrack && <Player  currentTrack={currentTrack} />}      
           <footer className="footer"></footer>
         </div>
       </div>

@@ -9,10 +9,11 @@ import { useEffect, useState } from 'react';
 
 type props = {
   setCurrentTrack: (track: TrackType) => void
+  isPlaying:boolean
+  setIsPlaying:boolean
 }
 
-export const CenterBlock = ({setCurrentTrack}:props) => {
-
+export const CenterBlock = ({setCurrentTrack, isPlaying, setIsPlaying}:props) => {
   const [tracks, setTracks] = useState<TrackType[]>([])
   const [err, setErr] = useState<string | null>(null)
 
@@ -57,7 +58,7 @@ useEffect(()=>{
             </svg>
           </div>
         </div>
-        <Playlist tracks={tracks} setCurrentTrack={setCurrentTrack}/>
+        <Playlist isPlaying={isPlaying} setIsPlaying={setIsPlaying} tracks={tracks} setCurrentTrack={setCurrentTrack}/>
         <p>{err}</p>
       </div>
     </div>
