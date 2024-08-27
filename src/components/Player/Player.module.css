@@ -231,7 +231,6 @@
   grid-row: 1;
   grid-column: 2;
   grid-area: author;
-  min-width: 49px;
 }
 
 .trackPlayAuthorLink {

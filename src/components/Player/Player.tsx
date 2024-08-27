@@ -71,7 +71,7 @@ export const Player = ({ currentTrack }: props) => {
   return (
     <>
       <audio
-        // className={s.displayNone}
+        className={s.displayNone}
         onTimeUpdate={onChangeTime}
         ref={audioRef}
         controls

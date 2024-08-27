@@ -116,6 +116,22 @@
     align-items: center;
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
-    justify-content: space-between;
     margin-bottom: 24px;
+  }
+  
+  .col01 {
+    width: 447px;
+  }
+  
+  .col02 {
+    width: 321px;
+  }
+  
+  .col03 {
+    width: 245px;
+  }
+  
+  .col04 {
+    width: 60px;
+    text-align: end;
   }
