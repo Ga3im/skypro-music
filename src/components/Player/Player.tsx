@@ -3,6 +3,7 @@ import s from "@/components/Player/Player.module.css";
 import { TrackType } from "@/types/tracks";
 import classNames from "classnames";
 import { ChangeEvent, SyntheticEvent, useRef, useState } from "react";
+import ProgressBar from "../ProgressBar/ProgressBar";
 
 type props = {
   currentTrack: TrackType;
@@ -58,9 +59,9 @@ export const Player = ({ currentTrack }: props) => {
     alert("Еще не реализовано");
   };
 
-  const progressBar = (e: SyntheticEvent<HTMLAudioElement, Event>) => {
+  const progressBar = (e) => {
     if (audioRef.current) {
-      audioRef.current.currentTime = Number(e.target.value);
+      audioRef.current.currentTime = Number(e.target.value) ;
     }
   };
 
@@ -78,12 +79,7 @@ export const Player = ({ currentTrack }: props) => {
       />
       <div className={s.bar}>
         <div className={s.barContent}>
-          <progress
-            onClick={progressBar}
-            max={progress.duration}
-            value={progress.currentTime}
-            className={s.barPlayerProgress}
-          ></progress>
+         <ProgressBar max={progress.duration} value={progress.currentTime} onChange={progressBar}/>
           <div className={s.barPlayerBlock}>
             <div className={s.barPlayer}>
               <div className={s.playerControls}>
@@ -116,7 +112,7 @@ export const Player = ({ currentTrack }: props) => {
                     onClick={onRepeat}
                     className={classNames(s.playerBtnRepeat, s.btnIcon)}
                   >
-                    <svg className={s.playerBtnRepeatSvg}>
+                    <svg className={s.playerBtnRepeatSvgActive}>
                       <use xlinkHref="/icon/sprite.svg#icon-activeRepeat"></use>
                     </svg>
                   </div>
