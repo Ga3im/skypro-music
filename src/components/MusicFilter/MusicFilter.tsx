@@ -1,14 +1,12 @@
 "use client"
 import s from "@/components/MusicFilter/MusicFilter.module.css";
-import { TrackType } from "@/types/tracks";
-import React, { useState } from "react";
+import React from "react";
 import { FilterItem } from "../FilterItem/FilterItem";
+import { useAppSelector } from "@/store/store";
 
-type FilterProp = { tracks: TrackType[] };
-
-export const MusicFilter = ({ tracks }: FilterProp) => {
+export const MusicFilter = () => {
   const [activeFilter, setActiveFilter] = React.useState<string | null>(null);
-
+  const {tracks} = useAppSelector(state=> state.tracksSlice);
   const getUniqValues = <T, K extends keyof T>(
     items: T[],
     key: K
