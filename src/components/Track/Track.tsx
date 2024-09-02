@@ -1,20 +1,23 @@
-import { TrackType } from "@/types/tracks";
+import { useAppDispatch, useAppSelector } from '@/store/store';
 import s from './Track.module.css';
+import { TrackType } from '@/types/tracks';
+import { setPlay, setThisTrack } from '@/store/feautures/tracksSlice';
 
-type TrackProps = { track: TrackType ;
-  setCurrentTrack: (track: TrackType) => void
-}
-
-
-export const Track = ( { track, setCurrentTrack }: TrackProps) => {
+export const Track = ({track}:TrackType[]) => {
+  
   let minutes: number = Math.floor( track.duration_in_seconds / 60);
   let seconds: number = track.duration_in_seconds % 60;
 
-  const playTrack = ()=>{
-    setCurrentTrack(track)
+  const dispatch = useAppDispatch();
+  const { isPlaying } = useAppSelector((state) => state.tracksSlice);
+
+  const playTrack = (track: TrackType[])=>{
+    dispatch(setThisTrack(track))
+    dispatch(setPlay(!isPlaying));
   }
+  
   return (
-    <div onClick={playTrack} key={track._id} className={s.playlistItem}>
+    <div onClick={() => playTrack(track)} key={track._id} className={s.playlistItem}>
       <div className={s.playlistTrack}>
         <div className={s.trackTitle}>
           <div className={s.trackTitleImage}>

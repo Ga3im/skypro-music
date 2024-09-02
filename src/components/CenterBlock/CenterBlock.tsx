@@ -9,17 +9,7 @@ import { useEffect, useState } from "react";
 import { useAppDispatch } from "@/store/store";
 import { setTrackState } from "@/store/feautures/tracksSlice";
 
-type props = {
-  setCurrentTrack: (track: TrackType) => void;
-  isPlaying: boolean;
-  setIsPlaying: boolean;
-};
-
-export const CenterBlock = ({
-  setCurrentTrack,
-  isPlaying,
-  setIsPlaying,
-}: props) => {
+export const CenterBlock = () => {
   const [err, setErr] = useState<string | null>(null);
   const dispatch = useAppDispatch();
 
@@ -65,11 +55,7 @@ export const CenterBlock = ({
             </svg>
           </div>
         </div>
-        <Playlist
-          isPlaying={isPlaying}
-          setIsPlaying={setIsPlaying}
-          setCurrentTrack={setCurrentTrack}
-        />
+        <Playlist />
         <p>{err}</p>
       </div>
     </div>
