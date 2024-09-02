@@ -1,29 +1,36 @@
-import { useAppDispatch, useAppSelector } from '@/store/store';
-import s from './Track.module.css';
-import { TrackType } from '@/types/tracks';
-import { setPlay, setThisTrack } from '@/store/feautures/tracksSlice';
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import s from "./Track.module.css";
+import { TrackType } from "@/types/tracks";
+import { setCurrentTrack, setPlay, setThisTrack } from "@/store/feautures/tracksSlice";
 
-export const Track = ({track}:TrackType[]) => {
-  
-  let minutes: number = Math.floor( track.duration_in_seconds / 60);
+export const Track = ({ track }: TrackType[]) => {
+  let minutes: number = Math.floor(track.duration_in_seconds / 60);
   let seconds: number = track.duration_in_seconds % 60;
 
   const dispatch = useAppDispatch();
-  const { isPlaying } = useAppSelector((state) => state.tracksSlice);
+  const { isPlaying, isCurrentTrack } = useAppSelector((state) => state.tracksSlice);
 
-  const playTrack = (track: TrackType[])=>{
-    dispatch(setThisTrack(track))
+  const playTrack = (track: TrackType[]) => {
+    dispatch(setThisTrack(track));
     dispatch(setPlay(!isPlaying));
-  }
-  
+  };
+
   return (
-    <div onClick={() => playTrack(track)} key={track._id} className={s.playlistItem}>
+    <div
+      onClick={() => playTrack(track)}
+      key={track._id}
+      className={s.playlistItem}
+    >
       <div className={s.playlistTrack}>
         <div className={s.trackTitle}>
           <div className={s.trackTitleImage}>
-            <svg className={s.trackTitleSvg}>
-              <use xlinkHref="/icon/sprite.svg#icon-note"></use>
-            </svg>
+            { isPlaying ? isPlaying ? <div className={s.playingDot}></div>  :  (
+              <div className={s.trackPlay}></div>
+            ) : (
+              <svg className={s.trackTitleSvg}>
+                <use xlinkHref="/icon/sprite.svg#icon-note"></use>
+              </svg>
+            )}
           </div>
           <div className="track__title-text">
             <a className={s.trackTitleLink} href="http://">
@@ -45,7 +52,9 @@ export const Track = ({track}:TrackType[]) => {
           <svg className={s.trackTimeSvg}>
             <use xlinkHref="/icon/sprite.svg#icon-like"></use>
           </svg>
-          <span className={s.trackTimeText}>{minutes}:{seconds.toString().padStart(2, "0")}</span>
+          <span className={s.trackTimeText}>
+            {minutes}:{seconds.toString().padStart(2, "0")}
+          </span>
         </div>
       </div>
     </div>

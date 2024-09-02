@@ -12,6 +12,7 @@ import {
 import ProgressBar from "../ProgressBar/ProgressBar";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import {
+  setCurrentTrack,
   setIsShuffle,
   setNextTrack,
   setPlay,
