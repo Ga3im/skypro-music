@@ -1,3 +1,6 @@
+.displayNone {
+  display: none;
+}
 .bar {
   position: absolute;
   bottom: 0;
@@ -21,6 +24,9 @@
   width: 100%;
   height: 5px;
   background: #2e2e2e;
+}
+.barPlayerProgress::-webkit-progress-value {
+  background: #b82424;
 }
 
 .barPlayerBlock {
@@ -149,6 +155,12 @@
   fill: transparent;
   stroke: #696969;
 }
+.playerBtnRepeatSvgActive{
+  width: 18px;
+  height: 12px;
+  fill: transparent;
+  stroke: #FFFFFF;
+}
 
 .playerBtnShuffle {
   display: -webkit-box;
@@ -219,7 +231,6 @@
   grid-row: 1;
   grid-column: 2;
   grid-area: author;
-  min-width: 49px;
 }
 
 .trackPlayAuthorLink {
@@ -274,6 +285,11 @@
 
 .trackPlayDislike {
   margin-left: 28.5px;
+}
+.trackTime {
+  display: flex;
+  gap: 640px;
+  align-items: center;
 }
 
 .trackPlayDislikeSvg {

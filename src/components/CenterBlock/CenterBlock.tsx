@@ -1,23 +1,36 @@
+'use client'
 import s from '@/components/CenterBlock/CenterBlock.module.css'
 import classNames from 'classnames'
 import { Playlist } from '../Playlist/Playlist';
 import { MusicFilter } from '@/components/MusicFilter/MusicFilter';
 import { getTracks } from '@/api/api';
 import { TrackType } from '@/types/tracks';
+import { useEffect, useState } from 'react';
 
-export const CenterBlock = async () => {
+type props = {
+  setCurrentTrack: (track: TrackType) => void
+  isPlaying:boolean
+  setIsPlaying:boolean
+}
 
-  let tracks: TrackType[] = []
-  let err : string | null = null
+export const CenterBlock = ({setCurrentTrack, isPlaying, setIsPlaying}:props) => {
+  const [tracks, setTracks] = useState<TrackType[]>([])
+  const [err, setErr] = useState<string | null>(null)
 
-  try {
-   tracks = await getTracks() 
-    console.log(tracks)
-  } catch (error) {
-    if (error instanceof Error) {
-      err = error.message;
-    }
+useEffect(()=>{
+  const getData = async () =>{
+    try {
+      const res = await getTracks()
+      setTracks(res) 
+     } catch (error) { 
+       if (error instanceof Error) {
+         setErr(error.message);
+       }
+     }
   }
+ getData()
+}, [])
+ 
 
   return (
     <div className="main__centerblock centerblock">
@@ -45,7 +58,7 @@ export const CenterBlock = async () => {
             </svg>
           </div>
         </div>
-        <Playlist tracks={tracks}/>
+        <Playlist isPlaying={isPlaying} setIsPlaying={setIsPlaying} tracks={tracks} setCurrentTrack={setCurrentTrack}/>
         <p>{err}</p>
       </div>
     </div>
