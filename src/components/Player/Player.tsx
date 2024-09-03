@@ -93,6 +93,10 @@ export const Player = ({ thisTrack }: props) => {
     dispatch(setShuffle());
   };
 
+  if (audioRef.current?.currentTime === audioRef.current?.duration) {
+    dispatch(setNextTrack());
+  }
+
   let minutes = Math.floor(progress.duration / 60);
   let seconds = Math.floor(progress.duration % 60);
 
