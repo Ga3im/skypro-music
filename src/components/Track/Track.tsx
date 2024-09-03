@@ -1,14 +1,14 @@
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import s from "./Track.module.css";
 import { TrackType } from "@/types/tracks";
-import { setCurrentTrack, setPlay, setThisTrack } from "@/store/feautures/tracksSlice";
+import { setPlay, setThisTrack } from "@/store/feautures/tracksSlice";
 
 export const Track = ({ track }: TrackType[]) => {
   let minutes: number = Math.floor(track.duration_in_seconds / 60);
   let seconds: number = track.duration_in_seconds % 60;
-
+  
   const dispatch = useAppDispatch();
-  const { isPlaying, isCurrentTrack } = useAppSelector((state) => state.tracksSlice);
+  const { isPlaying, thisTrack } = useAppSelector((state) => state.tracksSlice);
 
   const playTrack = (track: TrackType[]) => {
     dispatch(setThisTrack(track));
@@ -24,7 +24,7 @@ export const Track = ({ track }: TrackType[]) => {
       <div className={s.playlistTrack}>
         <div className={s.trackTitle}>
           <div className={s.trackTitleImage}>
-            { isPlaying ? isPlaying ? <div className={s.playingDot}></div>  :  (
+            { track._id ===  thisTrack?._id ? isPlaying ? <div className={s.playingDot}></div>  :  (
               <div className={s.trackPlay}></div>
             ) : (
               <svg className={s.trackTitleSvg}>

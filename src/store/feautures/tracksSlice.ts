@@ -47,7 +47,7 @@ const trackSlice = createSlice({
     setIsShuffle: (state, action: PayloadAction<boolean>) => {
       state.isShuffle = action.payload;
     },
-    setPlay:(state, action: PayloadAction<boolean>) =>{
+    setPlay: (state, action: PayloadAction<boolean>) => {
       state.isPlaying = action.payload;
     },
   },
@@ -60,7 +60,6 @@ export const {
   setPrevTrack,
   setIsShuffle,
   setShuffle,
-  setCurrentTrack,
   setPlay,
 } = trackSlice.actions;
 export const trackReducer = trackSlice.reducer;

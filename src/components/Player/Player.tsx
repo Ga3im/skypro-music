@@ -5,14 +5,13 @@ import classNames from "classnames";
 import {
   ChangeEvent,
   SyntheticEvent,
-  useActionState,
+  useEffect,
   useRef,
   useState,
 } from "react";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import {
-  setCurrentTrack,
   setIsShuffle,
   setNextTrack,
   setPlay,
@@ -32,6 +31,14 @@ export const Player = ({ thisTrack }: props) => {
     currentTime: 0,
     duration: 0,
   });
+
+  useEffect(()=>{
+    if (isPlaying) {
+      audioRef.current?.play();
+    } else {
+      audioRef.current?.pause();
+    }
+  },[isPlaying])
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const onPlay = () => {
