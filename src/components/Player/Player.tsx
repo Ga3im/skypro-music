@@ -41,6 +41,7 @@ export const Player = ({ thisTrack }: props) => {
   }, [isPlaying]);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
   const onPlay = () => {
     if (isPlaying) {
       audioRef.current?.pause();

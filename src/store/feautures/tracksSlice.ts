@@ -33,12 +33,18 @@ const trackSlice = createSlice({
       const trackIndex = playlist.findIndex(
         (item) => item._id === state.thisTrack?._id
       );
+      if (trackIndex === playlist.length - 1) {
+        return;
+      } 
       state.thisTrack = playlist[trackIndex + 1];
     },
     setPrevTrack: (state) => {
       const trackIndex = state.tracks.findIndex(
         (item) => item._id === state.thisTrack?._id
       );
+      if (trackIndex === 0) {
+        return;
+      } 
       state.thisTrack = state.tracks[trackIndex - 1];
     },
     setShuffle: (state) => {
