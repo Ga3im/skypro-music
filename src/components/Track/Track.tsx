@@ -8,11 +8,16 @@ export const Track = ({ track }: TrackType[]) => {
   let seconds: number = track.duration_in_seconds % 60;
   
   const dispatch = useAppDispatch();
-  const { isPlaying, thisTrack } = useAppSelector((state) => state.tracksSlice);
+  let { isPlaying, thisTrack, shuffledTracks } = useAppSelector((state) => state.tracksSlice);
 
   const playTrack = (track: TrackType[]) => {
     dispatch(setThisTrack(track));
-    dispatch(setPlay(!isPlaying));
+    if (isPlaying ) {
+      dispatch(setPlay(isPlaying = false));
+    }
+    else{
+      dispatch(setPlay(isPlaying = true));     
+    }
   };
 
   return (

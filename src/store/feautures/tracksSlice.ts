@@ -3,8 +3,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type initialStateType = {
   tracks: TrackType[];
-  thisTrack: TrackType[] | null;
-  defaultTracks: TrackType[];
+  thisTrack: TrackType | null;
+  shuffledTracks: TrackType[];
   isShuffle: boolean;
   isPlaying: boolean;
 };
@@ -12,7 +12,7 @@ type initialStateType = {
 const initialState: initialStateType = {
   tracks: [],
   thisTrack: null,
-  defaultTracks: [],
+  shuffledTracks: [],
   isShuffle: false,
   isPlaying: false,
 };
@@ -23,13 +23,13 @@ const trackSlice = createSlice({
   reducers: {
     setTrackState: (state, action: PayloadAction<TrackType[]>) => {
       state.tracks = action.payload;
-      state.defaultTracks = action.payload;
+      state.shuffledTracks = action.payload;
     },
-    setThisTrack: (state, action: PayloadAction<TrackType[]>) => {
+    setThisTrack: (state, action: PayloadAction<TrackType>) => {
       state.thisTrack = action.payload;
     },
     setNextTrack: (state) => {
-      const playlist = state.isShuffle ? state.tracks : state.defaultTracks;
+      const playlist = state.isShuffle ? state.shuffledTracks : state.tracks;
       const trackIndex = playlist.findIndex(
         (item) => item._id === state.thisTrack?._id
       );
@@ -39,16 +39,17 @@ const trackSlice = createSlice({
       state.thisTrack = playlist[trackIndex + 1];
     },
     setPrevTrack: (state) => {
-      const trackIndex = state.tracks.findIndex(
+      const playlist = state.isShuffle ? state.shuffledTracks : state.tracks;
+      const trackIndex = playlist.findIndex(
         (item) => item._id === state.thisTrack?._id
       );
       if (trackIndex === 0) {
         return;
       } 
-      state.thisTrack = state.tracks[trackIndex - 1];
+      state.thisTrack = playlist[trackIndex - 1];
     },
     setShuffle: (state) => {
-      state.defaultTracks.sort(() => Math.random() - 0.5);
+      state.shuffledTracks.sort(() => Math.random() - 0.5);
     },
     setIsShuffle: (state, action: PayloadAction<boolean>) => {
       state.isShuffle = action.payload;

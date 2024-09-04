@@ -25,24 +25,16 @@ type props = {
 
 export const Player = ({ thisTrack }: props) => {
   const dispatch = useAppDispatch();
-  const { isShuffle, isPlaying } = useAppSelector((state) => state.tracksSlice);
+  let { isShuffle, isPlaying } = useAppSelector((state) => state.tracksSlice);
   const [repeat, setRepeat] = useState<boolean>(false);
   const [progress, setProgress] = useState({
     currentTime: 0,
     duration: 0,
   });
 
-  useEffect(() => {
-    if (isPlaying) {
-      audioRef.current?.play();
-    } else {
-      audioRef.current?.pause();
-    }
-  }, [isPlaying]);
-
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const onPlay = () => {
+  const handlePlay = () => {
     if (isPlaying) {
       audioRef.current?.pause();
     } else {
@@ -50,6 +42,11 @@ export const Player = ({ thisTrack }: props) => {
     }
     dispatch(setPlay(!isPlaying));
   };
+
+  const handleCanPlay = ()=>{
+    audioRef.current?.play
+    dispatch(setPlay(true))
+  }
 
   const onChangeVolume = (e: ChangeEvent<HTMLInputElement>) => {
     if (audioRef.current) {
@@ -60,12 +57,12 @@ export const Player = ({ thisTrack }: props) => {
   const onChangeTime = (e: SyntheticEvent<HTMLAudioElement, Event>) => {
     setProgress({
       currentTime: e.currentTarget.currentTime,
-      duration: e.currentTarget.duration,
+      duration: e.currentTarget.duration || 0,
     });
   };
 
   const onRepeat = () => {
-    const audio: HTMLAudioElement | null = audioRef.current;
+    const audio: HTMLAudioElement | null  = audioRef.current;
     if (repeat) {
       audio.loop = false;
     } else {
@@ -76,6 +73,7 @@ export const Player = ({ thisTrack }: props) => {
 
   const NextTrack = () => {
     dispatch(setNextTrack());
+    dispatch(setPlay(isPlaying = true))
   };
 
   const PrevTrack = () => {
@@ -96,10 +94,18 @@ export const Player = ({ thisTrack }: props) => {
   let minutes = Math.floor(progress.duration / 60);
   let seconds = Math.floor(progress.duration % 60);
 
+  useEffect(() => {
+    if (isPlaying) {
+      audioRef.current?.play();     
+    } else {
+      audioRef.current?.pause();
+    }
+  }, [isPlaying]);
   return (
     <>
       <audio
         className={s.displayNone}
+        onCanPlay={handleCanPlay}
         onTimeUpdate={onChangeTime}
         ref={audioRef}
         controls
@@ -122,13 +128,13 @@ export const Player = ({ thisTrack }: props) => {
                     </svg>
                   </div>
                   {isPlaying ? (
-                    <div onClick={onPlay} className={s.playerBtnPlay}>
+                    <div onClick={handlePlay} className={s.playerBtnPlay}>
                       <svg className={s.playerBtnPlaySvg}>
                         <use xlinkHref="/icon/sprite.svg#icon-pause"></use>
                       </svg>
                     </div>
                   ) : (
-                    <div onClick={onPlay} className={s.playerBtnPlay}>
+                    <div onClick={handlePlay} className={s.playerBtnPlay}>
                       <svg className={s.playerBtnPlaySvg}>
                         <use xlinkHref="/icon/sprite.svg#icon-play"></use>
                       </svg>
