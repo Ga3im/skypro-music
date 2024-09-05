@@ -3,21 +3,20 @@ import { CenterBlock } from "@/components/CenterBlock/CenterBlock";
 import { Navigation } from "@/components/Navigation/Navigation";
 import { Player } from "@/components/Player/Player";
 import { Sidebar } from "@/components/Sidebar/Sidebar";
-import { TrackType } from "@/types/tracks";
-import { useState } from "react";
+import { useAppSelector } from "@/store/store";
 
 export default function Home() {
-  const [currentTrack, setCurrentTrack] = useState<TrackType | null>(null)
+  const {thisTrack} = useAppSelector(state => state.tracksSlice)
   return (
     <>
       <div className="wrapper">
         <div className="container">
           <main className="main">
             <Navigation/>
-            <CenterBlock setCurrentTrack={setCurrentTrack}/>
+            <CenterBlock/>
             <Sidebar/>
           </main>
-          {currentTrack && <Player  currentTrack={currentTrack} />}      
+          {thisTrack && <Player  thisTrack={thisTrack} />}      
           <footer className="footer"></footer>
         </div>
       </div>

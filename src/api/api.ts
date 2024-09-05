@@ -1,6 +1,8 @@
+import { TrackType } from "@/types/tracks"
+
 export const BASE_URL = 'https://webdev-music-003b5b991590.herokuapp.com'
 
-export const getTracks = async ()=>{
+export const getTracks = async ():Promise<TrackType[]> =>{
     const res = await fetch(BASE_URL + '/catalog/track/all/')
     if (!res.ok) {
         throw new Error('Ошибка в запросе')
