@@ -44,7 +44,7 @@ export const Player = ({ thisTrack }: props) => {
   };
 
   const handleCanPlay = ()=>{
-    audioRef.current?.play
+    audioRef.current?.play()
     dispatch(setPlay(true))
   }
 
@@ -110,6 +110,7 @@ export const Player = ({ thisTrack }: props) => {
         ref={audioRef}
         controls
         src={thisTrack.track_file}
+        onEnded={NextTrack}
       />
       <div className={s.bar}>
         <div className={s.barContent}>
