@@ -2,7 +2,7 @@ import s from "./Login.module.css";
 import classNames from "classnames";
 import { FormEvent } from "react";
 import { useAppDispatch } from "@/store/store";
-import { setAuthState, Token } from "@/store/feautures/authSlice";
+import { loginUser, setAuthState, Token } from "@/store/feautures/authSlice";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -12,21 +12,24 @@ export const Login = () => {
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>)=>{
     e.preventDefault();
-    dispatch(setAuthState(true))
-    // try {
-    //   await dispatch(
-    //     Token({
-    //       email: "test@test.ru",
-    //       password: "test@test.ru",
-    //     })
-    //   );
-    //   nav.push('/');
-    //   console.log('успех');
-    // } catch (error) {
-    //   if (error instanceof Error) {
-    //     console.log("Ошибка:", error.message);
-    //   }
-    // }
+    try {
+      dispatch(loginUser({
+        email: "test@test.ru",
+        password: "test@test.ru",
+      }))
+      await dispatch(
+        Token({
+          email: "test@test.ru",
+          password: "test@test.ru",
+        })
+      );
+      console.log('успех');
+      dispatch(setAuthState(true))
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log("Ошибка:", error.message);
+      }
+    }
   };
 
   return (

@@ -13,7 +13,7 @@ export const Register = () => {
     try {
       await dispatch(
         getUser({
-          email: "test@test.ru",
+          email: "test.ru",
           password: "test@test.ru",
         })
       );
@@ -44,18 +44,21 @@ export const Register = () => {
               type="text"
               name="login"
               placeholder="Почта"
+              onChange={(e)=> e.target.value}
             />
             <input
               className={classNames(s.modalInput, s.passwordFirst)}
               type="password"
               name="password"
               placeholder="Пароль"
+              onChange={(e)=> e.target.value}
             />
             <input
               className={classNames(s.modalInput, s.passwordDouble)}
               type="password"
               name="password"
               placeholder="Повторите пароль"
+              onChange={(e)=> e.target.value}
             />
             <button className={s.modalBtnSignupEnt}>
               <a>Зарегистрироваться</a>

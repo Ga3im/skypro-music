@@ -7,7 +7,7 @@ export const makeStore = () => {
   return configureStore({
     reducer: combineReducers({
       auth: authReducer,
-      tracksSlice: trackReducer
+      tracksSlice: trackReducer,  
     }),
   });
 };
