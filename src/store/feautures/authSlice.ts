@@ -1,7 +1,7 @@
 import { getToken, regUser, regUserType, signinUser } from "@/api/api";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type AuthStateType =  {
+export type AuthStateType =  {
   authState: boolean;
 }
 
@@ -59,6 +59,6 @@ const authSlice = createSlice({
     })
 }});
 
-export const {authState, setAuthState } = authSlice.actions;
+export const { setAuthState } = authSlice.actions;
 export const authReducer = authSlice.reducer;
 
