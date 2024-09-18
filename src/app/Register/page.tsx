@@ -1,13 +1,15 @@
+'use client'
 import Image from "next/image";
 import s from "./Register.module.css";
 import classNames from "classnames";
 import { useAppDispatch } from "@/store/store";
 import { FormEvent, useState } from "react";
 import { getUser } from "@/store/feautures/authSlice";
+import Link from "next/link";
 
-export const Register = () => {
-  const [loginInput, setLoginInput] = useState('');
-  const [passwordInput, setPasswordInput] = useState('');
+ const Register = () => {
+  const [loginInput, setLoginInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
   const dispatch = useAppDispatch();
 
   const handleRegUser = async (e: FormEvent<HTMLFormElement>) => {
@@ -19,7 +21,7 @@ export const Register = () => {
           password: passwordInput,
         })
       );
-      console.log('успех');
+      console.log("успех");
     } catch (error) {
       if (error instanceof Error) {
         console.log("Ошибка:", error.message);
@@ -46,28 +48,31 @@ export const Register = () => {
               type="text"
               name="login"
               placeholder="Почта"
-              onChange={(e)=>setLoginInput( e.target.value)}
+              onChange={(e) => setLoginInput(e.target.value)}
             />
             <input
               className={classNames(s.modalInput, s.passwordFirst)}
               type="password"
               name="password"
               placeholder="Пароль"
-              onChange={(e)=> e.target.value}
+              onChange={(e) => setPasswordInput(e.target.value)}
             />
             <input
               className={classNames(s.modalInput, s.passwordDouble)}
               type="password"
               name="password"
               placeholder="Повторите пароль"
-              onChange={(e)=> e.target.value}
+              onChange={(e) => e.target.value}
             />
             <button className={s.modalBtnSignupEnt}>
               <a>Зарегистрироваться</a>
             </button>
+            <Link className={s.authorization} href="/Login">Авторизация</Link>
           </form>
         </div>
       </div>
     </div>
   );
 };
+
+export default Register;

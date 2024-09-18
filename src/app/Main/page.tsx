@@ -1,13 +1,13 @@
+'use client'
 import { useAppSelector } from "@/store/store";
-import { CenterBlock } from "../CenterBlock/CenterBlock"
-import { Navigation } from "../Navigation/Navigation"
-import { Sidebar } from "../Sidebar/Sidebar"
-import { Player } from "../Player/Player";
 import s from './Main.module.css'
+import { Navigation } from "@/components/Navigation/Navigation";
+import { CenterBlock } from "@/components/CenterBlock/CenterBlock";
+import { Sidebar } from "@/components/Sidebar/Sidebar";
+import { Player } from "@/components/Player/Player";
 
-export const Main = ()=>{
+ const Main = ()=>{
   const { thisTrack } = useAppSelector((state) => state.tracksSlice);
-
     return(
     <div className={s.wrapper}>
     <div className={s.container}>
@@ -22,3 +22,4 @@ export const Main = ()=>{
   </div>
     )
 }
+export default Main;

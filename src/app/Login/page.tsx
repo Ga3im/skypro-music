@@ -1,72 +1,79 @@
+'use client'
 import s from "./Login.module.css";
 import classNames from "classnames";
 import { FormEvent, useState } from "react";
-import { useAppDispatch } from "@/store/store";
+import { useAppDispatch, useAppSelector } from "@/store/store";
 import { loginUser, setAuthState, Token } from "@/store/feautures/authSlice";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-export const Login = () => {
-  const [loginInput, setLoginInput] = useState('');
-  const [passwordInput, setPasswordInput] = useState('');
+ const Login = () => {
+  const [loginInput, setLoginInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
   const dispatch = useAppDispatch();
-  const nav = useRouter();
+  const navigate = useRouter()
 
-  const handleLogin = async (e: FormEvent<HTMLFormElement>)=>{
+  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      dispatch(loginUser({
-        email: "test@test.ru",
-        password: "test@test.ru",
-      }))
+      dispatch(
+        loginUser({
+          email: loginInput,
+          password: passwordInput,
+        })
+      );
       await dispatch(
         Token({
           email: loginInput,
-          password: "test@test.ru",
-        })
+          password: passwordInput,
+        })                             
       );
-      console.log('успех');
-      dispatch(setAuthState(true))
+      navigate.push('/Main');      
     } catch (error) {
       if (error instanceof Error) {
         console.log("Ошибка:", error.message);
       }
     }
   };
-  console.log(loginInput);
-
 
   return (
     <div className={s.wrapper}>
       <div className={s.containerCenter}>
         <div className={s.modalBlock}>
           <form onSubmit={handleLogin} className={s.modalFormLogin} action="#">
-            <a href="../">
               <div className={s.modalLogo}>
-                <Image src="/logo_modal.png" alt="logo" width={115} height={17} />
+                <Image
+                  src="/logo_modal.png"
+                  alt="logo"
+                  width={115}
+                  height={17}
+                />
               </div>
-            </a>
             <input
               className={classNames(s.modalInput, s.login)}
               type="text"
               name="login"
               placeholder="Почта"
-              onChange={(e)=>setLoginInput( e.target.value)}
+              onChange={(e) => setLoginInput(e.target.value)}
             />
             <input
               className={classNames(s.modalInput, s.password)}
               type="password"
               name="password"
               placeholder="Пароль"
+              onChange={(e) => setPasswordInput(e.target.value)}
             />
-            <button type="submit" className={s.modalBtnEnter}>
+            <button type="submit" className= {classNames(s.modalBtnEnter, s.colorWhite)}>
               Войти
             </button>
-            <a className={s.modalBtnSignup}>Зарегистрироваться</a>
+            <Link href="/Register" className={s.modalBtnSignup}>
+              Зарегистрироваться
+            </Link>
           </form>
-    
         </div>
       </div>
     </div>
   );
 };
+export default Login;

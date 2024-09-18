@@ -77,36 +77,6 @@
     border-right: none;
     border-bottom: 1px solid #d0cece;
     padding: 8px 1px;
-  }
-  
-  .modalInput::-webkit-input-placeholder {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 24px;
-    letter-spacing: -0.05px;
-    color: #d0cece;
-  }
-  
-  .modalInput:-ms-input-placeholder {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 24px;
-    letter-spacing: -0.05px;
-    color: #d0cece;
-  }
-  
-  .modalInput::-ms-input-placeholder {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 24px;
-    letter-spacing: -0.05px;
-    color: #d0cece;
-  }
-  
-  .modalInput::placeholder {
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -153,6 +123,10 @@
     -ms-flex-pack: center;
     justify-content: center;
   }
+  .colorWhite{
+    color: #FFFFFF;
+    font-size: 18px;
+  }
   
   .modalBtnSignup {
     width: 278px;
@@ -160,26 +134,6 @@
     background-color: transparent;
     border: 1px solid #d0cece;
     border-radius: 6px;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 24px;
-    letter-spacing: -0.05px;
-    color: #000000;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-  }
-  
-  .modalBtnSignup a {
-    width: 100%;
-    height: 100%;
     font-style: normal;
     font-weight: 400;
     font-size: 18px;

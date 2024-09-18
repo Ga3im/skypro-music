@@ -1,13 +1,11 @@
 import Image from "next/image";
 import s from "@/components/Sidebar/Sidebar.module.css";
-import { useAppDispatch, useAppSelector } from "@/store/store";
-import { setAuthState } from "@/store/feautures/authSlice";
+import { useRouter } from "next/navigation";
 
 export const Sidebar = () => {
-  const dispatch = useAppDispatch();
-  const isAuth = useAppSelector(state => state.auth)
+  const nav = useRouter();
   const handleLogin = () => {
-    isAuth ? dispatch(setAuthState(false)) : dispatch(setAuthState(true));
+    nav.push("/Login");
   };
   return (
     <div className="main__sidebar sidebar">
