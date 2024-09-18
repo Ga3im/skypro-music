@@ -2,10 +2,12 @@ import Image from "next/image";
 import s from "./Register.module.css";
 import classNames from "classnames";
 import { useAppDispatch } from "@/store/store";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { getUser } from "@/store/feautures/authSlice";
 
 export const Register = () => {
+  const [loginInput, setLoginInput] = useState('');
+  const [passwordInput, setPasswordInput] = useState('');
   const dispatch = useAppDispatch();
 
   const handleRegUser = async (e: FormEvent<HTMLFormElement>) => {
@@ -13,8 +15,8 @@ export const Register = () => {
     try {
       await dispatch(
         getUser({
-          email: "test.ru",
-          password: "test@test.ru",
+          email: loginInput,
+          password: passwordInput,
         })
       );
       console.log('успех');
@@ -44,7 +46,7 @@ export const Register = () => {
               type="text"
               name="login"
               placeholder="Почта"
-              onChange={(e)=> e.target.value}
+              onChange={(e)=>setLoginInput( e.target.value)}
             />
             <input
               className={classNames(s.modalInput, s.passwordFirst)}

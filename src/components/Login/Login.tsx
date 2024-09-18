@@ -1,12 +1,14 @@
 import s from "./Login.module.css";
 import classNames from "classnames";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { useAppDispatch } from "@/store/store";
 import { loginUser, setAuthState, Token } from "@/store/feautures/authSlice";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export const Login = () => {
+  const [loginInput, setLoginInput] = useState('');
+  const [passwordInput, setPasswordInput] = useState('');
   const dispatch = useAppDispatch();
   const nav = useRouter();
 
@@ -19,7 +21,7 @@ export const Login = () => {
       }))
       await dispatch(
         Token({
-          email: "test@test.ru",
+          email: loginInput,
           password: "test@test.ru",
         })
       );
@@ -31,6 +33,8 @@ export const Login = () => {
       }
     }
   };
+  console.log(loginInput);
+
 
   return (
     <div className={s.wrapper}>
@@ -47,6 +51,7 @@ export const Login = () => {
               type="text"
               name="login"
               placeholder="Почта"
+              onChange={(e)=>setLoginInput( e.target.value)}
             />
             <input
               className={classNames(s.modalInput, s.password)}
@@ -57,10 +62,9 @@ export const Login = () => {
             <button type="submit" className={s.modalBtnEnter}>
               Войти
             </button>
-            <button className={s.modalBtnSignup}>
-              <a>Зарегистрироваться</a>
-            </button>
+            <a className={s.modalBtnSignup}>Зарегистрироваться</a>
           </form>
+    
         </div>
       </div>
     </div>
