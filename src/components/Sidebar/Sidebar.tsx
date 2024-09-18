@@ -1,10 +1,15 @@
 import Image from "next/image";
 import s from "@/components/Sidebar/Sidebar.module.css";
 import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/store/store";
+import { logout, tokenDel } from "@/store/feautures/authSlice";
 
 export const Sidebar = () => {
   const nav = useRouter();
+  const dispatch = useAppDispatch()
   const handleLogin = () => {
+    dispatch(logout(null));
+    dispatch(tokenDel(null));
     nav.push("/Login");
   };
   return (

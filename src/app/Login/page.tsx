@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      dispatch(
+      await dispatch(
         loginUser({
           email: loginInput,
           password: passwordInput,

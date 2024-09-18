@@ -4,7 +4,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 export type AuthStateType = {
   authState: boolean;
   user: string | null;
-  token: TokensType;
+  token: TokensType | null;
 };
 
 type TokensType = {
@@ -48,6 +48,9 @@ const authSlice = createSlice({
     },
     logout:(state)=>{
       state.user = null;
+    },
+    tokenDel:(state) =>{
+      state.token = null;
     }
   },
   extraReducers: (builder) => {
@@ -67,5 +70,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { setAuthState } = authSlice.actions;
+export const { logout, tokenDel, setAuthState } = authSlice.actions;
 export const  authReducer   = authSlice.reducer;
