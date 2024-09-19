@@ -2,8 +2,8 @@
 import s from "./Login.module.css";
 import classNames from "classnames";
 import { FormEvent, useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/store/store";
-import { loginUser, setAuthState, Token } from "@/store/feautures/authSlice";
+import { useAppDispatch } from "@/store/store";
+import { loginUser, Token } from "@/store/feautures/authSlice";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -12,7 +12,8 @@ import { useRouter } from "next/navigation";
   const [loginInput, setLoginInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const dispatch = useAppDispatch();
-  const navigate = useRouter()
+  const navigate = useRouter();
+  const [error, setError] = useState('');
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,17 +23,17 @@ import { useRouter } from "next/navigation";
           email: loginInput,
           password: passwordInput,
         })
-      );
+      ).unwrap();
       await dispatch(
         Token({
           email: loginInput,
           password: passwordInput,
         })                             
-      );
-      navigate.push('/Main');      
+      ).unwrap();
+      navigate.push('/Main');  
     } catch (error) {
       if (error instanceof Error) {
-        console.log("Ошибка:", error.message);
+        setError(error.message);
       }
     }
   };
@@ -64,6 +65,7 @@ import { useRouter } from "next/navigation";
               placeholder="Пароль"
               onChange={(e) => setPasswordInput(e.target.value)}
             />
+            <p>{error}</p>
             <button type="submit" className= {classNames(s.modalBtnEnter, s.colorWhite)}>
               Войти
             </button>

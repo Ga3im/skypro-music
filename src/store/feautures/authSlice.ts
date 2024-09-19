@@ -1,4 +1,4 @@
-import { getToken, regUser, regUserType, signinUser } from "@/api/api";
+import { getToken, regUser, regUserType, signinUser, updateKey } from "@/api/api";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type AuthStateType = {
@@ -7,7 +7,7 @@ export type AuthStateType = {
   token: TokensType | null;
 };
 
-type TokensType = {
+export type TokensType = {
   access: string;
   refresh: string;
 };
@@ -30,6 +30,13 @@ export const Token = createAsyncThunk(
   "user/token",
   async ({ email, password }: regUserType) => {
     return await getToken({ email, password });
+  }
+);
+
+export const UpdateToken = createAsyncThunk(
+  "user/update",
+  async ({ refresh }: TokensType) => {
+    return await updateKey({ refresh });
   }
 );
 
@@ -57,16 +64,20 @@ const authSlice = createSlice({
     builder
       .addCase(getUser.fulfilled, (state, action) => {
         state.user = action.payload;
-      })
+      });
+      builder
       .addCase(getUser.rejected, (state, action) => {
-        console.error("Error:", action.error.message);
+        console.log("Error:", action.error.message);
       })
       .addCase(loginUser.fulfilled, (state, action: PayloadAction) => {
         state.user = action.payload;
       })
       .addCase(Token.fulfilled, (state, action: PayloadAction<TokensType>) => {
         state.token = action.payload;
-      });
+      }).addCase(UpdateToken.fulfilled, (state, action)=>{
+        state.token = action.payload
+      })
+
   },
 });
 

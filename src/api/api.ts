@@ -1,3 +1,4 @@
+import { TokensType } from "@/store/feautures/authSlice";
 import { TrackType } from "@/types/tracks";
 
 export type regUserType = {
@@ -41,9 +42,8 @@ export const signinUser = async ({ email, password }: regUserType) => {
   if (!response.ok) {
     throw new Error("Ошибка в запросе");
   }
-  if (response.ok) {
-    return response.json();
-  }
+
+    return response.json();  
 };
 
 export const getToken = async ({ email, password }: regUserType) => {
@@ -57,5 +57,16 @@ export const getToken = async ({ email, password }: regUserType) => {
   if (!response.ok) {
     throw new Error("Ошибка в запросе");
   }
+  return response.json();
+};
+
+export const updateKey = async ({ refresh }: TokensType) => {
+  const response = await fetch(`${BASE_URL}/user/token/refresh/`, {
+    method: "POST",
+    body: JSON.stringify({ refresh }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
   return response.json();
 };

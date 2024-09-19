@@ -5,9 +5,15 @@ import { Navigation } from "@/components/Navigation/Navigation";
 import { CenterBlock } from "@/components/CenterBlock/CenterBlock";
 import { Sidebar } from "@/components/Sidebar/Sidebar";
 import { Player } from "@/components/Player/Player";
+import { useRouter } from "next/navigation";
 
  const Main = ()=>{
   const { thisTrack } = useAppSelector((state) => state.tracksSlice);
+  const {user, token} = useAppSelector(state => state.auth)
+  const nav = useRouter()
+  if (user && token === null) {
+    nav.push('/Login')
+  }
     return(
     <div className={s.wrapper}>
     <div className={s.container}>

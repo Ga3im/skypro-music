@@ -1,11 +1,12 @@
 import Image from "next/image";
 import s from "@/components/Sidebar/Sidebar.module.css";
 import { useRouter } from "next/navigation";
-import { useAppDispatch } from "@/store/store";
+import { useAppDispatch, useAppSelector } from "@/store/store";
 import { logout, tokenDel } from "@/store/feautures/authSlice";
 
 export const Sidebar = () => {
   const nav = useRouter();
+  const {user} = useAppSelector(state=> state.auth)
   const dispatch = useAppDispatch()
   const handleLogin = () => {
     dispatch(logout(null));
@@ -15,7 +16,7 @@ export const Sidebar = () => {
   return (
     <div className="main__sidebar sidebar">
       <div className={s.sidebarPersonal}>
-        <p className={s.sidebarPersonalName}>Войти</p>
+        <p className={s.sidebarPersonalName}>{user?.username}</p>
         <div onClick={handleLogin} className={s.sidebarIcon}>
           <svg>
             <use xlinkHref="/icon/sprite.svg#logout"></use>
