@@ -11,9 +11,18 @@ import Link from "next/link";
   const [loginInput, setLoginInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const dispatch = useAppDispatch();
+  const [error, setError] = useState('');
+  const [ repeatPassword, setRepeatPassword] = useState('')
 
   const handleRegUser = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (repeatPassword === '') {
+      setError('Подтвердите пароль')
+      if (passwordInput != repeatPassword) {
+        setError('Пароли не совпали');
+      }
+    }
+  
     try {
       await dispatch(
         getUser({
@@ -23,9 +32,13 @@ import Link from "next/link";
       );
       console.log("успех");
     } catch (error) {
-      if (error instanceof Error) {
-        console.log("Ошибка:", error.message);
+      if (loginInput === '') {
+        setError('Логин не был введен')
       }
+      if (passwordInput === '') {
+        setError('Пароль не был введен')
+      }
+        setError( error.message);     
     }
   };
   return (
@@ -62,8 +75,9 @@ import Link from "next/link";
               type="password"
               name="password"
               placeholder="Повторите пароль"
-              onChange={(e) => e.target.value}
+              onChange={(e) =>setRepeatPassword( e.target.value)}
             />
+            {error && <p className={s.error}>{error}</p>}
             <button className={s.modalBtnSignupEnt}>
               <a>Зарегистрироваться</a>
             </button>

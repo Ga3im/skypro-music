@@ -24,8 +24,8 @@ export const regUser = async ({ email, password }: regUserType) => {
       "Content-Type": "application/json",
     },
   });
-  if (!response.ok) {
-    throw new Error("Ошибка в запросе");
+  if (response.status === 500) {
+    throw new Error("Сервер не отвечает");
   }
   return response.json();
 };
@@ -38,11 +38,9 @@ export const signinUser = async ({ email, password }: regUserType) => {
       "Content-Type": "application/json",
     },
   });
-
-  if (!response.ok) {
-    throw new Error("Ошибка в запросе");
-  }
-
+   if (response.status === 500) {
+    throw new Error('Сервер сломался')
+   }
     return response.json();  
 };
 
@@ -54,11 +52,12 @@ export const getToken = async ({ email, password }: regUserType) => {
       "Content-Type": "application/json",
     },
   });
-  if (!response.ok) {
-    throw new Error("Ошибка в запросе");
+  if (response.status === 500) {
+    throw new Error("Сервер сломался");
   }
   return response.json();
 };
+
 
 export const updateKey = async ({ refresh }: TokensType) => {
   const response = await fetch(`${BASE_URL}/user/token/refresh/`, {

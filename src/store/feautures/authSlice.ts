@@ -5,6 +5,7 @@ export type AuthStateType = {
   authState: boolean;
   user: string | null;
   token: TokensType | null;
+  error:string;
 };
 
 export type TokensType = {
@@ -44,6 +45,7 @@ const initialState: AuthStateType = {
   authState: false,
   user: null,
   token: null,
+  error: '',
 };
 
 const authSlice = createSlice({
@@ -69,8 +71,11 @@ const authSlice = createSlice({
       .addCase(getUser.rejected, (state, action) => {
         console.log("Error:", action.error.message);
       })
-      .addCase(loginUser.fulfilled, (state, action: PayloadAction) => {
-        state.user = action.payload;
+      .addCase(loginUser.fulfilled, (state, action: PayloadAction<regUserType>) => {
+        state.user = action.payload.email;
+      })
+      .addCase(loginUser.rejected, (state, action)=>{
+        state.error = action.error.message || '';
       })
       .addCase(Token.fulfilled, (state, action: PayloadAction<TokensType>) => {
         state.token = action.payload;
