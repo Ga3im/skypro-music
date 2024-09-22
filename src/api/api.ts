@@ -24,10 +24,24 @@ export const regUser = async ({ email, password }: regUserType) => {
       "Content-Type": "application/json",
     },
   });
+  if (response.status === 400) {
+    throw new Error("не передан пароль или логин");
+  }
+  if (response.status === 401) {
+    throw new Error("Пользователь с таким email или паролем не найден");
+  }
+  if (response.status === 403) {
+    throw new Error('Введенный Email уже занят')
+  }
+  if (response.status === 412) {
+    throw new Error("Неправильный формат Email");
+  }
   if (response.status === 500) {
     throw new Error("Сервер не отвечает");
   }
-  return response.json();
+  if (response.ok) {
+    return response.json();
+  }
 };
 
 export const signinUser = async ({ email, password }: regUserType) => {
@@ -38,10 +52,21 @@ export const signinUser = async ({ email, password }: regUserType) => {
       "Content-Type": "application/json",
     },
   });
-   if (response.status === 500) {
-    throw new Error('Сервер сломался')
-   }
-    return response.json();  
+  if (response.status === 400) {
+    throw new Error("не передан пароль or login");
+  }
+  if (response.status === 401) {
+    throw new Error("Пользователь с таким email или паролем не найден");
+  }
+  if (response.status === 412) {
+    throw new Error("412");
+  }
+  if (response.status === 500) {
+    throw new Error("Сервер сломался");
+  }
+  if (response.ok) {
+    return response.json();
+  }
 };
 
 export const getToken = async ({ email, password }: regUserType) => {
@@ -52,12 +77,14 @@ export const getToken = async ({ email, password }: regUserType) => {
       "Content-Type": "application/json",
     },
   });
+  if (!response.ok) {
+    throw new Error("Ошибка");
+  }
   if (response.status === 500) {
     throw new Error("Сервер сломался");
   }
   return response.json();
 };
-
 
 export const updateKey = async ({ refresh }: TokensType) => {
   const response = await fetch(`${BASE_URL}/user/token/refresh/`, {
@@ -67,5 +94,8 @@ export const updateKey = async ({ refresh }: TokensType) => {
       "Content-Type": "application/json",
     },
   });
+  if (!response.ok) {
+    throw new Error("Ошибка");
+  }
   return response.json();
 };

@@ -1,46 +1,78 @@
-'use client'
+"use client";
 import Image from "next/image";
 import s from "./Register.module.css";
 import classNames from "classnames";
-import { useAppDispatch } from "@/store/store";
+import { useAppDispatch, useAppSelector } from "@/store/store";
 import { FormEvent, useState } from "react";
-import { getUser } from "@/store/feautures/authSlice";
+import {
+  errDel,
+  getUser,
+  loginUser,
+  setAuthState,
+  Token,
+} from "@/store/feautures/authSlice";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
- const Register = () => {
+const Register = () => {
   const [loginInput, setLoginInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const dispatch = useAppDispatch();
-  const [error, setError] = useState('');
-  const [ repeatPassword, setRepeatPassword] = useState('')
+  const [repeatPassword, setRepeatPassword] = useState("");
+  const navigate = useRouter();
+  const error = useAppSelector((state) => state.auth.error);
 
   const handleRegUser = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (repeatPassword === '') {
-      setError('Подтвердите пароль')
-      if (passwordInput != repeatPassword) {
-        setError('Пароли не совпали');
-      }
-    }
-  
     try {
+      dispatch(setAuthState(true));
       await dispatch(
         getUser({
           email: loginInput,
           password: passwordInput,
         })
-      );
-      console.log("успех");
-    } catch (error) {
-      if (loginInput === '') {
-        setError('Логин не был введен')
+      ).unwrap();
+      await dispatch(
+        loginUser({
+          email: loginInput,
+          password: passwordInput,
+        })
+      ).unwrap();
+      await dispatch(
+        Token({
+          email: loginInput,
+          password: passwordInput,
+        })
+      ).unwrap();
+      dispatch(errDel(""));
+      navigate.push("/Main");
+    } catch (error: any) {
+      if (error.message === "Неправильный формат Email" && loginInput === "") {
+        dispatch(errDel("Введите логин"));
       }
-      if (passwordInput === '') {
-        setError('Пароль не был введен')
+      if (
+        error.message === "Неправильный формат Email" &&
+        passwordInput === "" &&
+        repeatPassword === ""
+      ) {
+        dispatch(errDel("Введите пароль"));
       }
-        setError( error.message);     
+      if (
+        error.message === "Неправильный формат Email" &&
+        passwordInput === "" &&
+        loginInput === ""
+      ) {
+        dispatch(errDel("Введите логин и пароль"));
+      }
+      if (passwordInput != repeatPassword) {
+        dispatch(errDel("Пароли не совпали"));
+        if (repeatPassword === "") {
+          dispatch(errDel("Подтвердите пароль"));
+        }
+      }
     }
   };
+
   return (
     <div className={s.wrapper}>
       <div className={s.containerSignup}>
@@ -75,13 +107,15 @@ import Link from "next/link";
               type="password"
               name="password"
               placeholder="Повторите пароль"
-              onChange={(e) =>setRepeatPassword( e.target.value)}
+              onChange={(e) => setRepeatPassword(e.target.value)}
             />
-            {error && <p className={s.error}>{error}</p>}
+            <p className={s.error}>{error}</p>
             <button className={s.modalBtnSignupEnt}>
               <a>Зарегистрироваться</a>
             </button>
-            <Link className={s.authorization} href="/Login">Авторизация</Link>
+            <Link className={s.authorization} href="/Login">
+              Авторизация
+            </Link>
           </form>
         </div>
       </div>

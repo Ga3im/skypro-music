@@ -2,15 +2,16 @@ import Image from "next/image";
 import s from "@/components/Sidebar/Sidebar.module.css";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { logout, tokenDel } from "@/store/feautures/authSlice";
+import { logout, setAuthState, tokenDel } from "@/store/feautures/authSlice";
 
 export const Sidebar = () => {
   const nav = useRouter();
-  const {user} = useAppSelector(state=> state.auth)
-  const dispatch = useAppDispatch()
+  const user: any = useAppSelector((state) => state.auth.user);
+  const dispatch = useAppDispatch();
   const handleLogin = () => {
-    dispatch(logout(null));
-    dispatch(tokenDel(null));
+    dispatch(setAuthState(false));
+    dispatch(logout());
+    dispatch(tokenDel());
     nav.push("/Login");
   };
   return (

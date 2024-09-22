@@ -60,6 +60,9 @@ const authSlice = createSlice({
     },
     tokenDel:(state) =>{
       state.token = null;
+    },
+    errDel:(state, action)=>{
+      state.error = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -69,10 +72,10 @@ const authSlice = createSlice({
       });
       builder
       .addCase(getUser.rejected, (state, action) => {
-        console.log("Error:", action.error.message);
+        state.error = action.error.message || '';
       })
-      .addCase(loginUser.fulfilled, (state, action: PayloadAction<regUserType>) => {
-        state.user = action.payload.email;
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.user = action.payload;
       })
       .addCase(loginUser.rejected, (state, action)=>{
         state.error = action.error.message || '';
@@ -86,5 +89,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, tokenDel, setAuthState } = authSlice.actions;
+export const { logout, tokenDel, setAuthState, errDel } = authSlice.actions;
 export const  authReducer   = authSlice.reducer;

@@ -1,9 +1,9 @@
 "use client";
 import s from "./Login.module.css";
 import classNames from "classnames";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { loginUser, Token } from "@/store/feautures/authSlice";
+import { errDel, loginUser, setAuthState, Token } from "@/store/feautures/authSlice";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -13,12 +13,12 @@ const Login = () => {
   const [passwordInput, setPasswordInput] = useState("");
   const dispatch = useAppDispatch();
   const navigate = useRouter();
-  const [error, setError] = useState("");
+  let err = useAppSelector((state) => state.auth.error);
 
-  const err = useAppSelector(state => state.auth.error)
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {      
+    try {
+      dispatch(setAuthState(true));
       await dispatch(
         loginUser({
           email: loginInput,
@@ -31,18 +31,24 @@ const Login = () => {
           password: passwordInput,
         })
       ).unwrap();
+      dispatch(errDel(''))
       navigate.push("/Main");
-    } catch (error) {
-      if (loginInput === '') {
-        setError('Логин не был введен')
+    } catch (error: any) {
+      if (error.message === "412" && loginInput === "") {
+        dispatch (errDel("Введите логин"))
       }
-      if (passwordInput === '') {
-        setError('Пароль не был введен')
+      if (error.message === "412" && passwordInput === "") {
+        dispatch (errDel("Введите пароль"))
       }
-      setError(error.message);
+      if (
+        error.message === "412" &&
+        passwordInput === "" &&
+        loginInput === ""
+      ) {
+        dispatch (errDel("Введите логин и пароль")) ;
+      }
     }
   };
-
   return (
     <div className={s.wrapper}>
       <div className={s.containerCenter}>
@@ -65,8 +71,7 @@ const Login = () => {
               placeholder="Пароль"
               onChange={(e) => setPasswordInput(e.target.value)}
             />
-            {error && <p className={s.error}>{error}</p>}
-            <p>{err}</p>
+            <p className={s.error}>{err}</p>
             <button
               type="submit"
               className={classNames(s.modalBtnEnter, s.colorWhite)}
