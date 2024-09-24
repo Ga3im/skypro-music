@@ -99,3 +99,17 @@ export const updateKey = async ({ refresh }: TokensType) => {
   }
   return response.json();
 };
+
+
+export const getFavoriteTracks = async () => {
+  const response = await fetch(`${BASE_URL}/catalog/track/favorite/all/`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${access}`,
+    },
+  });
+  if (!response.ok) {
+    throw new Error("Ошибка");
+  }
+  return response.json();
+};

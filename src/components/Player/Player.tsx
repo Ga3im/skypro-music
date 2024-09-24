@@ -12,6 +12,8 @@ import {
 import ProgressBar from "../ProgressBar/ProgressBar";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import {
+  setAddToMyPlaylist,
+  setIsLiked,
   setIsShuffle,
   setNextTrack,
   setPlay,
@@ -25,7 +27,9 @@ type props = {
 
 export const Player = ({ thisTrack }: props) => {
   const dispatch = useAppDispatch();
-  let { isShuffle, isPlaying } = useAppSelector((state) => state.tracksSlice);
+  let { isShuffle, isPlaying, isLiked } = useAppSelector(
+    (state) => state.tracksSlice
+  );
   const [repeat, setRepeat] = useState<boolean>(false);
   const [progress, setProgress] = useState({
     currentTime: 0,
@@ -43,10 +47,10 @@ export const Player = ({ thisTrack }: props) => {
     dispatch(setPlay(!isPlaying));
   };
 
-  const handleCanPlay = ()=>{
-    audioRef.current?.play()
-    dispatch(setPlay(true))
-  }
+  const handleCanPlay = () => {
+    audioRef.current?.play();
+    dispatch(setPlay(true));
+  };
 
   const onChangeVolume = (e: ChangeEvent<HTMLInputElement>) => {
     if (audioRef.current) {
@@ -62,7 +66,7 @@ export const Player = ({ thisTrack }: props) => {
   };
 
   const onRepeat = () => {
-    const audio: HTMLAudioElement | null  = audioRef.current;
+    const audio: HTMLAudioElement | null = audioRef.current;
     if (repeat) {
       audio.loop = false;
     } else {
@@ -73,7 +77,7 @@ export const Player = ({ thisTrack }: props) => {
 
   const NextTrack = () => {
     dispatch(setNextTrack());
-    dispatch(setPlay(isPlaying = true))
+    dispatch(setPlay((isPlaying = true)));
   };
 
   const PrevTrack = () => {
@@ -91,12 +95,17 @@ export const Player = ({ thisTrack }: props) => {
     dispatch(setShuffle());
   };
 
+  const likeButton = () => {
+    dispatch(setIsLiked(!isLiked));
+    dispatch(setAddToMyPlaylist());
+  };
+
   let minutes = Math.floor(progress.duration / 60);
   let seconds = Math.floor(progress.duration % 60);
 
   useEffect(() => {
     if (isPlaying) {
-      audioRef.current?.play();     
+      audioRef.current?.play();
     } else {
       audioRef.current?.pause();
     }
@@ -208,15 +217,19 @@ export const Player = ({ thisTrack }: props) => {
                   </div>
 
                   <div className={s.trackPlayLikeDis}>
-                    <div className={classNames(s.trackPlayLike, s.btnIcon)}>
-                      <svg className={s.trackPlayLikeSvg}>
-                        <use xlinkHref="/icon/sprite.svg#icon-like"></use>
-                      </svg>
-                    </div>
-                    <div className={classNames(s.trackPlayDislike, s.btnIcon)}>
-                      <svg className={s.trackPlayDislikeSvg}>
-                        <use xlinkHref="/icon/sprite.svg#icon-dislike"></use>
-                      </svg>
+                    <div
+                      onClick={likeButton}
+                      className={classNames(s.trackPlayLike, s.btnIcon)}
+                    >
+                      {isLiked ? (
+                        <svg className={s.trackPlayLikeSvg}>
+                          <use xlinkHref="/icon/sprite.svg#icon-active-like"></use>
+                        </svg>
+                      ) : (
+                        <svg className={s.trackPlayLikeSvg}>
+                          <use xlinkHref="/icon/sprite.svg#icon-like"></use>
+                        </svg>
+                      )}
                     </div>
                   </div>
                 </div>

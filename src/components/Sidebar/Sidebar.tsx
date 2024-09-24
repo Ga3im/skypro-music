@@ -3,6 +3,7 @@ import s from "@/components/Sidebar/Sidebar.module.css";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { logout, setAuthState, tokenDel } from "@/store/feautures/authSlice";
+import { setTrackState } from "@/store/feautures/tracksSlice";
 
 export const Sidebar = () => {
   const nav = useRouter();
@@ -13,6 +14,7 @@ export const Sidebar = () => {
     dispatch(logout());
     dispatch(tokenDel());
     nav.push("/Login");
+    dispatch(setTrackState([]))
   };
   return (
     <div className="main__sidebar sidebar">

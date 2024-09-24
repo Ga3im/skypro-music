@@ -1,23 +1,34 @@
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import s from "./Track.module.css";
 import { TrackType } from "@/types/tracks";
-import { setPlay, setThisTrack } from "@/store/feautures/tracksSlice";
+import {
+  setIsLiked,
+  setPlay,
+  setThisTrack,
+} from "@/store/feautures/tracksSlice";
+import { FormEvent, MouseEvent } from "react";
 
 export const Track = ({ track }: TrackType[]) => {
   let minutes: number = Math.floor(track.duration_in_seconds / 60);
   let seconds: number = track.duration_in_seconds % 60;
-  
-  const dispatch = useAppDispatch();
-  let { isPlaying, thisTrack, shuffledTracks } = useAppSelector((state) => state.tracksSlice);
 
-  const playTrack = (track: TrackType[]) => {
+  const dispatch = useAppDispatch();
+  let { isPlaying, thisTrack, isLiked } = useAppSelector(
+    (state) => state.tracksSlice
+  );
+
+  const playTrack = (track: TrackType) => {
     dispatch(setThisTrack(track));
-    if (isPlaying ) {
-      dispatch(setPlay(isPlaying = false));
+    if (isPlaying) {
+      dispatch(setPlay((isPlaying = false)));
+    } else {
+      dispatch(setPlay((isPlaying = true)));
     }
-    else{
-      dispatch(setPlay(isPlaying = true));     
-    }
+  };
+  const likeMusic = (e:MouseEvent<SVGSVGElement>) => {
+    e.preventDefault();
+
+    dispatch(setIsLiked(!isLiked));
   };
 
   return (
@@ -29,8 +40,12 @@ export const Track = ({ track }: TrackType[]) => {
       <div className={s.playlistTrack}>
         <div className={s.trackTitle}>
           <div className={s.trackTitleImage}>
-            { track._id ===  thisTrack?._id ? isPlaying ? <div className={s.playingDot}></div>  :  (
-              <div className={s.trackPlay}></div>
+            {track._id === thisTrack?._id ? (
+              isPlaying ? (
+                <div className={s.playingDot}></div>
+              ) : (
+                <div className={s.trackPlay}></div>
+              )
             ) : (
               <svg className={s.trackTitleSvg}>
                 <use xlinkHref="/icon/sprite.svg#icon-note"></use>
@@ -54,9 +69,14 @@ export const Track = ({ track }: TrackType[]) => {
           </a>
         </div>
         <div className="track__time">
-          <svg className={s.trackTimeSvg}>
-            <use xlinkHref="/icon/sprite.svg#icon-like"></use>
+          <svg onClick={likeMusic} className={s.trackTimeSvg}>
+            {isLiked ? (
+              <use xlinkHref="/icon/sprite.svg#icon-active-like"></use>
+            ) : (
+              <use xlinkHref="/icon/sprite.svg#icon-like"></use>
+            )}
           </svg>
+
           <span className={s.trackTimeText}>
             {minutes}:{seconds.toString().padStart(2, "0")}
           </span>

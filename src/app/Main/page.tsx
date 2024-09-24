@@ -11,11 +11,13 @@ const Main = () => {
   const { thisTrack } = useAppSelector((state) => state.tracksSlice);
   const { user, token } = useAppSelector((state) => state.auth);
   const nav = useRouter();
+  const isAuth = useAppSelector((state) => state.auth.authState);
 
   if (user && token === null) {
     nav.push("/Login");
   }
   return (
+    isAuth ?
     <div className={s.wrapper}>
       <div className={s.container}>
         <main className={s.main}>
@@ -27,6 +29,7 @@ const Main = () => {
         <footer className={s.footer}></footer>
       </div>
     </div>
+    : nav.push('/Login')
   );
 };
 export default Main;

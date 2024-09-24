@@ -131,6 +131,7 @@
   }
   
   .trackTimeSvg {
+    cursor: pointer;
     width: 14px;
     height: 12px;
     margin-right: 17px;
