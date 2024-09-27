@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { setIsLike } from "@/store/feautures/tracksSlice";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export const Navigation = () => {
   const [navIsOpen, setNavIsOpen] = useState(false);
@@ -12,13 +13,13 @@ export const Navigation = () => {
   const dispatch = useAppDispatch()
   const nav = useRouter();
 
-  const myTracksBtn = () =>{
-    dispatch(setIsLike(true))
-  }
+  // const myTracksBtn = () =>{
+  //   dispatch(setIsLike(true))
+  // }
 
-  const main = ()=>{
-    dispatch(setIsLike(false))
-  }
+  // const main = ()=>{
+  //   dispatch(setIsLike(false))
+  // }
 
   const logout = ()=>{
     nav.push('/Login')
@@ -47,14 +48,14 @@ export const Navigation = () => {
         <div className={s.navMenu}>
           <ul className={s.menuList}>
             <li className={s.menuItem}>
-              <a onClick={main} className={s.menuLink}>
+              <Link href={'/Main'} className={s.menuLink}>
                 Главное
-              </a>
+              </Link>
             </li>
             <li className={s.menuItem}>
-              <a onClick={myTracksBtn} className={s.menuLink}>
+              <Link href={'/Main/Favorite'} className={s.menuLink}>
                 Мой плейлист
-              </a>
+              </Link>
             </li>
             <li className={s.menuItem}>{authState ? <p onClick={logout}>Выйти</p> : <p>Войти</p> }</li>
           </ul>

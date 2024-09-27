@@ -1,36 +1,26 @@
 "use client";
-import { useAppSelector } from "@/store/store";
-import s from "./Main.module.css";
-import { Navigation } from "@/components/Navigation/Navigation";
+import { getFavoriteTracks, getTracks } from "@/api/api";
 import { CenterBlock } from "@/components/CenterBlock/CenterBlock";
-import { Sidebar } from "@/components/Sidebar/Sidebar";
-import { Player } from "@/components/Player/Player";
-import { useRouter } from "next/navigation";
+import { setFavoriteTracks, setTrackState } from "@/store/feautures/tracksSlice";
+import { useAppDispatch } from "@/store/store";
+import { useEffect, useState } from "react";
 
-const Main = () => {
-  const { thisTrack } = useAppSelector((state) => state.tracksSlice);
-  const { user, token } = useAppSelector((state) => state.auth);
-  const nav = useRouter();
-  const isAuth = useAppSelector((state) => state.auth.authState);
+export default function MainPage() {
+  const dispatch = useAppDispatch();
+  const [err, setErr] = useState<string | null>(null);
 
-  if (user && token === null) {
-    nav.push("/Login");
-  }
-
-  return (
-    isAuth ?
-    <div className={s.wrapper}>
-      <div className={s.container}>
-        <main className={s.main}>
-          <Navigation />
-          <CenterBlock />
-          <Sidebar />
-        </main>
-        {thisTrack && <Player thisTrack={thisTrack} />}
-        <footer className={s.footer}></footer>
-      </div>
-    </div>
-    : nav.push('/Login')
-  );
-};
-export default Main;
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await getTracks();
+        dispatch(setTrackState(res));
+      } catch (error) {
+        if (error instanceof Error) {
+          setErr(error.message);
+        }
+      }
+    };
+    getData();
+  }, []);
+  return <CenterBlock  title={'Треки'}/>;
+}

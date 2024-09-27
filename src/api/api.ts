@@ -120,7 +120,7 @@ export async function fetchWithAuth(BASE_URL:string, options, refresh:TokensType
   return res; 
 }
 
-export const getFavoriteTracks = async ({ access }: TokensType) => {
+export const getFavoriteTracks = async ( access : string) => {
   const response = await fetch(`${BASE_URL}/catalog/track/favorite/all/`, {
     method: "GET",
     headers: {
@@ -133,7 +133,7 @@ export const getFavoriteTracks = async ({ access }: TokensType) => {
   return response.json().then((tracksData) => tracksData.data);
 };
 
-export const likeTrack = async (trackId: TrackType, access:TokensType) => {
+export const likeTrack = async (trackId: number, access:string) => {
   const res = await fetch(`${BASE_URL}/catalog/track/${trackId}/favorite/`, {
     method: "POST",
     body: JSON.stringify({
@@ -152,7 +152,7 @@ export const likeTrack = async (trackId: TrackType, access:TokensType) => {
   return res.json();
 };
 
-export const deleteTrack = async (trackId: TrackType, {access}:TokensType) => {
+export const deleteTrack = async (trackId: number, access:string) => {
   const res = await fetch(`${BASE_URL}/catalog/track/${trackId}/favorite/`, {
     method: "DELETE",
     headers: {

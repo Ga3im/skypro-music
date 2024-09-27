@@ -9,26 +9,30 @@ import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import {  setFavoriteTracks, setTrackState } from "@/store/feautures/tracksSlice";
 
-export const CenterBlock = () => {
-  const [err, setErr] = useState<string | null>(null);
-  const dispatch = useAppDispatch();
-  const access = useAppSelector(state => state.auth.token?.access)
+type CenterBlockTypes = {
+  title: string;
+}
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await getFavoriteTracks({access})
-        const res = await getTracks();
-        dispatch(setTrackState(res));
-        dispatch(setFavoriteTracks(response));
-      } catch (error) {
-        if (error instanceof Error) {
-          setErr(error.message);
-        }
-      }
-    };
-    getData();
-  }, []);
+export const CenterBlock = ({  title }:CenterBlockTypes) => {
+  const [err, setErr] = useState<string | null>(null);
+  // const dispatch = useAppDispatch();
+  // const access = useAppSelector(state => state.auth.token?.access)
+
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     try {
+  //       const response = await getFavoriteTracks({access})
+  //       const res = await getTracks();
+  //       dispatch(setTrackState(res));
+  //       dispatch(setFavoriteTracks(response));
+  //     } catch (error) {
+  //       if (error instanceof Error) {
+  //         setErr(error.message);
+  //       }
+  //     }
+  //   };
+  //   getData();
+  // }, []);
 
   return (
     <div className="main__centerblock centerblock">
@@ -43,7 +47,7 @@ export const CenterBlock = () => {
           name="search"
         />
       </div>
-      <h2 className={s.centerblockH2}>Треки</h2>
+      <h2 className={s.centerblockH2}>{title}</h2>
       <MusicFilter />
       <div className={s.centerblockContent}>
         <div className={s.contentTitle}>
@@ -58,7 +62,7 @@ export const CenterBlock = () => {
             </svg>
           </div>
         </div>
-        <Playlist />
+        <Playlist  />
         <p>{err}</p>
       </div>
     </div>
