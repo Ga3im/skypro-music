@@ -1,21 +1,19 @@
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import s from "./Track.module.css";
 import { TrackType } from "@/types/tracks";
-import {
-  setIsLiked,
-  setPlay,
-  setThisTrack,
-} from "@/store/feautures/tracksSlice";
-import { FormEvent, MouseEvent } from "react";
+import {  setPlay, setThisTrack } from "@/store/feautures/tracksSlice";
+import {  MouseEvent } from "react";
+import { likeTrack } from "@/api/api";
 
 export const Track = ({ track }: TrackType[]) => {
   let minutes: number = Math.floor(track.duration_in_seconds / 60);
   let seconds: number = track.duration_in_seconds % 60;
 
   const dispatch = useAppDispatch();
-  let { isPlaying, thisTrack, isLiked } = useAppSelector(
+  let { isPlaying, myPlaylist, tracks, thisTrack } = useAppSelector(
     (state) => state.tracksSlice
   );
+  const { token} = useAppSelector(state => state.auth)
 
   const playTrack = (track: TrackType) => {
     dispatch(setThisTrack(track));
@@ -25,10 +23,11 @@ export const Track = ({ track }: TrackType[]) => {
       dispatch(setPlay((isPlaying = true)));
     }
   };
-  const likeMusic = (e:MouseEvent<SVGSVGElement>) => {
-    e.preventDefault();
-
-    dispatch(setIsLiked(!isLiked));
+  const likeMusic = (e: MouseEvent<SVGSVGElement>) => {
+    let trackId = thisTrack?._id;
+    let access = token?.access;
+    e.preventDefault()
+    likeTrack(trackId, access)
   };
 
   return (
@@ -70,11 +69,10 @@ export const Track = ({ track }: TrackType[]) => {
         </div>
         <div className="track__time">
           <svg onClick={likeMusic} className={s.trackTimeSvg}>
-            {isLiked ? (
-              <use xlinkHref="/icon/sprite.svg#icon-active-like"></use>
-            ) : (
+          
+           
               <use xlinkHref="/icon/sprite.svg#icon-like"></use>
-            )}
+          
           </svg>
 
           <span className={s.trackTimeText}>

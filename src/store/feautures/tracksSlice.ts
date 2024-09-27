@@ -1,5 +1,5 @@
 import { TrackType } from "@/types/tracks";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {  createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type initialStateType = {
   tracks: TrackType[];
@@ -8,8 +8,7 @@ type initialStateType = {
   isShuffle: boolean;
   isPlaying: boolean;
   myPlaylist: TrackType[];
-  isLiked: boolean;
-  isFavorite: boolean;
+  isLike: boolean;
 };
 
 const initialState: initialStateType = {
@@ -19,19 +18,18 @@ const initialState: initialStateType = {
   isShuffle: false,
   isPlaying: false,
   myPlaylist: [],
-  isLiked: false,
-  isFavorite: false,
+  isLike: false,
 };
 
 const trackSlice = createSlice({
   name: "track",
   initialState,
   reducers: {
-    setIsFavorite: (state, action)=>{
-      state.isFavorite = action.payload;
+    setIsLike: (state, action) => {
+      state.isLike = action.payload;
     },
-    setIsLiked:(state, action:PayloadAction<boolean>)=>{
-      state.isLiked = action.payload;
+    setFavoriteTracks: (state, action) => {
+      state.myPlaylist = action.payload;
     },
     setTrackState: (state, action: PayloadAction<TrackType[]>) => {
       state.tracks = action.payload;
@@ -69,9 +67,6 @@ const trackSlice = createSlice({
     setPlay: (state, action: PayloadAction<boolean>) => {
       state.isPlaying = action.payload;
     },
-    setAddToMyPlaylist: (state) => {
-      state.myPlaylist.push(state.thisTrack);
-    },
   },
 });
 
@@ -81,10 +76,9 @@ export const {
   setNextTrack,
   setPrevTrack,
   setIsShuffle,
+  setFavoriteTracks,
   setShuffle,
+  setIsLike,
   setPlay,
-  setIsLiked,
-  setIsFavorite,
-  setAddToMyPlaylist,
 } = trackSlice.actions;
 export const trackReducer = trackSlice.reducer;

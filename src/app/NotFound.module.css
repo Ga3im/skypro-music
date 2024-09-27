@@ -1,0 +1,139 @@
+@font-face {
+  font-family: "StratosSkyeng";
+  src: local("StratosSkyeng"), local("StratosSkyeng"),
+    url(/src/fonts/StratosSkyeng.woff);
+}
+.wrapper {
+  width: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  background-color: #383838;
+  font-family: StratosSkyeng;
+}
+
+.container {
+  max-width: 1920px;
+  height: 100vh;
+  margin: 0 auto;
+  position: relative;
+  background-color: #181818;
+}
+
+.main {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+.centerblockSearch {
+  width: 1293px;
+  border-bottom: 1px solid #4e4e4e;
+  margin-bottom: 51px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.searchSvg {
+  width: 17px;
+  height: 17px;
+  margin-right: 5px;
+  stroke: #ffffff;
+  fill: transparent;
+}
+
+.searchText {
+  -webkit-box-flex: 100;
+  -ms-flex-positive: 100;
+  flex-grow: 100;
+  background-color: transparent;
+  border: none;
+  padding: 13px 10px 14px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #ffffff;
+}
+.sidebarPersonal {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  padding: 12px 93px 15px 0;
+}
+
+.sidebarPersonalName {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #ffffff;
+  margin-right: 16px;
+}
+
+.sidebarIcon {
+  width: 43px;
+  height: 43px;
+  background-color: #313131;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.centerMain {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 285px;
+}
+.p404 {
+  font-size: 160px;
+  line-height: 168px;
+}
+.page {
+  display: flex;
+  align-items: center;
+  font-size: 32px;
+  line-height: 40px;
+}
+.pageInfo{
+    padding-top: 10px;
+    padding-bottom: 20px;
+    width: 432px;
+    font-size: 18px;
+    line-height: 24px;
+    color: #4E4E4E;
+    text-align: center;
+}
+.buttonAgain{
+    width: 278px;
+  font-family: "StratosSkyeng";
+    letter-spacing: 0.3%;
+    padding-top: 36px;
+    background-color: #580EA2;
+    color: #ffffff;
+    padding: 12px 46px 16px 46px ;
+}
+

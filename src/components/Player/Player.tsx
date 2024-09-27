@@ -12,8 +12,6 @@ import {
 import ProgressBar from "../ProgressBar/ProgressBar";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import {
-  setAddToMyPlaylist,
-  setIsLiked,
   setIsShuffle,
   setNextTrack,
   setPlay,
@@ -27,7 +25,7 @@ type props = {
 
 export const Player = ({ thisTrack }: props) => {
   const dispatch = useAppDispatch();
-  let { isShuffle, isPlaying, isLiked } = useAppSelector(
+  let { isShuffle, isPlaying } = useAppSelector(
     (state) => state.tracksSlice
   );
   const [repeat, setRepeat] = useState<boolean>(false);
@@ -96,8 +94,7 @@ export const Player = ({ thisTrack }: props) => {
   };
 
   const likeButton = () => {
-    dispatch(setIsLiked(!isLiked));
-    dispatch(setAddToMyPlaylist());
+
   };
 
   let minutes = Math.floor(progress.duration / 60);
@@ -221,15 +218,10 @@ export const Player = ({ thisTrack }: props) => {
                       onClick={likeButton}
                       className={classNames(s.trackPlayLike, s.btnIcon)}
                     >
-                      {isLiked ? (
-                        <svg className={s.trackPlayLikeSvg}>
-                          <use xlinkHref="/icon/sprite.svg#icon-active-like"></use>
-                        </svg>
-                      ) : (
                         <svg className={s.trackPlayLikeSvg}>
                           <use xlinkHref="/icon/sprite.svg#icon-like"></use>
                         </svg>
-                      )}
+                      
                     </div>
                   </div>
                 </div>

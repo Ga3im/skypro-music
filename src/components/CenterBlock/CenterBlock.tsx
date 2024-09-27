@@ -3,21 +3,24 @@ import s from "@/components/CenterBlock/CenterBlock.module.css";
 import classNames from "classnames";
 import { Playlist } from "../Playlist/Playlist";
 import { MusicFilter } from "@/components/MusicFilter/MusicFilter";
-import { getTracks } from "@/api/api";
+import { getFavoriteTracks, getTracks } from "@/api/api";
 import { TrackType } from "@/types/tracks";
 import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/store/store";
-import { setTrackState } from "@/store/feautures/tracksSlice";
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import {  setFavoriteTracks, setTrackState } from "@/store/feautures/tracksSlice";
 
 export const CenterBlock = () => {
   const [err, setErr] = useState<string | null>(null);
   const dispatch = useAppDispatch();
+  const access = useAppSelector(state => state.auth.token?.access)
 
   useEffect(() => {
     const getData = async () => {
       try {
+        const response = await getFavoriteTracks({access})
         const res = await getTracks();
         dispatch(setTrackState(res));
+        dispatch(setFavoriteTracks(response));
       } catch (error) {
         if (error instanceof Error) {
           setErr(error.message);
@@ -41,7 +44,7 @@ export const CenterBlock = () => {
         />
       </div>
       <h2 className={s.centerblockH2}>Треки</h2>
-      <MusicFilter/>
+      <MusicFilter />
       <div className={s.centerblockContent}>
         <div className={s.contentTitle}>
           <div className={classNames(s.playlistTitleCol, s.col01)}>Трек</div>

@@ -16,6 +16,7 @@ const Main = () => {
   if (user && token === null) {
     nav.push("/Login");
   }
+
   return (
     isAuth ?
     <div className={s.wrapper}>

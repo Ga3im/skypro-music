@@ -3,17 +3,29 @@ import Image from "next/image";
 import s from "@/components/Navigation/Navigation.module.css";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { setIsFavorite } from "@/store/feautures/tracksSlice";
+import { setIsLike } from "@/store/feautures/tracksSlice";
+import { useRouter } from "next/navigation";
 
 export const Navigation = () => {
   const [navIsOpen, setNavIsOpen] = useState(false);
   const { authState } = useAppSelector((state) => state.auth);
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
+  const nav = useRouter();
+
+  const myTracksBtn = () =>{
+    dispatch(setIsLike(true))
+  }
+
+  const main = ()=>{
+    dispatch(setIsLike(false))
+  }
+
+  const logout = ()=>{
+    nav.push('/Login')
+  }
+
   const openNav = () => {
     setNavIsOpen(!navIsOpen);
-  };
-  const myPlaylistBtn = () => {
-    dispatch(setIsFavorite(true));
   };
   return (
     <nav className={s.mainNav}>
@@ -35,16 +47,16 @@ export const Navigation = () => {
         <div className={s.navMenu}>
           <ul className={s.menuList}>
             <li className={s.menuItem}>
-              <a href="#" className={s.menuLink}>
+              <a onClick={main} className={s.menuLink}>
                 Главное
               </a>
             </li>
             <li className={s.menuItem}>
-              <a onClick={myPlaylistBtn} href="#" className={s.menuLink}>
+              <a onClick={myTracksBtn} className={s.menuLink}>
                 Мой плейлист
               </a>
             </li>
-            <li className={s.menuItem}>{authState ? "Выйти" : "Войти"}</li>
+            <li className={s.menuItem}>{authState ? <p onClick={logout}>Выйти</p> : <p>Войти</p> }</li>
           </ul>
         </div>
       )}
