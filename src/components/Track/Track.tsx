@@ -1,16 +1,21 @@
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import s from "./Track.module.css";
 import { TrackType } from "@/types/tracks";
-import { setPlay, setThisTrack } from "@/store/feautures/tracksSlice";
-import { MouseEvent } from "react";
-import { likeTrack } from "@/api/api";
+import {
+  setIsLike,
+  setPlay,
+  setThisTrack,
+  setTrackState,
+} from "@/store/feautures/tracksSlice";
+import { MouseEvent, useEffect } from "react";
+import { deleteTrack, likeTrack } from "@/api/api";
 
 export const Track = ({ track }: { track: TrackType }) => {
   let minutes: number = Math.floor(track.duration_in_seconds / 60);
   let seconds: number = track.duration_in_seconds % 60;
 
   const dispatch = useAppDispatch();
-  let { isPlaying, myPlaylist, tracks, thisTrack } = useAppSelector(
+  let { isPlaying, myPlaylist, tracks, thisTrack, isLike } = useAppSelector(
     (state) => state.tracksSlice
   );
   const { token } = useAppSelector((state) => state.auth);
@@ -23,12 +28,20 @@ export const Track = ({ track }: { track: TrackType }) => {
       dispatch(setPlay((isPlaying = true)));
     }
   };
-  const likeMusic = (e: MouseEvent<SVGSVGElement>) => {
+
+  const likeMusic = (e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-    let trackId = thisTrack?._id;
-    let access = token?.access;
-    if (trackId && access) {
+    let trackId: number | any = thisTrack?._id;
+    let access: string | any = token?.access;
+
+    if (isLike === true) {
+      deleteTrack(trackId, access);
+      dispatch(setIsLike(false));
+      console.log("xkby");
+    } else {
       likeTrack(trackId, access);
+      dispatch(setIsLike(true));
+      console.log("ytxkby");
     }
   };
 
@@ -70,9 +83,15 @@ export const Track = ({ track }: { track: TrackType }) => {
           </a>
         </div>
         <div className="track__time">
-          <svg onClick={likeMusic} className={s.trackTimeSvg}>
-            <use xlinkHref="/icon/sprite.svg#icon-like"></use>
-          </svg>
+          {isLike ? (
+            <svg onClick={likeMusic} className={s.trackTimeSvg}>
+              <use xlinkHref="/icon/sprite.svg#icon-active-like"></use>
+            </svg>
+          ) : (
+            <svg onClick={likeMusic} className={s.trackTimeSvg}>
+              <use xlinkHref="/icon/sprite.svg#icon-like"></use>
+            </svg>
+          )}
 
           <span className={s.trackTimeText}>
             {minutes}:{seconds.toString().padStart(2, "0")}

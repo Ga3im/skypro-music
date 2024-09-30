@@ -1,5 +1,4 @@
 import { TokensType } from "@/store/feautures/authSlice";
-import { useAppSelector } from "@/store/store";
 import { TrackType } from "@/types/tracks";
 
 export type regUserType = {
@@ -100,27 +99,7 @@ export const refreshToken = async ({ refresh }: TokensType) => {
   return response.json();
 };
 
-export async function fetchWithAuth(BASE_URL:string, options, refresh:TokensType) {
-  let res = await fetch(BASE_URL, options);
-
-  if (res.status === 401) {
-    const newAccessToken = await refreshToken(refresh); 
-
-    options.headers = {
-      ...options.headers,
-      Authorization: `Bearer ${newAccessToken}`,
-    };
-    res = await fetch(BASE_URL, options); 
-  }
-
-  if (!res.ok) {
-    throw new Error(res.statusText); 
-  }
-
-  return res; 
-}
-
-export const getFavoriteTracks = async ( access : string) => {
+export const getFavoriteTracks = async (access: string) => {
   const response = await fetch(`${BASE_URL}/catalog/track/favorite/all/`, {
     method: "GET",
     headers: {
@@ -133,26 +112,24 @@ export const getFavoriteTracks = async ( access : string) => {
   return response.json().then((tracksData) => tracksData.data);
 };
 
-export const likeTrack = async (trackId: number, access:string) => {
+export const likeTrack = async (trackId: number, access: string) => {
   const res = await fetch(`${BASE_URL}/catalog/track/${trackId}/favorite/`, {
     method: "POST",
     body: JSON.stringify({
-      access
+      access,
     }),
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${access}`,
     },
   });
-  console.log(trackId)
-  console.log(access)
   if (!res.ok) {
     throw new Error("НЕ удалось добавить трек, сервер не отвечает");
   }
   return res.json();
 };
 
-export const deleteTrack = async (trackId: number, access:string) => {
+export const deleteTrack = async (trackId: number, access: string) => {
   const res = await fetch(`${BASE_URL}/catalog/track/${trackId}/favorite/`, {
     method: "DELETE",
     headers: {

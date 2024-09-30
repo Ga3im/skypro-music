@@ -4,6 +4,7 @@ import { TrackType } from "@/types/tracks";
 import classNames from "classnames";
 import {
   ChangeEvent,
+  MouseEvent,
   SyntheticEvent,
   useEffect,
   useRef,
@@ -12,12 +13,14 @@ import {
 import ProgressBar from "../ProgressBar/ProgressBar";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import {
+  setIsLike,
   setIsShuffle,
   setNextTrack,
   setPlay,
   setPrevTrack,
   setShuffle,
 } from "@/store/feautures/tracksSlice";
+import { deleteTrack, likeTrack } from "@/api/api";
 
 type props = {
   thisTrack: TrackType;
@@ -25,9 +28,11 @@ type props = {
 
 export const Player = ({ thisTrack }: props) => {
   const dispatch = useAppDispatch();
-  let { isShuffle, isPlaying } = useAppSelector(
+  let { isShuffle, isPlaying, isLike } = useAppSelector(
     (state) => state.tracksSlice
   );
+  const { token } = useAppSelector((state) => state.auth);
+
   const [repeat, setRepeat] = useState<boolean>(false);
   const [progress, setProgress] = useState({
     currentTime: 0,
@@ -93,8 +98,20 @@ export const Player = ({ thisTrack }: props) => {
     dispatch(setShuffle());
   };
 
-  const likeButton = () => {
+  const likeMusic = (e: MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    let trackId: number = thisTrack?._id;
+    let access: string | any = token?.access;
 
+    if (isLike === true) {
+      deleteTrack(trackId, access);
+      dispatch(setIsLike(false));
+      console.log("xkby");
+    } else {
+      likeTrack(trackId, access);
+      dispatch(setIsLike(true));
+      console.log("ytxkby");
+    }
   };
 
   let minutes = Math.floor(progress.duration / 60);
@@ -215,13 +232,18 @@ export const Player = ({ thisTrack }: props) => {
 
                   <div className={s.trackPlayLikeDis}>
                     <div
-                      onClick={likeButton}
+                      onClick={likeMusic}
                       className={classNames(s.trackPlayLike, s.btnIcon)}
                     >
+                      {isLike ? (
+                        <svg className={s.trackPlayLikeSvg}>
+                          <use xlinkHref="/icon/sprite.svg#icon-active-like"></use>
+                        </svg>
+                      ) : (
                         <svg className={s.trackPlayLikeSvg}>
                           <use xlinkHref="/icon/sprite.svg#icon-like"></use>
                         </svg>
-                      
+                      )}
                     </div>
                   </div>
                 </div>
