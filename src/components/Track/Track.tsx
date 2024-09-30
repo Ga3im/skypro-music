@@ -15,9 +15,8 @@ export const Track = ({ track }: { track: TrackType }) => {
   let seconds: number = track.duration_in_seconds % 60;
 
   const dispatch = useAppDispatch();
-  let { isPlaying, myPlaylist, tracks, thisTrack, isLike } = useAppSelector(
-    (state) => state.tracksSlice
-  );
+  let { isPlaying, thisTrack, isLike } =
+    useAppSelector((state) => state.tracksSlice);
   const { token } = useAppSelector((state) => state.auth);
 
   const playTrack = (track: TrackType) => {
@@ -29,19 +28,20 @@ export const Track = ({ track }: { track: TrackType }) => {
     }
   };
 
-  const likeMusic = (e: MouseEvent<HTMLDivElement>) => {
+  const likeMusic = (e: MouseEvent<SVGSVGElement>) => {
     e.preventDefault();
     let trackId: number | any = thisTrack?._id;
     let access: string | any = token?.access;
 
-    if (isLike === true) {
+    if (isLike) {
       deleteTrack(trackId, access);
       dispatch(setIsLike(false));
-      console.log("xkby");
+      console.log("удален");
+      
     } else {
       likeTrack(trackId, access);
       dispatch(setIsLike(true));
-      console.log("ytxkby");
+      console.log("добавлен");
     }
   };
 

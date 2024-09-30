@@ -103,7 +103,8 @@ export const Player = ({ thisTrack }: props) => {
     let trackId: number = thisTrack?._id;
     let access: string | any = token?.access;
 
-    if (isLike === true) {
+  
+    if (isLike ) {
       deleteTrack(trackId, access);
       dispatch(setIsLike(false));
       console.log("xkby");

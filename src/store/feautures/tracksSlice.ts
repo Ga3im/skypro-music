@@ -9,6 +9,7 @@ type initialStateType = {
   isPlaying: boolean;
   myPlaylist: TrackType[];
   isLike: boolean;
+  likedTracks: TrackType[];
 };
 
 const initialState: initialStateType = {
@@ -19,12 +20,16 @@ const initialState: initialStateType = {
   isPlaying: false,
   myPlaylist: [],
   isLike: false,
+  likedTracks: [],
 };
 
 const trackSlice = createSlice({
   name: "track",
   initialState,
   reducers: {
+    setLikerdTracks: (state, action)=>{
+      state.likedTracks = action.payload;
+    },
     setIsLike: (state, action) => {
       state.isLike = action.payload;
     },
@@ -79,6 +84,7 @@ export const {
   setFavoriteTracks,
   setShuffle,
   setIsLike,
+  setLikerdTracks,
   setPlay,
 } = trackSlice.actions;
 export const trackReducer = trackSlice.reducer;

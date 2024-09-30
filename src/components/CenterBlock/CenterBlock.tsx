@@ -3,36 +3,14 @@ import s from "@/components/CenterBlock/CenterBlock.module.css";
 import classNames from "classnames";
 import { Playlist } from "../Playlist/Playlist";
 import { MusicFilter } from "@/components/MusicFilter/MusicFilter";
-import { getFavoriteTracks, getTracks } from "@/api/api";
-import { TrackType } from "@/types/tracks";
-import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/store/store";
-import {  setFavoriteTracks, setTrackState } from "@/store/feautures/tracksSlice";
+import { useState } from "react";
 
 type CenterBlockTypes = {
   title: string;
-}
+};
 
-export const CenterBlock = ({  title }:CenterBlockTypes) => {
+export const CenterBlock = ({ title }: CenterBlockTypes) => {
   const [err, setErr] = useState<string | null>(null);
-  // const dispatch = useAppDispatch();
-  // const access = useAppSelector(state => state.auth.token?.access)
-
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     try {
-  //       const response = await getFavoriteTracks({access})
-  //       const res = await getTracks();
-  //       dispatch(setTrackState(res));
-  //       dispatch(setFavoriteTracks(response));
-  //     } catch (error) {
-  //       if (error instanceof Error) {
-  //         setErr(error.message);
-  //       }
-  //     }
-  //   };
-  //   getData();
-  // }, []);
 
   return (
     <div className="main__centerblock centerblock">
@@ -62,7 +40,7 @@ export const CenterBlock = ({  title }:CenterBlockTypes) => {
             </svg>
           </div>
         </div>
-        <Playlist  />
+        <Playlist />
         <p>{err}</p>
       </div>
     </div>
