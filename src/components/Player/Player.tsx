@@ -103,18 +103,16 @@ export const Player = ({ thisTrack }: props) => {
 
   const likeMusic = (e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-
     let trackId: number = thisTrack?._id;
     let access: string | any = token?.access;
     if (isLike) {
       deleteTrack(trackId, access);
       dispatch(setIsLike(false));
-      dispatch(setDislikeTrack(myPlaylist))
+      dispatch(setDislikeTrack(myPlaylist));
     } else {
       likeTrack(trackId, access);
       dispatch(setIsLike(true));
-      dispatch(setAddLike(myPlaylist))
-
+      dispatch(setAddLike(myPlaylist));
     }
   };
 

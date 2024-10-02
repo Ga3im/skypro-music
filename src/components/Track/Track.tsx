@@ -2,13 +2,16 @@ import { useAppDispatch, useAppSelector } from "@/store/store";
 import s from "./Track.module.css";
 import { TrackType } from "@/types/tracks";
 import {
+  setAddLike,
+  setDislikeTrack,
+  setFavoriteTracks,
   setIsLike,
   setPlay,
   setThisTrack,
   setTrackState,
 } from "@/store/feautures/tracksSlice";
 import { MouseEvent } from "react";
-import { deleteTrack, likeTrack } from "@/api/api";
+import { deleteTrack, getFavoriteTracks, likeTrack } from "@/api/api";
 
 export const Track = ({ track }: { track: TrackType }) => {
   let minutes: number = Math.floor(track.duration_in_seconds / 60);
@@ -29,19 +32,18 @@ export const Track = ({ track }: { track: TrackType }) => {
     }
   };
   
-
-  const likeMusic = (e: MouseEvent<SVGSVGElement>) => {
+  const likeMusic = (e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-    let trackId: number | any = thisTrack?._id;
+    let trackId: number = thisTrack?._id;
     let access: string | any = token?.access;
     if (isLike) {
       deleteTrack(trackId, access);
       dispatch(setIsLike(false));
-      console.log("удален");
+      dispatch(setDislikeTrack(myPlaylist));
     } else {
       likeTrack(trackId, access);
       dispatch(setIsLike(true));
-      console.log("добавлен");
+      dispatch(setAddLike(myPlaylist));
     }
   };
 

@@ -1,5 +1,5 @@
 import { TrackType } from "@/types/tracks";
-import {  createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type initialStateType = {
   tracks: TrackType[];
@@ -25,11 +25,11 @@ const trackSlice = createSlice({
   name: "track",
   initialState,
   reducers: {
-    setAddLike: (state)=>{
-      state.myPlaylist.push(state.thisTrack)
+    setAddLike: (state) => {
+      state.myPlaylist.push(state.thisTrack);
     },
-    setDislikeTrack: (state)=>{
-      state.myPlaylist.filter(i => i._id !== state.thisTrack?._id)
+    setDislikeTrack: (state) => {
+      state.myPlaylist.filter((i) => i._id !== state.thisTrack?._id);
     },
     setIsLike: (state, action) => {
       state.isLike = action.payload;
