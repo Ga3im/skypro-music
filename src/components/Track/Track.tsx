@@ -7,7 +7,7 @@ import {
   setThisTrack,
   setTrackState,
 } from "@/store/feautures/tracksSlice";
-import { MouseEvent, useEffect } from "react";
+import { MouseEvent } from "react";
 import { deleteTrack, likeTrack } from "@/api/api";
 
 export const Track = ({ track }: { track: TrackType }) => {
@@ -15,8 +15,9 @@ export const Track = ({ track }: { track: TrackType }) => {
   let seconds: number = track.duration_in_seconds % 60;
 
   const dispatch = useAppDispatch();
-  let { isPlaying, thisTrack, isLike } =
-    useAppSelector((state) => state.tracksSlice);
+  let { isPlaying, thisTrack, myPlaylist, tracks, isLike } = useAppSelector(
+    (state) => state.tracksSlice
+  );
   const { token } = useAppSelector((state) => state.auth);
 
   const playTrack = (track: TrackType) => {
@@ -27,17 +28,16 @@ export const Track = ({ track }: { track: TrackType }) => {
       dispatch(setPlay((isPlaying = true)));
     }
   };
+  
 
   const likeMusic = (e: MouseEvent<SVGSVGElement>) => {
     e.preventDefault();
     let trackId: number | any = thisTrack?._id;
     let access: string | any = token?.access;
-
     if (isLike) {
       deleteTrack(trackId, access);
       dispatch(setIsLike(false));
       console.log("удален");
-      
     } else {
       likeTrack(trackId, access);
       dispatch(setIsLike(true));
@@ -92,7 +92,6 @@ export const Track = ({ track }: { track: TrackType }) => {
               <use xlinkHref="/icon/sprite.svg#icon-like"></use>
             </svg>
           )}
-
           <span className={s.trackTimeText}>
             {minutes}:{seconds.toString().padStart(2, "0")}
           </span>

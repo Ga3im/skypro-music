@@ -22,7 +22,11 @@
     letter-spacing: -0.8px;
     margin-bottom: 45px;
   }
-  
+  @font-face {
+    font-family: "StratosSkyeng";
+    src: local("StratosSkyeng"), local("StratosSkyeng"),
+      url(/src/fonts/StratosSkyeng.woff);
+  }
   .centerblockContent {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -32,8 +36,18 @@
     -ms-flex-direction: column;
     flex-direction: column;
     max-height: calc(100vh - 500px);
+    font-family: "StratosSkyeng";
   }
   
+  .playlistTitleCol {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 2px;
+    color: #696969;
+    text-transform: uppercase;
+  }
   .searchSvg {
     width: 17px;
     height: 17px;

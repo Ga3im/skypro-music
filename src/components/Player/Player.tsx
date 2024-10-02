@@ -13,14 +13,16 @@ import {
 import ProgressBar from "../ProgressBar/ProgressBar";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import {
+  setFavoriteTracks,
   setIsLike,
   setIsShuffle,
   setNextTrack,
   setPlay,
   setPrevTrack,
   setShuffle,
+  setTrackState,
 } from "@/store/feautures/tracksSlice";
-import { deleteTrack, likeTrack } from "@/api/api";
+import { deleteTrack, getFavoriteTracks, likeTrack } from "@/api/api";
 
 type props = {
   thisTrack: TrackType;
@@ -28,11 +30,10 @@ type props = {
 
 export const Player = ({ thisTrack }: props) => {
   const dispatch = useAppDispatch();
-  let { isShuffle, isPlaying, isLike } = useAppSelector(
+  let { isShuffle, isPlaying, myPlaylist, isLike } = useAppSelector(
     (state) => state.tracksSlice
   );
   const { token } = useAppSelector((state) => state.auth);
-
   const [repeat, setRepeat] = useState<boolean>(false);
   const [progress, setProgress] = useState({
     currentTime: 0,
@@ -100,18 +101,19 @@ export const Player = ({ thisTrack }: props) => {
 
   const likeMusic = (e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
+
     let trackId: number = thisTrack?._id;
     let access: string | any = token?.access;
-
-  
-    if (isLike ) {
+    if (isLike) {
       deleteTrack(trackId, access);
       dispatch(setIsLike(false));
-      console.log("xkby");
+      console.log('удален')
     } else {
       likeTrack(trackId, access);
       dispatch(setIsLike(true));
-      console.log("ytxkby");
+      dispatch(setFavoriteTracks(myPlaylist))
+      console.log('добавлен')
+
     }
   };
 

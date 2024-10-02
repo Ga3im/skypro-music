@@ -2,24 +2,14 @@
 import Image from "next/image";
 import s from "@/components/Navigation/Navigation.module.css";
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/store/store";
-import { setIsLike } from "@/store/feautures/tracksSlice";
+import { useAppSelector } from "@/store/store";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export const Navigation = () => {
   const [navIsOpen, setNavIsOpen] = useState(false);
   const { authState } = useAppSelector((state) => state.auth);
-  const dispatch = useAppDispatch()
   const nav = useRouter();
-
-  // const myTracksBtn = () =>{
-  //   dispatch(setIsLike(true))
-  // }
-
-  // const main = ()=>{
-  //   dispatch(setIsLike(false))
-  // }
 
   const logout = ()=>{
     nav.push('/Login')

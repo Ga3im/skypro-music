@@ -58,7 +58,7 @@ export const signinUser = async ({ email, password }: regUserType) => {
     throw new Error("Пользователь с таким email или паролем не найден");
   }
   if (response.status === 412) {
-    throw new Error("412");
+    throw new Error("Данные в неверном формате.");
   }
   if (response.status === 500) {
     throw new Error("Сервер сломался");

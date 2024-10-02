@@ -1,14 +1,9 @@
-@font-face {
-  font-family: "StratosSkyeng";
-  src: local("StratosSkyeng"), local("StratosSkyeng"),
-    url(/src/fonts/StratosSkyeng.woff);
-}
+
 .wrapper {
   width: 100%;
   min-height: 100%;
   overflow: hidden;
   background-color: #383838;
-  font-family: StratosSkyeng;
 }
 
 .container {

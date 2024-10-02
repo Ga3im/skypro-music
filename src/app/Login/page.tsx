@@ -34,14 +34,14 @@ const Login = () => {
       dispatch(errDel(''))
       navigate.push("/Main");
     } catch (error: any) {
-      if (error.message === "412" && loginInput === "") {
+      if (error.message === "Данные в неверном формате." && loginInput === "") {
         dispatch (errDel("Введите логин"))
       }
-      if (error.message === "412" && passwordInput === "") {
+      if (error.message === "Данные в неверном формате." && passwordInput === "") {
         dispatch (errDel("Введите пароль"))
       }
       if (
-        error.message === "412" &&
+        error.message === "Данные в неверном формате." &&
         passwordInput === "" &&
         loginInput === ""
       ) {

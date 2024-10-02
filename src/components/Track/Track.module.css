@@ -1,3 +1,9 @@
+@font-face {
+  font-family: "StratosSkyeng";
+  src: local("StratosSkyeng"), local("StratosSkyeng"),
+    url(/src/fonts/StratosSkyeng.woff);
+}
+
 .playlistItem {
     width: 100%;
     display: block;
