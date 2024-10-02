@@ -1,7 +1,7 @@
 "use client";
-import { getFavoriteTracks, getTracks } from "@/api/api";
+import {  getTracks } from "@/api/api";
 import { CenterBlock } from "@/components/CenterBlock/CenterBlock";
-import { setFavoriteTracks, setTrackState } from "@/store/feautures/tracksSlice";
+import {  setTrackState } from "@/store/feautures/tracksSlice";
 import { useAppDispatch } from "@/store/store";
 import { useEffect, useState } from "react";
 
