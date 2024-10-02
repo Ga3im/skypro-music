@@ -13,6 +13,8 @@ import {
 import ProgressBar from "../ProgressBar/ProgressBar";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import {
+  setAddLike,
+  setDislikeTrack,
   setFavoriteTracks,
   setIsLike,
   setIsShuffle,
@@ -107,12 +109,11 @@ export const Player = ({ thisTrack }: props) => {
     if (isLike) {
       deleteTrack(trackId, access);
       dispatch(setIsLike(false));
-      console.log('удален')
+      dispatch(setDislikeTrack(myPlaylist))
     } else {
       likeTrack(trackId, access);
       dispatch(setIsLike(true));
-      dispatch(setFavoriteTracks(myPlaylist))
-      console.log('добавлен')
+      dispatch(setAddLike(myPlaylist))
 
     }
   };
