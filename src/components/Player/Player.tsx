@@ -22,9 +22,8 @@ import {
   setPlay,
   setPrevTrack,
   setShuffle,
-  setTrackState,
 } from "@/store/feautures/tracksSlice";
-import { deleteTrack, getFavoriteTracks, likeTrack } from "@/api/api";
+import { deleteTrack, likeTrack } from "@/api/api";
 
 type props = {
   thisTrack: TrackType;
@@ -32,7 +31,7 @@ type props = {
 
 export const Player = ({ thisTrack }: props) => {
   const dispatch = useAppDispatch();
-  let { isShuffle, isPlaying, myPlaylist, isLike } = useAppSelector(
+  let { isShuffle, isPlaying, myPlaylist, tracks, isLike } = useAppSelector(
     (state) => state.tracksSlice
   );
   const { token } = useAppSelector((state) => state.auth);
@@ -41,8 +40,9 @@ export const Player = ({ thisTrack }: props) => {
     currentTime: 0,
     duration: 0,
   });
-
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  isLike = myPlaylist.some(i=> i._id === thisTrack._id)
 
   const handlePlay = () => {
     if (isPlaying) {

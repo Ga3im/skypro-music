@@ -8,10 +8,11 @@ import { useEffect, useState } from "react";
 export default function FavoritePage() {
 
   const dispatch = useAppDispatch();
-  const { myPlaylist } = useAppSelector((state) => state.tracksSlice);
+  let { myPlaylist, thisTrack, isLike} = useAppSelector((state) => state.tracksSlice);
   dispatch(setTrackState(myPlaylist));
   const { token } = useAppSelector((state) => state.auth);
   const [err, setErr] = useState<string | null>(null);
+
 
   useEffect(() => {
     const getData = async () => {

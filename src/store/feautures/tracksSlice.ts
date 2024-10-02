@@ -25,14 +25,18 @@ const trackSlice = createSlice({
   name: "track",
   initialState,
   reducers: {
+    setIsLike: (state, action) => {
+      state.isLike = action.payload;
+    },
     setAddLike: (state) => {
-      state.myPlaylist.push(state.thisTrack);
+      if (state.myPlaylist.map((i) => i._id) === state.thisTrack?._id) {
+        return;
+      } else {
+        state.myPlaylist.push(state.thisTrack);
+      }
     },
     setDislikeTrack: (state) => {
       state.myPlaylist.filter((i) => i._id !== state.thisTrack?._id);
-    },
-    setIsLike: (state, action) => {
-      state.isLike = action.payload;
     },
     setFavoriteTracks: (state, action) => {
       state.myPlaylist = action.payload;
