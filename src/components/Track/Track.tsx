@@ -7,7 +7,6 @@ import {
   setFavoriteTracks,
   setPlay,
   setThisTrack,
-  setTrackState,
 } from "@/store/feautures/tracksSlice";
 import { MouseEvent, useEffect, useState } from "react";
 import { deleteTrack, likeTrack } from "@/api/api";
@@ -18,7 +17,7 @@ export const Track = ({ track }: { track: TrackType }) => {
   let seconds: number = track.duration_in_seconds % 60;
 
   const dispatch = useAppDispatch();
-  let { isPlaying, thisTrack, myPlaylist, tracks } = useAppSelector(
+  let { isPlaying, thisTrack, myPlaylist } = useAppSelector(
     (state) => state.tracksSlice
   );
   const { token, authState } = useAppSelector((state) => state.auth);
@@ -36,7 +35,7 @@ export const Track = ({ track }: { track: TrackType }) => {
     }
   };
 
-  const likeMusic = (e: MouseEvent<HTMLDivElement>) => {
+  const likeMusic = (e: MouseEvent<SVGElement>) => {
     e.preventDefault();
     if (authState) {
     let trackId: number = thisTrack?._id;

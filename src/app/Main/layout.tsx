@@ -22,8 +22,6 @@ export default function layout({ children }: layoutProps) {
   useEffect(() => {
     const getData = async () => {
       try {
-        console.log('куку')
-
         if (token?.access) {
           const res = await getFavoriteTracks(token.access);
           dispatch(setFavoriteTracks(res));
