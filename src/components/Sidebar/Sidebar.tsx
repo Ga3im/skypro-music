@@ -1,9 +1,10 @@
 import Image from "next/image";
-import s from "@/components/Sidebar/Sidebar.module.css";
+import s from "./Sidebar.module.css";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { logout, setAuthState, tokenDel } from "@/store/feautures/authSlice";
 import { setTrackState } from "@/store/feautures/tracksSlice";
+import Link from "next/link";
 
 export const Sidebar = () => {
   const nav = useRouter();
@@ -14,7 +15,7 @@ export const Sidebar = () => {
     dispatch(logout());
     dispatch(tokenDel());
     nav.push("/Login");
-    dispatch(setTrackState([]))
+    dispatch(setTrackState([]));
   };
   return (
     <div className="main__sidebar sidebar">
@@ -29,7 +30,7 @@ export const Sidebar = () => {
       <div className={s.sidebarBlock}>
         <div className={s.sidebarList}>
           <div className={s.sidebarItem}>
-            <a className={s.sidebarLink} href="#">
+            <Link href={"/Main/DaylyPlaylist"} className={s.sidebarLink}>
               <Image
                 className={s.sidebarImg}
                 src="/playlist01.png"
@@ -37,10 +38,10 @@ export const Sidebar = () => {
                 width={250}
                 height={150}
               />
-            </a>
+            </Link>
           </div>
           <div className={s.sidebarItem}>
-            <a className={s.sidebarLink} href="#">
+            <Link  className={s.sidebarLink} href="/Main/100DanceHits">
               <Image
                 className={s.sidebarImg}
                 src="/playlist02.png"
@@ -48,10 +49,10 @@ export const Sidebar = () => {
                 width={250}
                 height={150}
               />
-            </a>
+            </Link>
           </div>
           <div className={s.sidebarItem}>
-            <a className={s.sidebarLink} href="#">
+            <Link className={s.sidebarLink} href="/Main/IndieMusic">
               <Image
                 className={s.sidebarImg}
                 src="/playlist03.png"
@@ -59,7 +60,7 @@ export const Sidebar = () => {
                 width={250}
                 height={150}
               />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

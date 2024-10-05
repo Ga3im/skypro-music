@@ -15,8 +15,6 @@ import { useAppDispatch, useAppSelector } from "@/store/store";
 import {
   setAddLike,
   setDislikeTrack,
-  setFavoriteTracks,
-  setIsLike,
   setIsShuffle,
   setNextTrack,
   setPlay,
@@ -30,19 +28,18 @@ type props = {
 };
 
 export const Player = ({ thisTrack }: props) => {
+  const [isLike, setIsLike] = useState<boolean>();
   const dispatch = useAppDispatch();
-  let { isShuffle, isPlaying, myPlaylist, tracks, isLike } = useAppSelector(
+  let { isShuffle, isPlaying, myPlaylist, tracks } = useAppSelector(
     (state) => state.tracksSlice
   );
-  const { token } = useAppSelector((state) => state.auth);
+  const { token, authState } = useAppSelector((state) => state.auth);
   const [repeat, setRepeat] = useState<boolean>(false);
   const [progress, setProgress] = useState({
     currentTime: 0,
     duration: 0,
   });
   const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  isLike = myPlaylist.some(i=> i._id === thisTrack._id)
 
   const handlePlay = () => {
     if (isPlaying) {
@@ -102,17 +99,19 @@ export const Player = ({ thisTrack }: props) => {
   };
 
   const likeMusic = (e: MouseEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    let trackId: number = thisTrack?._id;
-    let access: string | any = token?.access;
-    if (isLike) {
-      deleteTrack(trackId, access);
-      dispatch(setIsLike(false));
-      dispatch(setDislikeTrack(myPlaylist));
-    } else {
-      likeTrack(trackId, access);
-      dispatch(setIsLike(true));
-      dispatch(setAddLike(myPlaylist));
+    if (authState) {
+      e.preventDefault();
+      let trackId: number = thisTrack?._id;
+      let access: string | any = token?.access;
+      if (isLike) {
+        deleteTrack(trackId, access);
+        setIsLike(false);
+        dispatch(setDislikeTrack(myPlaylist));
+      } else {
+        likeTrack(trackId, access);
+        setIsLike(true);
+        dispatch(setAddLike(myPlaylist));
+      }
     }
   };
 
@@ -120,6 +119,7 @@ export const Player = ({ thisTrack }: props) => {
   let seconds = Math.floor(progress.duration % 60);
 
   useEffect(() => {
+    setIsLike(myPlaylist.some((favTrack) => favTrack._id === thisTrack._id));
     if (isPlaying) {
       audioRef.current?.play();
     } else {

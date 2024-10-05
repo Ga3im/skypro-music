@@ -47,7 +47,7 @@ export const Navigation = () => {
                 Мой плейлист
               </Link>
             </li>
-            <li className={s.menuItem}>{authState ? <p onClick={logout}>Выйти</p> : <p>Войти</p> }</li>
+            <li className={s.menuItem}>{authState ? <p onClick={logout}>Выйти</p> : <Link className={s.menuLink} href={'/Login'}>Войти</Link> }</li>
           </ul>
         </div>
       )}

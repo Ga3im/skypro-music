@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 export default function FavoritePage() {
 
   const dispatch = useAppDispatch();
-  let { myPlaylist, thisTrack, isLike} = useAppSelector((state) => state.tracksSlice);
+  let { myPlaylist} = useAppSelector((state) => state.tracksSlice);
   dispatch(setTrackState(myPlaylist));
   const { token } = useAppSelector((state) => state.auth);
   const [err, setErr] = useState<string | null>(null);

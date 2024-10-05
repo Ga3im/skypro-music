@@ -1,13 +1,11 @@
 "use client";
 import { getFavoriteTracks } from "@/api/api";
 import s from "@/app/Main/Main.module.css";
-import { CenterBlock } from "@/components/CenterBlock/CenterBlock";
 import { Navigation } from "@/components/Navigation/Navigation";
 import { Player } from "@/components/Player/Player";
 import { Sidebar } from "@/components/Sidebar/Sidebar";
 import {
   setFavoriteTracks,
-  setTrackState,
 } from "@/store/feautures/tracksSlice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { ReactNode, useEffect, useState } from "react";
@@ -24,6 +22,8 @@ export default function layout({ children }: layoutProps) {
   useEffect(() => {
     const getData = async () => {
       try {
+        console.log('куку')
+
         if (token?.access) {
           const res = await getFavoriteTracks(token.access);
           dispatch(setFavoriteTracks(res));
