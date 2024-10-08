@@ -29,11 +29,11 @@ export const CenterBlock = ({ title }: CenterBlockTypes) => {
       <MusicFilter />
       <div className={s.centerblockContent}>
         <div className={s.contentTitle}>
-          <div className={classNames(s.playlistTitleCol, s.col01)}>ТРЕКИ</div>
+          <div className={classNames(s.playlistTitleCol, s.col01)}>треки</div>
           <div className={classNames(s.playlistTitleCol, s.col02)}>
-            ИСПОЛНИТЕЛЬ
+            испольнитель
           </div>
-          <div className={classNames(s.playlistTitleCol, s.col03)}>АЛЬБОМ</div>
+          <div className={classNames(s.playlistTitleCol, s.col03)}>альбом</div>
           <div className={classNames(s.playlistTitleCol, s.col04)}>
             <svg className={s.playlistTitleSvg}>
               <use xlinkHref="/icon/sprite.svg#icon-watch"></use>

@@ -1,9 +1,11 @@
+
 @font-face {
   font-family: "StratosSkyeng";
   src: local("StratosSkyeng"),
-    url("/src//fonts//StratosSkyeng.woff") format('woff'), 
-    url("/src/fonts//StratosSkyeng.woff2") format("woff2");
+    url("/public/fonts/StratosSkyeng.woff2") format('woff2'), 
+    url("/public/fonts/StratosSkyeng.woff") format("woff");
 }
+
 
 * {
   margin: 0;
@@ -39,8 +41,8 @@ html,
 body {
   width: 100%;
   height: 100%;
-  font-family: "StratosSkyeng", sans-serif;
   color: #ffffff;
+  font-family: "StratosSkyeng";
 }
 
 

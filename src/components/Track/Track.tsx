@@ -9,7 +9,7 @@ import {
   setThisTrack,
 } from "@/store/feautures/tracksSlice";
 import { MouseEvent, useEffect, useState } from "react";
-import { deleteTrack, likeTrack } from "@/api/api";
+import { deleteTrack, getFavoriteTracks, likeTrack } from "@/api/api";
 
 export const Track = ({ track }: { track: TrackType }) => {
   const [isLike, setIsLike] = useState<boolean>();
@@ -45,7 +45,6 @@ export const Track = ({ track }: { track: TrackType }) => {
       deleteTrack(trackId, access);
       setIsLike(false);
       dispatch(setDislikeTrack(myPlaylist));
-      dispatch(setFavoriteTracks(myPlaylist));
     } else {
       likeTrack(trackId, access);
       dispatch(setAddLike(myPlaylist));

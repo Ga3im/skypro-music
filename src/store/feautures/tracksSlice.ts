@@ -24,7 +24,7 @@ const trackSlice = createSlice({
   initialState,
   reducers: {
     setAddLike: (state) => {
-      if (state.myPlaylist.map((i) => i._id) === state.thisTrack?._id) {
+      if (state.myPlaylist.map((i) => i._id) === state.thisTrack?._id || state.thisTrack?._id === state.thisTrack?._id) {
         return;
       } else {
         state.myPlaylist.push(state.thisTrack);

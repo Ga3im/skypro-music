@@ -1,9 +1,3 @@
-@font-face {
-  font-family: "StratosSkyeng";
-  src: local("StratosSkyeng"),
-    url(/src//fonts//StratosSkyeng.woff);
-}
-
 .centerblockSearch {
     width: 100%;
     border-bottom: 1px solid #4e4e4e;
