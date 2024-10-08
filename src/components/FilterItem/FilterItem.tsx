@@ -23,14 +23,24 @@ export const FilterItem = ({
   return (
     <>
       <div className={s.contentBlock}>
-        <div
-          onClick={openFindFilter}
-          className={classNames(s.filterButton, s.btnText)}
-        >
-          {title}
-        </div>
+        {activeFilter && activeFilter === id ? (
+          <div
+            onClick={openFindFilter}
+            className={classNames(s.filterButtonActive, s.btnText)}
+          >
+            {title}
+          </div>
+        ) : (
+          <div
+            onClick={openFindFilter}
+            className={classNames(s.filterButton, s.btnText)}
+          >
+            {title}
+          </div>
+        )}
+
         {activeFilter === id && (
-          <>
+          <div className={s.listt}>
             <div className={s.list}>
               {list.map((i) => (
                 <p key={i} className={s.listName}>
@@ -38,10 +48,14 @@ export const FilterItem = ({
                 </p>
               ))}
             </div>
-          </>
+          </div>
         )}
       </div>
-      {activeFilter === id && <div className={s.count}><p>{list.length}</p></div>}
+      {activeFilter === id && (
+        <div className={s.count}>
+          <p>{list.length}</p>
+        </div>
+      )}
     </>
   );
 };
