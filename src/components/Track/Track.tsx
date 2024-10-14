@@ -9,7 +9,7 @@ import {
   setThisTrack,
 } from "@/store/feautures/tracksSlice";
 import { MouseEvent, useEffect, useState } from "react";
-import { deleteTrack, getFavoriteTracks, likeTrack } from "@/api/api";
+import { deleteTrack, likeTrack } from "@/api/api";
 
 export const Track = ({ track }: { track: TrackType }) => {
   const [isLike, setIsLike] = useState<boolean>();
@@ -25,7 +25,7 @@ export const Track = ({ track }: { track: TrackType }) => {
   useEffect(() => {
     setIsLike(myPlaylist.some((favTrack) => favTrack._id === track._id));
   }, []);
-  
+
   const playTrack = (track: TrackType) => {
     dispatch(setThisTrack(track));
     if (isPlaying) {
@@ -38,19 +38,19 @@ export const Track = ({ track }: { track: TrackType }) => {
   const likeMusic = (e: MouseEvent<SVGElement>) => {
     e.preventDefault();
     if (authState) {
-    let trackId: number = thisTrack?._id;
-    let access: string | any = token?.access;
-    dispatch(setThisTrack(track));
-    if (isLike) {
-      deleteTrack(trackId, access);
-      setIsLike(false);
-      dispatch(setDislikeTrack(myPlaylist));
-    } else {
-      likeTrack(trackId, access);
-      dispatch(setAddLike(myPlaylist));
-      setIsLike(true);
+      let trackId: number = thisTrack?._id;
+      let access: string | any = token?.access;
+      dispatch(setThisTrack(track))
+      if (myPlaylist.some((favTrack) => favTrack._id === track._id)) {
+        deleteTrack(trackId, access);
+        setIsLike(false);
+        dispatch(setDislikeTrack(myPlaylist));
+      } else {
+        likeTrack(trackId, access);
+        dispatch(setAddLike(myPlaylist));
+        setIsLike(true);
+      }
     }
-  }
   };
 
   return (

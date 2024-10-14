@@ -28,7 +28,7 @@ type props = {
 };
 
 export const Player = ({ thisTrack }: props) => {
-  const [isLike, setIsLike] = useState<boolean>();
+  const [ isLike, setIsLike] = useState<boolean>()
   const dispatch = useAppDispatch();
   let { isShuffle, isPlaying, myPlaylist, tracks } = useAppSelector(
     (state) => state.tracksSlice
@@ -103,7 +103,7 @@ export const Player = ({ thisTrack }: props) => {
       e.preventDefault();
       let trackId: number = thisTrack?._id;
       let access: string | any = token?.access;
-      if (isLike) {
+      if (myPlaylist.some((i)=> i._id === thisTrack._id)) {
         deleteTrack(trackId, access);
         setIsLike(false);
         dispatch(setDislikeTrack(myPlaylist));
@@ -237,7 +237,7 @@ export const Player = ({ thisTrack }: props) => {
                       onClick={likeMusic}
                       className={classNames(s.trackPlayLike, s.btnIcon)}
                     >
-                      {isLike ? (
+                      {myPlaylist.some((favTrack) => favTrack._id === thisTrack._id) ? (
                         <svg className={s.trackPlayLikeSvg}>
                           <use xlinkHref="/icon/sprite.svg#icon-active-like"></use>
                         </svg>
