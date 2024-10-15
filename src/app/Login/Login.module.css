@@ -1,3 +1,12 @@
+  
+@font-face {
+  font-family: "StratosSkyeng";
+ src: local("StratosSkyeng"),
+   url("/fonts/StratosSkyeng.woff2") format('woff2'), 
+   url("/fonts/StratosSkyeng.woff") format("woff");
+}
+
+  
   .wrapper {
     width: 100%;
     min-height: 100%;
@@ -144,7 +153,7 @@
     font-weight: 400;
     font-size: 18px;
     line-height: 24px;
-    letter-spacing: -0.05px;
+    letter-spacing: -0.0px;
     color: #000000;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -155,6 +164,8 @@
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
+  font-family: "StratosSkyeng", sans-serif;
+
   }
   
   .login {

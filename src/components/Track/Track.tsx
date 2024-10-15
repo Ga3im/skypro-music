@@ -4,7 +4,6 @@ import { TrackType } from "@/types/tracks";
 import {
   setAddLike,
   setDislikeTrack,
-  setFavoriteTracks,
   setPlay,
   setThisTrack,
 } from "@/store/feautures/tracksSlice";
@@ -12,7 +11,7 @@ import { MouseEvent, useEffect, useState } from "react";
 import { deleteTrack, likeTrack } from "@/api/api";
 
 export const Track = ({ track }: { track: TrackType }) => {
-  const [isLike, setIsLike] = useState<boolean>();
+  let [isLike, setIsLike] = useState<boolean>();
   let minutes: number = Math.floor(track.duration_in_seconds / 60);
   let seconds: number = track.duration_in_seconds % 60;
 
@@ -22,10 +21,8 @@ export const Track = ({ track }: { track: TrackType }) => {
   );
   const { token, authState } = useAppSelector((state) => state.auth);
 
-  useEffect(() => {
-    setIsLike(myPlaylist.some((favTrack) => favTrack._id === track._id));
-  }, []);
 
+    isLike = myPlaylist.some((favTrack) => favTrack._id === track._id);
   const playTrack = (track: TrackType) => {
     dispatch(setThisTrack(track));
     if (isPlaying) {

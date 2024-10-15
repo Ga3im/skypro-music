@@ -3,7 +3,7 @@ import s from "@/components/CenterBlock/CenterBlock.module.css";
 import classNames from "classnames";
 import { Playlist } from "../Playlist/Playlist";
 import { MusicFilter } from "@/components/MusicFilter/MusicFilter";
-import { useState } from "react";
+import {  useState } from "react";
 
 type CenterBlockTypes = {
   title: string;
@@ -29,7 +29,7 @@ export const CenterBlock = ({ title }: CenterBlockTypes) => {
       <MusicFilter />
       <div className={s.centerblockContent}>
         <div className={s.contentTitle}>
-          <div className={classNames(s.playlistTitleCol, s.col01)}>треки</div>
+          <div className={classNames(s.playlistTitleCol, s.col01)}>трек</div>
           <div className={classNames(s.playlistTitleCol, s.col02)}>
             испольнитель
           </div>

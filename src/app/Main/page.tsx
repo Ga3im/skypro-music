@@ -10,7 +10,6 @@ export default function MainPage() {
   const { token } = useAppSelector((state) => state.auth);
   const [err, setErr] = useState<string | null>(null);
 
-  
   useEffect(() => {
     const getData = async () => {
       try {
