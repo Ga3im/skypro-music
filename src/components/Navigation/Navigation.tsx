@@ -11,6 +11,10 @@ export const Navigation = () => {
   const { authState } = useAppSelector((state) => state.auth);
   const nav = useRouter();
 
+  const main = ()=>{
+    nav.push('/Main')
+  }
+
   const logout = ()=>{
     nav.push('/Login')
   }
@@ -27,6 +31,7 @@ export const Navigation = () => {
           src="/logo.png"
           width={115}
           height={17}
+          onClick={main}
         />
       </div>
       <div className={s.navBurger} onClick={openNav}>

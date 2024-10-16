@@ -112,6 +112,19 @@ export const getFavoriteTracks = async (access: string) => {
   return response.json().then((tracksData) => tracksData.data);
 };
 
+export const getSelectionTracks = async (access: string) => {
+  const response = await fetch(`${BASE_URL}/catalog/selection/all`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${access}`,
+    },
+  });
+  if (!response.ok) {
+    throw new Error("Ошибка");
+  }
+  return response.json().then((tracksData) => tracksData.data);
+};
+
 export const likeTrack = async (trackId: number, access: string) => {
   const res = await fetch(`${BASE_URL}/catalog/track/${trackId}/favorite/`, {
     method: "POST",
