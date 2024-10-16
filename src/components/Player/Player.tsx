@@ -4,6 +4,7 @@ import { TrackType } from "@/types/tracks";
 import classNames from "classnames";
 import {
   ChangeEvent,
+  MouseEvent,
   SyntheticEvent,
   useEffect,
   useRef,
@@ -12,26 +13,32 @@ import {
 import ProgressBar from "../ProgressBar/ProgressBar";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import {
+  setAddLike,
+  setDislikeTrack,
   setIsShuffle,
   setNextTrack,
   setPlay,
   setPrevTrack,
   setShuffle,
 } from "@/store/feautures/tracksSlice";
+import { deleteTrack, likeTrack } from "@/api/api";
 
 type props = {
   thisTrack: TrackType;
 };
 
 export const Player = ({ thisTrack }: props) => {
+  const [ isLike, setIsLike] = useState<boolean>()
   const dispatch = useAppDispatch();
-  let { isShuffle, isPlaying } = useAppSelector((state) => state.tracksSlice);
+  let { isShuffle, isPlaying, myPlaylist, tracks } = useAppSelector(
+    (state) => state.tracksSlice
+  );
+  const { token, authState } = useAppSelector((state) => state.auth);
   const [repeat, setRepeat] = useState<boolean>(false);
   const [progress, setProgress] = useState({
     currentTime: 0,
     duration: 0,
   });
-
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const handlePlay = () => {
@@ -43,10 +50,10 @@ export const Player = ({ thisTrack }: props) => {
     dispatch(setPlay(!isPlaying));
   };
 
-  const handleCanPlay = ()=>{
-    audioRef.current?.play()
-    dispatch(setPlay(true))
-  }
+  const handleCanPlay = () => {
+    audioRef.current?.play();
+    dispatch(setPlay(true));
+  };
 
   const onChangeVolume = (e: ChangeEvent<HTMLInputElement>) => {
     if (audioRef.current) {
@@ -62,7 +69,7 @@ export const Player = ({ thisTrack }: props) => {
   };
 
   const onRepeat = () => {
-    const audio: HTMLAudioElement | null  = audioRef.current;
+    const audio: HTMLAudioElement | null = audioRef.current;
     if (repeat) {
       audio.loop = false;
     } else {
@@ -73,7 +80,7 @@ export const Player = ({ thisTrack }: props) => {
 
   const NextTrack = () => {
     dispatch(setNextTrack());
-    dispatch(setPlay(isPlaying = true))
+    dispatch(setPlay((isPlaying = true)));
   };
 
   const PrevTrack = () => {
@@ -91,12 +98,30 @@ export const Player = ({ thisTrack }: props) => {
     dispatch(setShuffle());
   };
 
+  const likeMusic = (e: MouseEvent<HTMLDivElement>) => {
+    if (authState) {
+      e.preventDefault();
+      let trackId: number = thisTrack?._id;
+      let access: string | any = token?.access;
+      if (myPlaylist.some((i)=> i._id === thisTrack._id)) {
+        deleteTrack(trackId, access);
+        setIsLike(false);
+        dispatch(setDislikeTrack(myPlaylist));
+      } else {
+        likeTrack(trackId, access);
+        setIsLike(true);
+        dispatch(setAddLike(myPlaylist));
+      }
+    }
+  };
+
   let minutes = Math.floor(progress.duration / 60);
   let seconds = Math.floor(progress.duration % 60);
 
   useEffect(() => {
+    setIsLike(myPlaylist.some((favTrack) => favTrack._id === thisTrack._id));
     if (isPlaying) {
-      audioRef.current?.play();     
+      audioRef.current?.play();
     } else {
       audioRef.current?.pause();
     }
@@ -208,15 +233,19 @@ export const Player = ({ thisTrack }: props) => {
                   </div>
 
                   <div className={s.trackPlayLikeDis}>
-                    <div className={classNames(s.trackPlayLike, s.btnIcon)}>
-                      <svg className={s.trackPlayLikeSvg}>
-                        <use xlinkHref="/icon/sprite.svg#icon-like"></use>
-                      </svg>
-                    </div>
-                    <div className={classNames(s.trackPlayDislike, s.btnIcon)}>
-                      <svg className={s.trackPlayDislikeSvg}>
-                        <use xlinkHref="/icon/sprite.svg#icon-dislike"></use>
-                      </svg>
+                    <div
+                      onClick={likeMusic}
+                      className={classNames(s.trackPlayLike, s.btnIcon)}
+                    >
+                      {myPlaylist.some((favTrack) => favTrack._id === thisTrack._id) ? (
+                        <svg className={s.trackPlayLikeSvg}>
+                          <use xlinkHref="/icon/sprite.svg#icon-active-like"></use>
+                        </svg>
+                      ) : (
+                        <svg className={s.trackPlayLikeSvg}>
+                          <use xlinkHref="/icon/sprite.svg#icon-like"></use>
+                        </svg>
+                      )}
                     </div>
                   </div>
                 </div>

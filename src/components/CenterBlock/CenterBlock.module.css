@@ -17,12 +17,12 @@
   .centerblockH2 {
     font-style: normal;
     font-weight: 400;
-    font-size: 64px;
-    line-height: 72px;
-    letter-spacing: -0.8px;
+    font-size: 60px;
+    line-height: 64px;
+    letter-spacing: -1px;
     margin-bottom: 45px;
   }
-  
+
   .centerblockContent {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -34,6 +34,15 @@
     max-height: calc(100vh - 500px);
   }
   
+  .playlistTitleCol {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 1px;
+    color: #696969;
+    text-transform: uppercase;
+  }
   .searchSvg {
     width: 17px;
     height: 17px;
@@ -48,11 +57,12 @@
     flex-grow: 100;
     background-color: transparent;
     border: none;
-    padding: 13px 10px 14px;
+    padding: 13px 10px 13px;
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
-    line-height: 24px;
+    line-height: 18px;
+    letter-spacing: 0.9px;
     color: #ffffff;
   }
   

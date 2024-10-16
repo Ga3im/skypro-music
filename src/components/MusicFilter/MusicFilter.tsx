@@ -26,14 +26,14 @@ export const MusicFilter = () => {
       list: getUniqValues(tracks, "author"),
     },
     {
-      title: "жанру",
-      key: "genre",
-      list: getUniqValues(tracks, "genre"),
-    },
-    {
       title: "году выпуска",
       key: "year",
       list: filterOptions,
+    },
+    {
+      title: "жанру",
+      key: "genre",
+      list: getUniqValues(tracks, "genre"),
     },
   ];
 

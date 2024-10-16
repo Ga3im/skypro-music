@@ -1,49 +1,56 @@
-'use client'
-import Image from "next/image"
-import s from "@/components/Navigation/Navigation.module.css"
-import { useState } from "react"
+"use client";
+import Image from "next/image";
+import s from "@/components/Navigation/Navigation.module.css";
+import { useState } from "react";
+import { useAppSelector } from "@/store/store";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-export const Navigation = () =>{
+export const Navigation = () => {
   const [navIsOpen, setNavIsOpen] = useState(false);
-  const openNav = ()=>{
-    setNavIsOpen(!navIsOpen)
+  const { authState } = useAppSelector((state) => state.auth);
+  const nav = useRouter();
+
+  const logout = ()=>{
+    nav.push('/Login')
   }
-    return(
-        <nav className={s.mainNav}>
-        <div className={s.navLogo}>
-          <Image
-            className={s.logoImage}
-            alt="logo"
-            src="/logo.png"
-            width={115}
-            height={17}
-          />
-        </div>
-        <div className={s.navBurger} onClick={openNav}>
-          <span className={s.burgerLine}></span>
-          <span className={s.burgerLine}></span>
-          <span className={s.burgerLine}></span>
-        </div>
-        {navIsOpen && <div className={s.navMenu}>
+
+  const openNav = () => {
+    setNavIsOpen(!navIsOpen);
+  };
+  return (
+    <nav className={s.mainNav}>
+      <div className={s.navLogo}>
+        <Image
+          className={s.logoImage}
+          alt="logo"
+          src="/logo.png"
+          width={115}
+          height={17}
+        />
+      </div>
+      <div className={s.navBurger} onClick={openNav}>
+        <span className={s.burgerLine}></span>
+        <span className={s.burgerLine}></span>
+        <span className={s.burgerLine}></span>
+      </div>
+      {navIsOpen && (
+        <div className={s.navMenu}>
           <ul className={s.menuList}>
             <li className={s.menuItem}>
-              <a href="#" className={s.menuLink}>
+              <Link href={'/Main'} className={s.menuLink}>
                 Главное
-              </a>
+              </Link>
             </li>
             <li className={s.menuItem}>
-              <a href="#" className={s.menuLink}>
+              <Link href={'/Main/Favorite'} className={s.menuLink}>
                 Мой плейлист
-              </a>
+              </Link>
             </li>
-            <li className={s.menuItem}>
-              <a href="../signin.html" className={s.menuLink}>
-                Войти
-              </a>
-            </li>
+            <li className={s.menuItem}>{authState ? <p onClick={logout}>Выйти</p> : <Link className={s.menuLink} href={'/Login'}>Войти</Link> }</li>
           </ul>
-        </div>}
-        
-      </nav>
-    )
-}
+        </div>
+      )}
+    </nav>
+  );
+};
