@@ -1,7 +1,7 @@
 "use client";
 import { getFavoriteTracks, getTracks } from "@/api/api";
 import { CenterBlock } from "@/components/CenterBlock/CenterBlock";
-import { setFavoriteTracks, setTrackState } from "@/store/feautures/tracksSlice";
+import { setAllTracks, setFavoriteTracks, setTrackState } from "@/store/feautures/tracksSlice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { useEffect, useState } from "react";
 
@@ -15,6 +15,7 @@ export default function MainPage() {
       try {
         const res = await getTracks();
         dispatch(setTrackState(res));
+        dispatch(setAllTracks(res));
         if (token?.access) {
           const res = await getFavoriteTracks(token.access);
           dispatch(setFavoriteTracks(res));

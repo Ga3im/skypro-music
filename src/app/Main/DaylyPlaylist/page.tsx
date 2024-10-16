@@ -8,10 +8,11 @@ import { useEffect } from "react";
 export default function DaylyPlaylist() {
   const dispatch = useAppDispatch();
   const { token } = useAppSelector((state) => state.auth);
-  const { tracks } = useAppSelector((state) => state.tracksSlice);
+  const { tracks, allTracks } = useAppSelector((state) => state.tracksSlice);
   useEffect(() => {
     const getData = async () => {
       try {
+
         if (token?.access) {
           const res = await getSelectionTracks(token.access);
           res.map((track) => {
@@ -19,7 +20,7 @@ export default function DaylyPlaylist() {
               const q = [];
               const arr = track.items;
               arr.filter((i) => {
-                tracks.map((e) => {
+                allTracks.map((e) => {
                   if (i === e._id) {
                     q.push(e);
                   }
