@@ -39,6 +39,7 @@ export const Navigation = () => {
         <span className={s.burgerLine}></span>
         <span className={s.burgerLine}></span>
       </div>
+      
       {navIsOpen && (
         <div className={s.navMenu}>
           <ul className={s.menuList}>

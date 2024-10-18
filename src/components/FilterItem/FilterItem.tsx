@@ -9,6 +9,7 @@ type ItemProp = {
   activeFilter: string | null;
   setActiveFilter: string | null;
 };
+
 export const FilterItem = ({
   title,
   list,
@@ -20,6 +21,13 @@ export const FilterItem = ({
     setActiveFilter(() => (activeFilter === id ? null : id));
   };
 
+  const filterBtn = () => {
+    list.filter((i) => {
+      if (i === 'По умолчанию') {
+        console.log(i);
+      }
+    });
+  };
   return (
     <>
       <div className={s.contentBlock}>
@@ -43,7 +51,7 @@ export const FilterItem = ({
           <div className={s.listt}>
             <div className={s.list}>
               {list.map((i) => (
-                <p key={i} className={s.listName}>
+                <p onClick={filterBtn} key={i} className={s.listName}>
                   {i}
                 </p>
               ))}

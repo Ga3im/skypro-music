@@ -11,7 +11,7 @@ type initialStateType = {
   allTracks: TrackType[];
 };
 
-const initialState: initialStateType = {
+export const initialState: initialStateType = {
   tracks: [],
   thisTrack: null,
   shuffledTracks: [],
