@@ -6,14 +6,15 @@ import { useAppDispatch, useAppSelector } from "@/store/store";
 import { TrackType } from "@/types/tracks";
 import { useEffect } from "react";
 
-export default function Page() {
+export default function Page({params}) {
   const dispatch = useAppDispatch();
   const { token } = useAppSelector((state) => state.auth);
   const { allTracks } = useAppSelector((state) => state.tracksSlice);
+  console.log(params.id)
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await getSelectionTracks();
+        const res = await getSelectionTracksId(params.id);
         console.log(res);
 
         res.map((track: any) => {
