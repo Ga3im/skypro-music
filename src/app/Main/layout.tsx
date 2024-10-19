@@ -3,7 +3,7 @@ import { getFavoriteTracks } from "@/api/api";
 import s from "@/app/Main/Main.module.css";
 import { Navigation } from "@/components/Navigation/Navigation";
 import { Player } from "@/components/Player/Player";
-import { Sidebar } from "@/components/Sidebar/Sidebar";
+import { Sidebar } from "@/app/Main/Sidebar/Sidebar";
 import {
   setFavoriteTracks,
 } from "@/store/feautures/tracksSlice";

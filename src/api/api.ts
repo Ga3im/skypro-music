@@ -112,12 +112,19 @@ export const getFavoriteTracks = async (access: string) => {
   return response.json().then((tracksData) => tracksData.data);
 };
 
-export const getSelectionTracks = async (access: string) => {
+export const getSelectionTracks = async () => {
   const response = await fetch(`${BASE_URL}/catalog/selection/all`, {
     method: "GET",
-    headers: {
-      Authorization: `Bearer ${access}`,
-    },
+  });
+  if (!response.ok) {
+    throw new Error("Ошибка");
+  }
+  return response.json().then((tracksData) => tracksData.data);
+};
+
+export const getSelectionTracksId = async ( id: number) => {
+  const response = await fetch(`${BASE_URL}/catalog/selection/${id}`, {
+    method: "GET",
   });
   if (!response.ok) {
     throw new Error("Ошибка");
