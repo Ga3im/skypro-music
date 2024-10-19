@@ -1,59 +1,28 @@
 "use client";
-import { getSelectionTracks, getSelectionTracksId, getTracks } from "@/api/api";
+import { getSelectionTracksId } from "@/api/api";
 import { CenterBlock } from "@/components/CenterBlock/CenterBlock";
 import { setTrackState } from "@/store/feautures/tracksSlice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { TrackType } from "@/types/tracks";
 import { useEffect } from "react";
 
-export default function Page({params}) {
+export default function Page({ params }) {
   const dispatch = useAppDispatch();
-  const { token } = useAppSelector((state) => state.auth);
   const { allTracks } = useAppSelector((state) => state.tracksSlice);
-  console.log(params.id)
   useEffect(() => {
     const getData = async () => {
       try {
+        const arr: TrackType[] = [];
         const res = await getSelectionTracksId(params.id);
-        console.log(res);
-
-        res.map((track: any) => {
-          const q: TrackType[] = [];
-          let id: number;
-          const arr = track.items;
-          if (track.name === "Инди-заряд") {
-            id = track._id;
-            arr.filter((i: any) => {
-              allTracks.map((e) => {
-                if (i === e._id) {
-                  q.push(e);
-                }
-              });
-            });
-          }
-          if (track.name === "Танцевальные хиты") {
-            id = track._id;
-            arr.filter((i: any) => {
-              allTracks.map((e) => {
-                if (i === e._id) {
-                  q.push(e);
-                }
-              });
-            });
-          }
-          if (track.name === "Плейлист дня") {
-            id = track._id;
-            arr.filter((i: any) => {
-              allTracks.map((e) => {
-                if (i === e._id) {
-                  q.push(e);
-                }
-              });
-            });
-          }
-
-          dispatch(setTrackState(q));
+        console.log(res.items);
+        res.items.filter((i: any) => {
+          allTracks.map((e) => {
+            if (i === e._id) {
+              arr.push(e);
+            }
+          });
         });
+        dispatch(setTrackState(arr));
       } catch (error) {
         if (error instanceof Error) {
           console.log(error.message);
@@ -63,5 +32,5 @@ export default function Page({params}) {
     getData();
   }, []);
 
-  return <CenterBlock title={"Плейлист дня"} />;
+  return <CenterBlock title={"playlistName"} />;
 }
