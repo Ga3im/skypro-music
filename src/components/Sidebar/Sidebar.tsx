@@ -30,7 +30,7 @@ export const Sidebar = () => {
       <div className={s.sidebarBlock}>
         <div className={s.sidebarList}>
           <div className={s.sidebarItem}>
-            <Link href={"/Main/DaylyPlaylist"} className={s.sidebarLink}>
+            <Link href={"/Main/2"} className={s.sidebarLink}>
               <Image
                 className={s.sidebarImg}
                 src="/playlist01.png"
@@ -41,7 +41,7 @@ export const Sidebar = () => {
             </Link>
           </div>
           <div className={s.sidebarItem}>
-            <Link  className={s.sidebarLink} href="/Main/100DanceHits">
+            <Link  className={s.sidebarLink} href="/Main/3">
               <Image
                 className={s.sidebarImg}
                 src="/playlist02.png"
@@ -52,7 +52,7 @@ export const Sidebar = () => {
             </Link>
           </div>
           <div className={s.sidebarItem}>
-            <Link className={s.sidebarLink} href="/Main/IndieMusic">
+            <Link className={s.sidebarLink} href="/Main/4">
               <Image
                 className={s.sidebarImg}
                 src="/playlist03.png"

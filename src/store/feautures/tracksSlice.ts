@@ -8,21 +8,26 @@ type initialStateType = {
   isShuffle: boolean;
   isPlaying: boolean;
   myPlaylist: TrackType[];
+  allTracks: TrackType[];
 };
 
-const initialState: initialStateType = {
+export const initialState: initialStateType = {
   tracks: [],
   thisTrack: null,
   shuffledTracks: [],
   isShuffle: false,
   isPlaying: false,
   myPlaylist: [],
+  allTracks: [],
 };
 
 const trackSlice = createSlice({
   name: "track",
   initialState,
   reducers: {
+    setAllTracks:(state, action)=>{
+      state.allTracks = action.payload;
+    },
     setAddLike: (state) => {
       state.myPlaylist.push(state.thisTrack);
     },
@@ -77,6 +82,7 @@ const trackSlice = createSlice({
 export const {
   setTrackState,
   setThisTrack,
+  setAllTracks,
   setNextTrack,
   setPrevTrack,
   setIsShuffle,

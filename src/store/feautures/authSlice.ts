@@ -34,7 +34,7 @@ export const Token = createAsyncThunk(
   }
 );
 
-const initialState: AuthStateType = {
+export const initialState: AuthStateType = {
   authState: false,
   user: null,
   token: null,
