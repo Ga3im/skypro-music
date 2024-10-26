@@ -1,7 +1,7 @@
 "use client";
 import { getSelectionTracksId } from "@/api/api";
 import { CenterBlock } from "@/components/CenterBlock/CenterBlock";
-import { setTrackState } from "@/store/feautures/tracksSlice";
+import {setTrackState } from "@/store/feautures/tracksSlice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { TrackType } from "@/types/tracks";
 import { useEffect, useState } from "react";

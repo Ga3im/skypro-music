@@ -9,6 +9,12 @@ type initialStateType = {
   isPlaying: boolean;
   myPlaylist: TrackType[];
   allTracks: TrackType[];
+  activeFilters:{
+    genres:string[],
+    authors:string[],
+    date:string,
+    search: string,
+  };
 };
 
 export const initialState: initialStateType = {
@@ -19,13 +25,59 @@ export const initialState: initialStateType = {
   isPlaying: false,
   myPlaylist: [],
   allTracks: [],
+  activeFilters:{
+    genres:[],
+    authors:[],
+    date: "По умолчанию", 
+    search: "",
+  }
 };
 
 const trackSlice = createSlice({
   name: "track",
   initialState,
   reducers: {
-    setAllTracks:(state, action)=>{
+    setFilters:(state, action:PayloadAction<{genres?:string[], authors?:string[], date?:string, search?:string}>)=>{
+      const { genres, authors, date, search} = action.payload;
+      state.activeFilters.authors = authors ?? state.activeFilters.authors;
+      state.activeFilters.genres = genres ?? state.activeFilters.genres;
+      state.activeFilters.date = date ?? state.activeFilters.date;
+      state.activeFilters.search = action.payload.search !== undefined ? action.payload.search : state.activeFilters.search;
+      let filterPlaylist = state.tracks;
+      if (state.activeFilters.authors.length > 0) {
+        filterPlaylist = filterPlaylist.filter((track)=> state.activeFilters.authors.includes(track.author))
+
+      }
+      if (state.activeFilters.genres.length > 0) {
+        filterPlaylist = filterPlaylist.filter((track)=> state.activeFilters.genres.includes(track.genre[0]))
+      }
+      if (state.activeFilters.search) {
+        filterPlaylist = filterPlaylist.filter((track)=>
+           track.name.toLowerCase().includes(state.activeFilters.search.toLowerCase()) || 
+           track.author.toLowerCase().includes(state.activeFilters.search.toLowerCase())
+       )
+      }
+      const SORT_OPTIONS: Record<string, string> = {
+        DEFAULT: 'По умолчанию',
+        NEW: 'Сначала новые',
+        OLD: 'Сначала старые'
+      }
+      const sortFunctions: Record<string,(a: TrackType, b: TrackType) => number> = {
+        [SORT_OPTIONS.NEW]: (a, b) =>
+          new Date(b.release_date).getTime() -
+          new Date(a.release_date).getTime(),
+        [SORT_OPTIONS.OLD]: (a, b) =>
+          new Date(a.release_date).getTime() -
+          new Date(b.release_date).getTime(),
+      };
+      const sortFunction = sortFunctions[state.activeFilters.sortOption];
+      if (sortFunction) {
+        filterPlaylist = filterPlaylist.sort(sortFunction);
+      }
+      state.tracks= filterPlaylist;
+    },
+
+    setAllTracks: (state, action) => {
       state.allTracks = action.payload;
     },
     setAddLike: (state) => {
@@ -89,6 +141,7 @@ export const {
   setFavoriteTracks,
   setShuffle,
   setPlay,
+  setFilters,
   setAddLike,
   setDislikeTrack,
 } = trackSlice.actions;
