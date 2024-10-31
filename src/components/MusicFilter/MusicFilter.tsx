@@ -22,18 +22,24 @@ export const MusicFilter = () => {
   const filters = [
     {
       title: "испольнителю",
-      key: "author",
+      key: "authors",
       list: getUniqValues(tracks, "author"),
+      selected: useAppSelector((store)=>{
+        store.tracksSlice.activeFilters.authors
+      })
     },
     {
       title: "году выпуска",
-      key: "year",
+      key: "date",
       list: filterOptions,
     },
     {
       title: "жанру",
-      key: "genre",
+      key: "genres",
       list: getUniqValues(tracks, "genre"),
+      selected: useAppSelector((store)=>{
+        store.tracksSlice.activeFilters.genres
+      })
     },
   ];
 
@@ -44,6 +50,7 @@ export const MusicFilter = () => {
         <FilterItem
           key={item.key}
           id={item.key}
+          selected={item.selected}
           setActiveFilter={setActiveFilter}
           activeFilter={activeFilter}
           title={item.title}

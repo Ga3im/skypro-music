@@ -43,7 +43,7 @@ const trackSlice = createSlice({
       state.activeFilters.genres = genres ?? state.activeFilters.genres;
       state.activeFilters.date = date ?? state.activeFilters.date;
       state.activeFilters.search = action.payload.search !== undefined ? action.payload.search : state.activeFilters.search;
-      let filterPlaylist = state.tracks;
+      let filterPlaylist = state.allTracks;
       if (state.activeFilters.authors.length > 0) {
         filterPlaylist = filterPlaylist.filter((track)=> state.activeFilters.authors.includes(track.author))
 
@@ -70,7 +70,7 @@ const trackSlice = createSlice({
           new Date(a.release_date).getTime() -
           new Date(b.release_date).getTime(),
       };
-      const sortFunction = sortFunctions[state.activeFilters.sortOption];
+      const sortFunction = sortFunctions[state.activeFilters.date];
       if (sortFunction) {
         filterPlaylist = filterPlaylist.sort(sortFunction);
       }

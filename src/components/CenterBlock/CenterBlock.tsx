@@ -6,7 +6,7 @@ import { MusicFilter } from "@/components/MusicFilter/MusicFilter";
 import { KeyboardEvent, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { TrackType } from "@/types/tracks";
-import { setFilters, setTrackState } from "@/store/feautures/tracksSlice";
+import { setFilters } from "@/store/feautures/tracksSlice";
 
 type CenterBlockTypes = {
   title: string;

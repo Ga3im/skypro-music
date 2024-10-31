@@ -1,6 +1,8 @@
 "use client";
 import classNames from "classnames";
 import s from "./FilterItem.module.css";
+import { useAppDispatch } from "@/store/store";
+import { setFilters } from "@/store/feautures/tracksSlice";
 
 type ItemProp = {
   title: string;
@@ -8,25 +10,38 @@ type ItemProp = {
   id: string;
   activeFilter: string | null;
   setActiveFilter: string | null;
+  selected: string[] | string;
 };
 
 export const FilterItem = ({
   title,
   list,
   id,
+  selected,
   setActiveFilter,
   activeFilter,
 }: ItemProp) => {
+
+  const dispatch = useAppDispatch();
+
   const openFindFilter = () => {
     setActiveFilter(() => (activeFilter === id ? null : id));
   };
 
-  const filterBtn = () => {
-    list.filter((i) => {
-      if (i === 'По умолчанию') {
-        console.log(i);
-      }
-    });
+  const filterBtn = (item: string) => {
+   if (id === 'date') {
+    dispatch(setFilters({date: item}));
+    return;
+  }
+  if (selected instanceof Array) {
+    dispatch(
+      setFilters({
+        [id]: selected.includes(item) ?
+        selected.filter((el)=> el !== item)
+        : [...selected, item],
+      })
+    )
+  }
   };
   return (
     <>
@@ -51,7 +66,7 @@ export const FilterItem = ({
           <div className={s.listt}>
             <div className={s.list}>
               {list.map((i) => (
-                <p onClick={filterBtn} key={i} className={s.listName}>
+                <p onClick={() => filterBtn(i)} key={i} className={s.listName}>
                   {i}
                 </p>
               ))}
