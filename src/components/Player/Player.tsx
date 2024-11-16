@@ -14,7 +14,6 @@ import ProgressBar from "../ProgressBar/ProgressBar";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import {
   setAddLike,
-  setDislikeTrack,
   setIsShuffle,
   setNextTrack,
   setPlay,
@@ -69,7 +68,7 @@ export const Player = ({ thisTrack }: props) => {
   };
 
   const onRepeat = () => {
-    const audio: HTMLAudioElement | null = audioRef.current;
+    const audio: HTMLAudioElement  = audioRef.current;
     if (repeat) {
       audio.loop = false;
     } else {
@@ -106,11 +105,11 @@ export const Player = ({ thisTrack }: props) => {
       if (myPlaylist.some((i)=> i._id === thisTrack._id)) {
         deleteTrack(trackId, access);
         setIsLike(false);
-        dispatch(setDislikeTrack(myPlaylist));
+        dispatch(setAddLike(thisTrack));
       } else {
         likeTrack(trackId, access);
         setIsLike(true);
-        dispatch(setAddLike(myPlaylist));
+        dispatch(setAddLike(thisTrack));
       }
     }
   };

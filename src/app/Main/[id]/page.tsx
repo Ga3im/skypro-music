@@ -6,11 +6,17 @@ import { useAppDispatch, useAppSelector } from "@/store/store";
 import { TrackType } from "@/types/tracks";
 import { useEffect, useState } from "react";
 
-export default function Page({ params }) {
+type propParam = {
+  params: string,
+}
+
+export default function Page({ params }:propParam) {
   const dispatch = useAppDispatch();
   const { allTracks } = useAppSelector((state) => state.tracksSlice);
   const [playlistName, setPlaylistName] = useState<string>();
+
   useEffect(() => {
+    console.log(params)
     const getData = async () => {
       try {
         const arr: TrackType[] = [];

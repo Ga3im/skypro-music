@@ -6,7 +6,8 @@ import { useAppSelector } from "@/store/store";
 
 export const MusicFilter = () => {
   const [activeFilter, setActiveFilter] = React.useState<string | null>(null);
-  const {tracks} = useAppSelector(state=> state.tracksSlice);
+  const {allTracks} = useAppSelector(state=> state.tracksSlice);
+
   const getUniqValues = <T, K extends keyof T>(
     items: T[],
     key: K
@@ -23,23 +24,26 @@ export const MusicFilter = () => {
     {
       title: "испольнителю",
       key: "authors",
-      list: getUniqValues(tracks, "author"),
-      selected: useAppSelector((store)=>{
+      list: getUniqValues(allTracks, "author"),
+      selected: useAppSelector((store)=>
         store.tracksSlice.activeFilters.authors
-      })
+      )
     },
     {
       title: "году выпуска",
       key: "date",
       list: filterOptions,
+      selected: useAppSelector((store)=>
+        store.tracksSlice.activeFilters.date
+      )
     },
     {
       title: "жанру",
       key: "genres",
-      list: getUniqValues(tracks, "genre"),
-      selected: useAppSelector((store)=>{
+      list: getUniqValues(allTracks, "genre"),
+      selected: useAppSelector((store)=>
         store.tracksSlice.activeFilters.genres
-      })
+      )
     },
   ];
 

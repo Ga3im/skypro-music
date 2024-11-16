@@ -33,16 +33,17 @@ export const FilterItem = ({
     dispatch(setFilters({date: item}));
     return;
   }
-  if (selected instanceof Array) {
+ 
     dispatch(
       setFilters({
         [id]: selected.includes(item) ?
-        selected.filter((el)=> el !== item)
+        selected.filter((el:string)=> el !== item)
         : [...selected, item],
       })
     )
-  }
+  
   };
+
   return (
     <>
       <div className={s.contentBlock}>
@@ -66,7 +67,7 @@ export const FilterItem = ({
           <div className={s.listt}>
             <div className={s.list}>
               {list.map((i) => (
-                <p onClick={() => filterBtn(i)} key={i} className={s.listName}>
+                <p onClick={() => filterBtn(i)} key={i} className={classNames(s.listName,{[s.listNameActive] : selected.includes(i) } ) }>
                   {i}
                 </p>
               ))}

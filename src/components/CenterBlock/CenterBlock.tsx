@@ -5,33 +5,29 @@ import { Playlist } from "../Playlist/Playlist";
 import { MusicFilter } from "@/components/MusicFilter/MusicFilter";
 import { KeyboardEvent, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { TrackType } from "@/types/tracks";
 import { setFilters } from "@/store/feautures/tracksSlice";
 
 type CenterBlockTypes = {
-  title: string;
+  title: string | undefined;
 };
 
 export const CenterBlock = ({ title }: CenterBlockTypes) => {
   const { tracks, allTracks } = useAppSelector((state) => state.tracksSlice);
   const dispatch = useAppDispatch();
   const [err, setErr] = useState<string | null>(null);
-  const [search, setSearch] = useState<string>("");
+  // const [search, setSearch] = useState<string>("");
 
-  const clickInput = (e: KeyboardEvent<HTMLInputElement>) => {
-    const searchTracks = tracks.filter((i) =>
-      i.name.toLowerCase().includes(search.toLowerCase())
-    );
+  // const clickInput = (e: KeyboardEvent<HTMLInputElement>) => {
+  //   if(search || e.key === "Enter"){
+  //       dispatch(setFilters({ search: search}))
+  //       setErr("");
+  //    }
+  //    else {
+  //     setErr("Подходящих треков не нашлось");
+  //   }
+  // };
 
-    if (e.key === "Enter") {
-    if(search){
-        dispatch(setFilters({ search: search}))
-        setErr("");
-     }
-    } else {
-      setErr("Подходящих треков не нашлось");
-    }
-  };
+ 
 
   return (
     <div className="main__centerblock centerblock">
@@ -40,8 +36,8 @@ export const CenterBlock = ({ title }: CenterBlockTypes) => {
           <use xlinkHref="/icon/sprite.svg#icon-search"></use>
         </svg>
         <input
-          onChange={(e) => setSearch(e.target.value)}
-          onKeyPress={clickInput}
+          onChange={(e) => dispatch(setFilters({search: e.target.value}))}
+          // onKeyPress={clickInput}
           className={s.searchText}
           type="search"
           placeholder="Поиск"

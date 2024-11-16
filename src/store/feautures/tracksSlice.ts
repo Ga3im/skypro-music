@@ -70,6 +70,7 @@ const trackSlice = createSlice({
           new Date(a.release_date).getTime() -
           new Date(b.release_date).getTime(),
       };
+
       const sortFunction = sortFunctions[state.activeFilters.date];
       if (sortFunction) {
         filterPlaylist = filterPlaylist.sort(sortFunction);
@@ -77,19 +78,20 @@ const trackSlice = createSlice({
       state.tracks= filterPlaylist;
     },
 
-    setAllTracks: (state, action) => {
+    setAllTracks: (state, action:PayloadAction<TrackType[]>) => {
       state.allTracks = action.payload;
     },
-    setAddLike: (state) => {
-      state.myPlaylist.push(state.thisTrack);
+    setAddLike: (state, action:PayloadAction<TrackType>) => {
+      if (state.myPlaylist.some((favTrack) => favTrack._id === action.payload._id)) {
+       const newArr = state.myPlaylist.filter(
+          (i) =>i._id !== action.payload._id
+        );
+        state.myPlaylist = newArr;
+      } else{
+        state.myPlaylist.push(action.payload);
+      } 
     },
-    setDislikeTrack: (state) => {
-      const newArr = state.myPlaylist.filter(
-        (i) => i._id !== state.thisTrack?._id
-      );
-      state.myPlaylist = newArr;
-    },
-    setFavoriteTracks: (state, action) => {
+    setFavoriteTracks: (state, action: PayloadAction<TrackType[]>) => {
       state.myPlaylist = action.payload;
     },
     setTrackState: (state, action: PayloadAction<TrackType[]>) => {
@@ -143,6 +145,5 @@ export const {
   setPlay,
   setFilters,
   setAddLike,
-  setDislikeTrack,
 } = trackSlice.actions;
 export const trackReducer = trackSlice.reducer;

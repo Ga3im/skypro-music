@@ -49,6 +49,7 @@
     margin-right: 5px;
     stroke: #ffffff;
     fill: transparent;
+    cursor: pointer;
   }
   
   .searchText {

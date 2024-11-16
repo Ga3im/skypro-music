@@ -3,11 +3,10 @@ import s from "./Track.module.css";
 import { TrackType } from "@/types/tracks";
 import {
   setAddLike,
-  setDislikeTrack,
   setPlay,
   setThisTrack,
 } from "@/store/feautures/tracksSlice";
-import { MouseEvent, useEffect, useState } from "react";
+import { MouseEvent, useState } from "react";
 import { deleteTrack, likeTrack } from "@/api/api";
 
 export const Track = ({ track }: { track: TrackType }) => {
@@ -16,14 +15,35 @@ export const Track = ({ track }: { track: TrackType }) => {
   let seconds: number = track.duration_in_seconds % 60;
 
   const dispatch = useAppDispatch();
-  let { isPlaying, thisTrack, myPlaylist } = useAppSelector(
+  let { isPlaying, thisTrack, myPlaylist} = useAppSelector(
     (state) => state.tracksSlice
   );
   const { token, authState } = useAppSelector((state) => state.auth);
 
-
     isLike = myPlaylist.some((favTrack) => favTrack._id === track._id);
-  const playTrack = (track: TrackType) => {
+
+  console.log(myPlaylist)
+
+    const likeMusic = (e: MouseEvent<SVGElement>) => {
+      e.stopPropagation();
+      if (authState) {
+        let trackId: number | any = track._id;
+        let access: string | any = token?.access;
+        if (myPlaylist.some((favTrack) => favTrack._id === track._id)) {
+          deleteTrack(trackId, access);
+          setIsLike(false);
+          dispatch(setAddLike(track));
+        } else {
+          likeTrack(trackId, access);
+          dispatch(setAddLike(track));
+          setIsLike(true);
+        }
+      }
+    };
+
+  const playTrack = (track: TrackType, e:MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    
     dispatch(setThisTrack(track));
     if (isPlaying) {
       dispatch(setPlay((isPlaying = false)));
@@ -32,27 +52,9 @@ export const Track = ({ track }: { track: TrackType }) => {
     }
   };
 
-  const likeMusic = (e: MouseEvent<SVGElement>) => {
-    e.preventDefault();
-    if (authState) {
-      let trackId: number = thisTrack?._id;
-      let access: string | any = token?.access;
-      dispatch(setThisTrack(track))
-      if (myPlaylist.some((favTrack) => favTrack._id === track._id)) {
-        deleteTrack(trackId, access);
-        setIsLike(false);
-        dispatch(setDislikeTrack(myPlaylist));
-      } else {
-        likeTrack(trackId, access);
-        dispatch(setAddLike(myPlaylist));
-        setIsLike(true);
-      }
-    }
-  };
-
   return (
     <div
-      onClick={() => playTrack(track)}
+      onClick={(e) => playTrack(track, e)}
       key={track._id}
       className={s.playlistItem}
     >
