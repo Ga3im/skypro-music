@@ -54,7 +54,7 @@ const trackSlice = createSlice({
       let onlyPlaylist = state.tracks
       
       if (state.activeFilters.authors.length > 0) {
-        onlyPlaylist = onlyPlaylist.filter((track)=> state.activeFilters.authors.includes(track.author))
+        onlyPlaylist = filterPlaylist.filter((track)=> state.activeFilters.authors.includes(track.author))
         state.tracks = onlyPlaylist
       }
       if (state.activeFilters.genres.length > 0) {

@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type AuthStateType = {
   authState: boolean;
-  user: string | null;
+  user: string[] | null;
   token: TokensType | null;
   error:string;
 };

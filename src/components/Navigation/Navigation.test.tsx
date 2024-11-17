@@ -24,14 +24,3 @@ test("find logo", () => {
   expect(text.length).toBeGreaterThan(0);
 });
 
-// test("проверка на слово главное", () => {
-//     const mockStore = configureStore([]);
-//     const store = mockStore({ auth: initialState });
-//     render(
-//         <Provider store={store}>
-//           <Navigation />
-//         </Provider>
-//     );
-//     const text = screen.getByText("Главное");
-//     expect(text).toBeTruthy();
-//   });

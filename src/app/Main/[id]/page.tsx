@@ -16,13 +16,12 @@ export default function Page({ params }:propParam) {
   const [playlistName, setPlaylistName] = useState<string>();
 
   useEffect(() => {
-    console.log(params)
     const getData = async () => {
       try {
         const arr: TrackType[] = [];
         const res = await getSelectionTracksId(params.id);
         setPlaylistName(res.name);
-        res.items.filter((i: any) => {
+        res.items.filter((i: number) => {
           allTracks.map((e) => {
             if (i === e._id) {
               arr.push(e);

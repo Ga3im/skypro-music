@@ -8,20 +8,24 @@ import Link from "next/link";
 
 export const Sidebar = () => {
   const nav = useRouter();
-  const user: any = useAppSelector((state) => state.auth.user);
+  const user: string[] | null = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
-  const handleLogin = () => {
+
+  const handleLogout = () => {
     dispatch(setAuthState(false));
     dispatch(logout());
+    localStorage.removeItem('email')
+    localStorage.removeItem('password')
     dispatch(tokenDel());
     nav.push("/Login");
     dispatch(setTrackState([]));
   };
+  console.log(user)
   return (
     <div className="main__sidebar sidebar">
       <div className={s.sidebarPersonal}>
         <p className={s.sidebarPersonalName}>{user?.username}</p>
-        <div onClick={handleLogin} className={s.sidebarIcon}>
+        <div onClick={handleLogout} className={s.sidebarIcon}>
           <svg>
             <use xlinkHref="/icon/sprite.svg#logout"></use>
           </svg>

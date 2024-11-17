@@ -2,8 +2,8 @@
 import s from "@/components/MusicFilter/MusicFilter.module.css";
 import React from "react";
 import { FilterItem } from "../FilterItem/FilterItem";
-import { useAppSelector } from "@/store/store";
-import { setResetFilter } from "@/store/feautures/tracksSlice";
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import { setDefaultTracks, setResetFilter, setThisTrack, setTrackState } from "@/store/feautures/tracksSlice";
 type prop = {
   search: string | undefined 
 }
@@ -23,9 +23,11 @@ export const MusicFilter = ({search}: prop) => {
     });
     return Array.from(uniqValues);
   };
-
+  const {defaultTracks} = useAppSelector((state)=> state.tracksSlice)
+  const dispatch = useAppDispatch();
+  
   const resetSearchBtn = () => {
-    setResetFilter(search)
+    dispatch(setTrackState(defaultTracks))
   }
 
   const filterOptions = ["По умолчанию", "Сначала новые", "Сначала старые"];

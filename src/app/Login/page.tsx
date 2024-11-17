@@ -15,40 +15,52 @@ const Login = () => {
   const navigate = useRouter();
   let err = useAppSelector((state) => state.auth.error);
 
+  useEffect(()=>{
+    setLoginInput(localStorage.getItem('email') ?? '')
+    setPasswordInput(localStorage.getItem('password') ?? '')
+    dispatch(setAuthState(true));
+  },[])
+
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      localStorage.setItem('email', loginInput)
+      localStorage.setItem('password', passwordInput)
       dispatch(setAuthState(true));
       await dispatch(
         loginUser({
-          email: loginInput,
-          password: passwordInput,
+          email:  localStorage.getItem('email') ?? '',
+          password: localStorage.getItem('password') ?? '',
         })
       ).unwrap();
       await dispatch(
         Token({
-          email: loginInput,
-          password: passwordInput,
+          email:  localStorage.getItem('email') ?? '',
+          password: localStorage.getItem('password') ?? '',
         })
       ).unwrap();
       dispatch(errDel(''))
       navigate.push("/Main");
-    } catch (error: any) {
-      if (error.message === "Данные в неверном формате." && loginInput === "") {
-        dispatch (errDel("Введите логин"))
-      }
-      if (error.message === "Данные в неверном формате." && passwordInput === "") {
-        dispatch (errDel("Введите пароль"))
-      }
-      if (
-        error.message === "Данные в неверном формате." &&
-        passwordInput === "" &&
-        loginInput === ""
-      ) {
-        dispatch (errDel("Введите логин и пароль")) ;
-      }
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.message === "Данные в неверном формате." && loginInput === "") {
+          dispatch (errDel("Введите логин"))
+        }
+        if (error.message === "Данные в неверном формате." && passwordInput === "") {
+          dispatch (errDel("Введите пароль"))
+        }
+        if (
+          error.message === "Данные в неверном формате." &&
+          passwordInput === "" &&
+          loginInput === ""
+        ) {
+          dispatch (errDel("Введите логин и пароль")) ;
+        }
+      }   
     }
   };
+
+
   return (
     <div className={s.wrapper}>
       <div className={s.containerCenter}>

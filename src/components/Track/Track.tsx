@@ -22,13 +22,11 @@ export const Track = ({ track }: { track: TrackType }) => {
 
     isLike = myPlaylist.some((favTrack) => favTrack._id === track._id);
 
-  console.log(myPlaylist)
-
     const likeMusic = (e: MouseEvent<SVGElement>) => {
       e.stopPropagation();
       if (authState) {
-        let trackId: number | any = track._id;
-        let access: string | any = token?.access;
+        let trackId: number  = track._id;
+        let access: string = token?.access ?? '';
         if (myPlaylist.some((favTrack) => favTrack._id === track._id)) {
           deleteTrack(trackId, access);
           setIsLike(false);

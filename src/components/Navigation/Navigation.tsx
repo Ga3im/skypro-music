@@ -17,6 +17,8 @@ export const Navigation = () => {
 
   const logout = ()=>{
     nav.push('/Login')
+    localStorage.removeItem('email')
+    localStorage.removeItem('password')
   }
 
   const openNav = () => {

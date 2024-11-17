@@ -68,11 +68,12 @@ export const Player = ({ thisTrack }: props) => {
   };
 
   const onRepeat = () => {
-    const audio: HTMLAudioElement  = audioRef.current;
+    const audio  = audioRef.current;
+    let loopAudio = audio?.loop
     if (repeat) {
-      audio.loop = false;
+      loopAudio = false;
     } else {
-      audio.loop = true;
+      loopAudio = true;
     }
     setRepeat(!repeat);
   };
@@ -101,7 +102,7 @@ export const Player = ({ thisTrack }: props) => {
     if (authState) {
       e.preventDefault();
       let trackId: number = thisTrack?._id;
-      let access: string | any = token?.access;
+      let access: string = token?.access ?? '';
       if (myPlaylist.some((i)=> i._id === thisTrack._id)) {
         deleteTrack(trackId, access);
         setIsLike(false);
