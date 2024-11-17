@@ -5,10 +5,10 @@ import { Playlist } from "../Playlist/Playlist";
 import { MusicFilter } from "@/components/MusicFilter/MusicFilter";
 import {  useState } from "react";
 import { useAppDispatch } from "@/store/store";
-import { setFilters, setResetFilter } from "@/store/feautures/tracksSlice";
+import { setFilters } from "@/store/feautures/tracksSlice";
 
 type CenterBlockTypes = {
-  title: string;
+  title: string | undefined;
 };
 
 export const CenterBlock = ({ title }: CenterBlockTypes) => {

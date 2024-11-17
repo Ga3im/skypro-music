@@ -9,6 +9,7 @@ type initialStateType = {
   isPlaying: boolean;
   myPlaylist: TrackType[];
   allTracks: TrackType[];
+  defaultTracks: TrackType[];
   activeFilters:{
     genres:string[],
     authors:string[],
@@ -19,6 +20,7 @@ type initialStateType = {
 
 export const initialState: initialStateType = {
   tracks: [],
+  defaultTracks: [],
   thisTrack: null,
   shuffledTracks: [],
   isShuffle: false,
@@ -38,25 +40,28 @@ const trackSlice = createSlice({
   initialState,
   reducers: {
     setResetFilter:(state, action:PayloadAction<{search?:string}>)=>{
-      action.payload.search = ''
+      state.activeFilters.search = '';
     },
     setFilters:(state, action:PayloadAction<{genres?:string[], authors?:string[], date?:string, search?:string}>)=>{
       const { genres, authors, date, search} = action.payload;
+      
       state.activeFilters.authors = authors ?? state.activeFilters.authors;
       state.activeFilters.genres = genres ?? state.activeFilters.genres;
       state.activeFilters.date = date ?? state.activeFilters.date;
       state.activeFilters.search = action.payload.search !== undefined ? action.payload.search : state.activeFilters.search;
-      let filterPlaylist = state.allTracks;
-      let onlyPlaylist = state.tracks
-      if (state.activeFilters.authors.length > 0) {
-        filterPlaylist = filterPlaylist.filter((track)=> state.activeFilters.authors.includes(track.author))
 
+      let filterPlaylist = state.defaultTracks;
+      let onlyPlaylist = state.tracks
+      
+      if (state.activeFilters.authors.length > 0) {
+        onlyPlaylist = onlyPlaylist.filter((track)=> state.activeFilters.authors.includes(track.author))
+        state.tracks = onlyPlaylist
       }
       if (state.activeFilters.genres.length > 0) {
-        filterPlaylist = onlyPlaylist.filter((track)=> state.activeFilters.genres.includes(track.genre[0]))
+        onlyPlaylist = onlyPlaylist.filter((track)=> state.activeFilters.genres.includes(track.genre[0]))
       }
       if (state.activeFilters.search) {
-        filterPlaylist = filterPlaylist.filter((track)=>
+        onlyPlaylist = onlyPlaylist.filter((track)=>
            track.name.toLowerCase().includes(state.activeFilters.search.toLowerCase()) || 
            track.author.toLowerCase().includes(state.activeFilters.search.toLowerCase())
        )
@@ -78,13 +83,18 @@ const trackSlice = createSlice({
       const sortFunction = sortFunctions[state.activeFilters.date];
 
       if (sortFunction) {
-        filterPlaylist = onlyPlaylist.sort(sortFunction);
+        onlyPlaylist = onlyPlaylist.sort(sortFunction);
       }
-      state.tracks= filterPlaylist;
+      else{
+        state.tracks = filterPlaylist;
+      }
     },
 
     setAllTracks: (state, action:PayloadAction<TrackType[]>) => {
       state.allTracks = action.payload;
+    },
+    setDefaultTracks:(state, action:PayloadAction<TrackType[]>)=>{
+      state.defaultTracks = action.payload;
     },
     setAddLike: (state, action:PayloadAction<TrackType>) => {
       if (state.myPlaylist.some((favTrack) => favTrack._id === action.payload._id)) {
@@ -149,6 +159,7 @@ export const {
   setShuffle,
   setResetFilter,
   setPlay,
+  setDefaultTracks,
   setFilters,
   setAddLike,
 } = trackSlice.actions;
