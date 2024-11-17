@@ -3,31 +3,18 @@ import s from "@/components/CenterBlock/CenterBlock.module.css";
 import classNames from "classnames";
 import { Playlist } from "../Playlist/Playlist";
 import { MusicFilter } from "@/components/MusicFilter/MusicFilter";
-import { KeyboardEvent, useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/store/store";
-import { setFilters } from "@/store/feautures/tracksSlice";
+import {  useState } from "react";
+import { useAppDispatch } from "@/store/store";
+import { setFilters, setResetFilter } from "@/store/feautures/tracksSlice";
 
 type CenterBlockTypes = {
-  title: string | undefined;
+  title: string;
 };
 
 export const CenterBlock = ({ title }: CenterBlockTypes) => {
-  const { tracks, allTracks } = useAppSelector((state) => state.tracksSlice);
   const dispatch = useAppDispatch();
   const [err, setErr] = useState<string | null>(null);
-  // const [search, setSearch] = useState<string>("");
-
-  // const clickInput = (e: KeyboardEvent<HTMLInputElement>) => {
-  //   if(search || e.key === "Enter"){
-  //       dispatch(setFilters({ search: search}))
-  //       setErr("");
-  //    }
-  //    else {
-  //     setErr("Подходящих треков не нашлось");
-  //   }
-  // };
-
- 
+  const [sear, setSear] = useState<string>()
 
   return (
     <div className="main__centerblock centerblock">
@@ -36,8 +23,9 @@ export const CenterBlock = ({ title }: CenterBlockTypes) => {
           <use xlinkHref="/icon/sprite.svg#icon-search"></use>
         </svg>
         <input
-          onChange={(e) => dispatch(setFilters({search: e.target.value}))}
-          // onKeyPress={clickInput}
+          onChange={(e) =>{ 
+            setSear(e.target.value) 
+            dispatch(setFilters({search: e.target.value}))}}
           className={s.searchText}
           type="search"
           placeholder="Поиск"
@@ -45,7 +33,7 @@ export const CenterBlock = ({ title }: CenterBlockTypes) => {
         />
       </div>
       <h2 className={s.centerblockH2}>{title}</h2>
-      <MusicFilter />
+      <MusicFilter search={sear}/>
       <div className={s.centerblockContent}>
         <div className={s.contentTitle}>
           <div className={classNames(s.playlistTitleCol, s.col01)}>трек</div>

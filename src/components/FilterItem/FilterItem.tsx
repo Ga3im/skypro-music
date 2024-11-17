@@ -47,6 +47,7 @@ export const FilterItem = ({
   return (
     <>
       <div className={s.contentBlock}>
+        
         {activeFilter && activeFilter === id ? (
           <div
             onClick={openFindFilter}
@@ -62,6 +63,7 @@ export const FilterItem = ({
             {title}
           </div>
         )}
+      
 
         {activeFilter === id && (
           <div className={s.listt}>

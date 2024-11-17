@@ -22,5 +22,14 @@
     letter-spacing: 0.5px;
   }
     
+  .returnSearch{
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    transition: all 0.3 s;
+  }
+  .returnSearch:hover{
+  transform: scale(1.08);
+  }
 
   
