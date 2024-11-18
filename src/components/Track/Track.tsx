@@ -6,10 +6,13 @@ import {
   setPlay,
   setThisTrack,
 } from "@/store/feautures/tracksSlice";
-import { MouseEvent, useState } from "react";
+import React, { MouseEvent, useState } from "react";
 import { deleteTrack, likeTrack } from "@/api/api";
 
-export const Track = ({ track }: { track: TrackType }) => {
+export const Track =
+ React.memo( 
+  ({ track }: { track: TrackType }) => {
+  console.log('re-render')
   let [isLike, setIsLike] = useState<boolean>();
   let minutes: number = Math.floor(track.duration_in_seconds / 60);
   let seconds: number = track.duration_in_seconds % 60;
@@ -22,7 +25,7 @@ export const Track = ({ track }: { track: TrackType }) => {
 
     isLike = myPlaylist.some((favTrack) => favTrack._id === track._id);
 
-    const likeMusic = (e: MouseEvent<SVGElement>) => {
+    const likeMusic = React.useCallback((e: MouseEvent<SVGElement>) => {
       e.stopPropagation();
       if (authState) {
         let trackId: number  = track._id;
@@ -37,9 +40,9 @@ export const Track = ({ track }: { track: TrackType }) => {
           setIsLike(true);
         }
       }
-    };
+    },[])
 
-  const playTrack = (track: TrackType, e:MouseEvent<HTMLDivElement>) => {
+  const playTrack = React.useCallback((track: TrackType, e:MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     dispatch(setThisTrack(track));
     if (isPlaying) {
@@ -47,8 +50,8 @@ export const Track = ({ track }: { track: TrackType }) => {
     } else {
       dispatch(setPlay((isPlaying = true)));
     }
-  };
-
+  },[]
+) 
   return (
     <div
       onClick={(e) => playTrack(track, e)}
@@ -103,4 +106,5 @@ export const Track = ({ track }: { track: TrackType }) => {
       </div>
     </div>
   );
-};
+}
+)

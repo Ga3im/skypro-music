@@ -4,6 +4,7 @@ import React from "react";
 import { FilterItem } from "../FilterItem/FilterItem";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { setTrackState } from "@/store/feautures/tracksSlice";
+
 type prop = {
   search: string | undefined 
 }
@@ -13,7 +14,7 @@ export const MusicFilter = ({search}: prop) => {
   const [activeFilter, setActiveFilter] = React.useState<string | null>(null);
   const {allTracks} = useAppSelector(state=> state.tracksSlice);
 
-  const getUniqValues = <T, K extends keyof T>(
+  const getUniqValues = React.useCallback( <T, K extends keyof T> (
     items: T[],
     key: K
   ): string[] => {
@@ -22,13 +23,14 @@ export const MusicFilter = ({search}: prop) => {
       uniqValues.add(String(item[key]));
     });
     return Array.from(uniqValues);
-  };
+  },[])
+  
   const {defaultTracks} = useAppSelector((state)=> state.tracksSlice)
   const dispatch = useAppDispatch();
   
-  const resetSearchBtn = () => {
+  const resetSearchBtn = React.useCallback( () => {
     dispatch(setTrackState(defaultTracks))
-  }
+  },[])
 
   const filterOptions = ["По умолчанию", "Сначала новые", "Сначала старые"];
   const filters = [
