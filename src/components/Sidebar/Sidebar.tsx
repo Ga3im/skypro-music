@@ -20,7 +20,6 @@ export const Sidebar = () => {
     nav.push("/Login");
     dispatch(setTrackState([]));
   };
-  console.log(user)
   return (
     <div className="main__sidebar sidebar">
       <div className={s.sidebarPersonal}>

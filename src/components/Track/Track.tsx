@@ -41,7 +41,6 @@ export const Track = ({ track }: { track: TrackType }) => {
 
   const playTrack = (track: TrackType, e:MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-    
     dispatch(setThisTrack(track));
     if (isPlaying) {
       dispatch(setPlay((isPlaying = false)));

@@ -50,22 +50,6 @@ const trackSlice = createSlice({
       state.activeFilters.date = date ?? state.activeFilters.date;
       state.activeFilters.search = action.payload.search !== undefined ? action.payload.search : state.activeFilters.search;
 
-      let filterPlaylist = state.defaultTracks;
-      let onlyPlaylist = state.tracks
-      
-      if (state.activeFilters.authors.length > 0) {
-        onlyPlaylist = filterPlaylist.filter((track)=> state.activeFilters.authors.includes(track.author))
-        state.tracks = onlyPlaylist
-      }
-      if (state.activeFilters.genres.length > 0) {
-        onlyPlaylist = onlyPlaylist.filter((track)=> state.activeFilters.genres.includes(track.genre[0]))
-      }
-      if (state.activeFilters.search) {
-        onlyPlaylist = onlyPlaylist.filter((track)=>
-           track.name.toLowerCase().includes(state.activeFilters.search.toLowerCase()) || 
-           track.author.toLowerCase().includes(state.activeFilters.search.toLowerCase())
-       )
-      }
       const SORT_OPTIONS: Record<string, string> = {
         DEFAULT: 'По умолчанию',
         NEW: 'Сначала новые',
@@ -82,12 +66,25 @@ const trackSlice = createSlice({
 
       const sortFunction = sortFunctions[state.activeFilters.date];
 
+      let filterPlaylist = state.defaultTracks;
+      let onlyPlaylist = state.tracks
+
+      if (state.activeFilters.authors.length > 0) {
+        onlyPlaylist = onlyPlaylist.filter((track)=> state.activeFilters.authors.includes(track.author))
+      }
+      if (state.activeFilters.genres.length > 0) {
+        onlyPlaylist = onlyPlaylist.filter((track)=> state.activeFilters.genres.includes(track.genre[0]))
+      }   
+      if (state.activeFilters.search.length) {
+        onlyPlaylist = onlyPlaylist.filter((track)=>
+           track.name.toLowerCase().includes(state.activeFilters.search.toLowerCase()) || 
+           track.author.toLowerCase().includes(state.activeFilters.search.toLowerCase())
+       )
+      }
       if (sortFunction) {
         onlyPlaylist = onlyPlaylist.sort(sortFunction);
       }
-      else{
-        state.tracks = filterPlaylist;
-      }
+      state.tracks = onlyPlaylist;
     },
 
     setAllTracks: (state, action:PayloadAction<TrackType[]>) => {

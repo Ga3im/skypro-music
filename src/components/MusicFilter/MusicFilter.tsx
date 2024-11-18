@@ -3,7 +3,7 @@ import s from "@/components/MusicFilter/MusicFilter.module.css";
 import React from "react";
 import { FilterItem } from "../FilterItem/FilterItem";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { setDefaultTracks, setResetFilter, setThisTrack, setTrackState } from "@/store/feautures/tracksSlice";
+import { setTrackState } from "@/store/feautures/tracksSlice";
 type prop = {
   search: string | undefined 
 }

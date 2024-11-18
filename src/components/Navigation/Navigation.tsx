@@ -24,6 +24,7 @@ export const Navigation = () => {
   const openNav = () => {
     setNavIsOpen(!navIsOpen);
   };
+  
   return (
     <nav className={s.mainNav}>
       <div className={s.navLogo}>

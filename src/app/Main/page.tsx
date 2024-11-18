@@ -26,7 +26,7 @@ export default function MainPage() {
           setErr(error.message);
         }
       }
-    };
+    }
     getData();
   }, []);
   return <CenterBlock title={"Треки"} />;
