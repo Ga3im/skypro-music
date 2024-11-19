@@ -3,6 +3,7 @@ import { getFavoriteTracks } from "@/api/api";
 import { CenterBlock } from "@/components/CenterBlock/CenterBlock";
 import { setFavoriteTracks, setTrackState } from "@/store/feautures/tracksSlice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function FavoritePage() {
@@ -12,7 +13,7 @@ export default function FavoritePage() {
   dispatch(setTrackState(myPlaylist));
   const { token } = useAppSelector((state) => state.auth);
   const [err, setErr] = useState<string | null>(null);
-
+  const router = useRouter()
 
   useEffect(() => {
     const getData = async () => {
@@ -21,6 +22,10 @@ export default function FavoritePage() {
           const res = await getFavoriteTracks(token.access);
           dispatch(setFavoriteTracks(res));
         }
+        else{
+          alert('Автоизуйтесь, чтобы увидеть Избранное треки')
+          router.push('/');
+        }
       } catch (error) {
         if (error instanceof Error) {
           setErr(error.message);
@@ -28,7 +33,8 @@ export default function FavoritePage() {
       }
     };
     getData();
+  
   }, []);
 
-  return <CenterBlock title={"Избранное"} />;
+  return <CenterBlock title={'Избранное'} />;
 }

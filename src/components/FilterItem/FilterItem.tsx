@@ -26,15 +26,12 @@ export const FilterItem = React.memo( ({
   const dispatch = useAppDispatch();
 
   const openFindFilter = () => {
-    setActiveFilter(activeFilter === id ? '' : id);
+    setActiveFilter(activeFilter === id ? null : id);
   }
 
   const filterBtn = (item: string) => {
-    if (id === "date") {
-      dispatch(setFilters({ date: item }));
-      return;
-    }
 
+console.log(item)
 if (selected instanceof Array) {
   dispatch(
     setFilters({
@@ -44,7 +41,12 @@ if (selected instanceof Array) {
     })
   );
 }
-   
+
+if (id === "date") {
+  dispatch(setFilters({ date: item }));
+
+}
+
   };
 
   return (

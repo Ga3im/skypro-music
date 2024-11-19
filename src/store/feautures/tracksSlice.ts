@@ -9,6 +9,7 @@ type initialStateType = {
   isPlaying: boolean;
   myPlaylist: TrackType[]; 
   filteredTracks: TrackType[]; 
+  defaultTracks: TrackType[]; 
   activeFilters:{
     genres:string[],
     authors:string[],
@@ -25,6 +26,7 @@ export const initialState: initialStateType = {
   isShuffle: false,
   isPlaying: false,
   myPlaylist: [],
+  defaultTracks: [],
   activeFilters:{
     genres:[],
     authors:[],
@@ -81,6 +83,9 @@ const trackSlice = createSlice({
       if (sortFunction) {
         onlyPlaylist = onlyPlaylist.sort(sortFunction);
       }
+      if (date === 'По умолчанию') {
+        onlyPlaylist = state.defaultTracks
+      }
       state.filteredTracks = onlyPlaylist;
     },
     setfilteredTracks:(state, action:PayloadAction<TrackType[]>)=>{
@@ -103,6 +108,8 @@ const trackSlice = createSlice({
       state.tracks = action.payload;
       state.shuffledTracks = action.payload;
       state.filteredTracks = action.payload;
+      state.defaultTracks = action.payload;
+      
     },
     setThisTrack: (state, action: PayloadAction<TrackType>) => {
       state.thisTrack = action.payload;
