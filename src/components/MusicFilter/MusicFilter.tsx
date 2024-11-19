@@ -12,7 +12,7 @@ type prop = {
 
 export const MusicFilter = ({search}: prop) => {
   const [activeFilter, setActiveFilter] = React.useState<string | null>(null);
-  const {allTracks} = useAppSelector(state=> state.tracksSlice);
+  // const {allTracks} = useAppSelector(state=> state.tracksSlice);
 
   const getUniqValues = React.useCallback( <T, K extends keyof T> (
     items: T[],
@@ -24,20 +24,20 @@ export const MusicFilter = ({search}: prop) => {
     });
     return Array.from(uniqValues);
   },[])
-  
-  const {defaultTracks} = useAppSelector((state)=> state.tracksSlice)
+
+  const {tracks} = useAppSelector((state)=> state.tracksSlice)
   const dispatch = useAppDispatch();
   
-  const resetSearchBtn = React.useCallback( () => {
-    dispatch(setTrackState(defaultTracks))
-  },[])
+  const resetSearchBtn = () => {
+    dispatch(setTrackState(tracks))
+  }
 
   const filterOptions = ["По умолчанию", "Сначала новые", "Сначала старые"];
   const filters = [
     {
       title: "испольнителю",
       key: "authors",
-      list: getUniqValues(allTracks, "author"),
+      list: getUniqValues(tracks, "author"),
       selected: useAppSelector((store)=>
         store.tracksSlice.activeFilters.authors
       )
@@ -53,7 +53,7 @@ export const MusicFilter = ({search}: prop) => {
     {
       title: "жанру",
       key: "genres",
-      list: getUniqValues(allTracks, "genre"),
+      list: getUniqValues(tracks, "genre"),
       selected: useAppSelector((store)=>
         store.tracksSlice.activeFilters.genres
       )

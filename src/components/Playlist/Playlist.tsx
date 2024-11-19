@@ -4,11 +4,11 @@ import {  useAppSelector } from "@/store/store";
 import React, { useMemo } from "react";
 
 export const Playlist = React.memo(() => {
-  const { tracks } = useAppSelector((state) => state.tracksSlice);
+  const { filteredTracks } = useAppSelector((state) => state.tracksSlice);
 
-  const filteredTracks = useMemo(()=>{
-    return tracks
-  }, [tracks])
+  // const filteredTracks = ()=>{
+  //   return tracks
+  // }, [tracks]
  
   return (
     <>

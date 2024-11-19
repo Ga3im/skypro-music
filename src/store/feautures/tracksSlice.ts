@@ -2,14 +2,14 @@ import { TrackType } from "@/types/tracks";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type initialStateType = {
-  tracks: TrackType[];
-  thisTrack: TrackType | null;
-  shuffledTracks: TrackType[];
+  tracks: TrackType[];   //текущий
+  thisTrack: TrackType | null; 
+  shuffledTracks: TrackType[];  // перемещанные
   isShuffle: boolean;
   isPlaying: boolean;
-  myPlaylist: TrackType[];
-  allTracks: TrackType[];
-  defaultTracks: TrackType[];
+  myPlaylist: TrackType[]; //лайкнутые
+  // allTracks: TrackType[];  //все  
+  filteredTracks: TrackType[];  // текущий
   activeFilters:{
     genres:string[],
     authors:string[],
@@ -20,13 +20,13 @@ type initialStateType = {
 
 export const initialState: initialStateType = {
   tracks: [],
-  defaultTracks: [],
+  filteredTracks: [],
   thisTrack: null,
   shuffledTracks: [],
   isShuffle: false,
   isPlaying: false,
   myPlaylist: [],
-  allTracks: [],
+  // allTracks: [],
   activeFilters:{
     genres:[],
     authors:[],
@@ -66,7 +66,6 @@ const trackSlice = createSlice({
 
       const sortFunction = sortFunctions[state.activeFilters.date];
 
-      let filterPlaylist = state.defaultTracks;
       let onlyPlaylist = state.tracks
 
       if (state.activeFilters.authors.length > 0) {
@@ -84,14 +83,18 @@ const trackSlice = createSlice({
       if (sortFunction) {
         onlyPlaylist = onlyPlaylist.sort(sortFunction);
       }
-      state.tracks = onlyPlaylist;
+      state.filteredTracks = onlyPlaylist;
     },
+    
 
-    setAllTracks: (state, action:PayloadAction<TrackType[]>) => {
-      state.allTracks = action.payload;
-    },
-    setDefaultTracks:(state, action:PayloadAction<TrackType[]>)=>{
-      state.defaultTracks = action.payload;
+
+    
+    // setAllTracks: (state, action:PayloadAction<TrackType[]>) => {
+    //   state.allTracks = action.payload;
+
+    // },
+    setfilteredTracks:(state, action:PayloadAction<TrackType[]>)=>{
+      state.filteredTracks = action.payload;
     },
     setAddLike: (state, action:PayloadAction<TrackType>) => {
       if (state.myPlaylist.some((favTrack) => favTrack._id === action.payload._id)) {
@@ -109,6 +112,8 @@ const trackSlice = createSlice({
     setTrackState: (state, action: PayloadAction<TrackType[]>) => {
       state.tracks = action.payload;
       state.shuffledTracks = action.payload;
+      // state.allTracks = action.payload;
+      state.filteredTracks = action.payload;
     },
     setThisTrack: (state, action: PayloadAction<TrackType>) => {
       state.thisTrack = action.payload;
@@ -148,7 +153,7 @@ const trackSlice = createSlice({
 export const {
   setTrackState,
   setThisTrack,
-  setAllTracks,
+  // setAllTracks,
   setNextTrack,
   setPrevTrack,
   setIsShuffle,
@@ -156,7 +161,7 @@ export const {
   setShuffle,
   setResetFilter,
   setPlay,
-  setDefaultTracks,
+  setfilteredTracks,
   setFilters,
   setAddLike,
 } = trackSlice.actions;

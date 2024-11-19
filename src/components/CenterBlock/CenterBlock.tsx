@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { Playlist } from "../Playlist/Playlist";
 import { MusicFilter } from "@/components/MusicFilter/MusicFilter";
 import {  useState } from "react";
-import { useAppDispatch } from "@/store/store";
+import { useAppDispatch, useAppSelector } from "@/store/store";
 import { setFilters } from "@/store/feautures/tracksSlice";
 
 type CenterBlockTypes = {
@@ -15,7 +15,8 @@ export const CenterBlock = ({ title }: CenterBlockTypes) => {
   const dispatch = useAppDispatch();
   const [err, setErr] = useState<string | null>(null);
   const [sear, setSear] = useState<string>()
-
+  const search = useAppSelector((s)=>s.tracksSlice.activeFilters.search)
+console.log(search);
   return (
     <div className="main__centerblock centerblock">
       <div className={s.centerblockSearch}>

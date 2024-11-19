@@ -2,13 +2,13 @@ import Image from "next/image";
 import s from "./Sidebar.module.css";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { logout, setAuthState, tokenDel } from "@/store/feautures/authSlice";
+import { logout, setAuthState, tokenDel, userType } from "@/store/feautures/authSlice";
 import { setTrackState } from "@/store/feautures/tracksSlice";
 import Link from "next/link";
 
 export const Sidebar = () => {
   const nav = useRouter();
-  const user: string[] | null = useAppSelector((state) => state.auth.user);
+  const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
 
   const handleLogout = () => {

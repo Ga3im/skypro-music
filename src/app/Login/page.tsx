@@ -24,15 +24,17 @@ const Login = () => {
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      localStorage.setItem('email', loginInput)
-      localStorage.setItem('password', passwordInput)
+      localStorage.getItem('user');
       dispatch(setAuthState(true));
-      await dispatch(
+      const user = await dispatch(
+
         loginUser({
           email:  localStorage.getItem('email') ?? '',
           password: localStorage.getItem('password') ?? '',
         })
       ).unwrap();
+      console.log(user)
+      localStorage.setItem('user', JSON.stringify(user))
       await dispatch(
         Token({
           email:  localStorage.getItem('email') ?? '',
@@ -40,6 +42,7 @@ const Login = () => {
         })
       ).unwrap();
       dispatch(errDel(''))
+      console.log()
       navigate.push("/Main");
     } catch (error) {
       if (error instanceof Error) {

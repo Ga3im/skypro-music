@@ -11,7 +11,7 @@ type ItemProp = {
   list: string[];
   id: string;
   activeFilter: string | null;
-  setActiveFilter: string | null;
+  setActiveFilter:  (id:string | null) => void;
   selected: string[] | string;
 }
 
@@ -25,9 +25,9 @@ export const FilterItem = React.memo( ({
 }: ItemProp) => {
   const dispatch = useAppDispatch();
 
-  const openFindFilter = React.useCallback(() => {
-    setActiveFilter(() => (activeFilter === id ? null : id));
-  },[])
+  const openFindFilter = () => {
+    setActiveFilter(activeFilter === id ? '' : id);
+  }
 
   const filterBtn = (item: string) => {
     if (id === "date") {
@@ -35,13 +35,16 @@ export const FilterItem = React.memo( ({
       return;
     }
 
-    dispatch(
-      setFilters({
-        [id]: selected.includes(item)
-          ? selected.filter((el: string) => el !== item)
-          : [...selected, item],
-      })
-    );
+if (selected instanceof Array) {
+  dispatch(
+    setFilters({
+      [id]: selected.includes(item)
+        ? selected.filter((el: string) => el !== item)
+        : [...selected, item],
+    })
+  );
+}
+   
   };
 
   return (
