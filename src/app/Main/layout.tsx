@@ -20,6 +20,8 @@ export default function layout({ children }: layoutProps) {
   const [err, setErr] = useState<string | null>(null);
 
   useEffect(() => {
+    const localuser  = localStorage.getItem('user');
+    console.log(localuser)
     const getData = async () => {
       try {
         if (token?.access) {
@@ -34,6 +36,7 @@ export default function layout({ children }: layoutProps) {
     };
     getData();
   }, []);
+  
   return (
     <div className={s.wrapper}>
       <div className={s.container}>

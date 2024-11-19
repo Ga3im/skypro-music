@@ -32,12 +32,13 @@ const Register = () => {
           password: passwordInput,
         })
       ).unwrap();
-      await dispatch(
-        loginUser({
+      const user = await dispatch(
+       loginUser({
           email: loginInput,
           password: passwordInput,
         })
       ).unwrap();
+      localStorage.setItem('user', JSON.stringify(user))
       await dispatch(
         Token({
           email: loginInput,

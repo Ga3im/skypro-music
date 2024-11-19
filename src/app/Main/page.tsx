@@ -15,8 +15,6 @@ export default function MainPage() {
       try {
         const res = await getTracks();
         dispatch(setTrackState(res));
-        // dispatch(setDefaultTracks(res));
-        // dispatch(setAllTracks(res))
         if (token?.access) {
           const res = await getFavoriteTracks(token.access);
           dispatch(setFavoriteTracks(res));

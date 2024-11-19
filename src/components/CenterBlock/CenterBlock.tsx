@@ -16,7 +16,6 @@ export const CenterBlock = ({ title }: CenterBlockTypes) => {
   const [err, setErr] = useState<string | null>(null);
   const [sear, setSear] = useState<string>()
   const search = useAppSelector((s)=>s.tracksSlice.activeFilters.search)
-console.log(search);
   return (
     <div className="main__centerblock centerblock">
       <div className={s.centerblockSearch}>

@@ -12,7 +12,6 @@ import { deleteTrack, likeTrack } from "@/api/api";
 export const Track =
  React.memo( 
   ({ track }: { track: TrackType }) => {
-  console.log('re-render')
   let [isLike, setIsLike] = useState<boolean>();
   let minutes: number = Math.floor(track.duration_in_seconds / 60);
   let seconds: number = track.duration_in_seconds % 60;

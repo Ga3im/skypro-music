@@ -2,14 +2,13 @@ import { TrackType } from "@/types/tracks";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type initialStateType = {
-  tracks: TrackType[];   //текущий
+  tracks: TrackType[];  
   thisTrack: TrackType | null; 
-  shuffledTracks: TrackType[];  // перемещанные
+  shuffledTracks: TrackType[]; 
   isShuffle: boolean;
   isPlaying: boolean;
-  myPlaylist: TrackType[]; //лайкнутые
-  // allTracks: TrackType[];  //все  
-  filteredTracks: TrackType[];  // текущий
+  myPlaylist: TrackType[]; 
+  filteredTracks: TrackType[]; 
   activeFilters:{
     genres:string[],
     authors:string[],
@@ -26,7 +25,6 @@ export const initialState: initialStateType = {
   isShuffle: false,
   isPlaying: false,
   myPlaylist: [],
-  // allTracks: [],
   activeFilters:{
     genres:[],
     authors:[],
@@ -39,7 +37,7 @@ const trackSlice = createSlice({
   name: "track",
   initialState,
   reducers: {
-    setResetFilter:(state, action:PayloadAction<{search?:string}>)=>{
+    setResetFilter:(state)=>{
       state.activeFilters.search = '';
     },
     setFilters:(state, action:PayloadAction<{genres?:string[], authors?:string[], date?:string, search?:string}>)=>{
@@ -85,14 +83,6 @@ const trackSlice = createSlice({
       }
       state.filteredTracks = onlyPlaylist;
     },
-    
-
-
-    
-    // setAllTracks: (state, action:PayloadAction<TrackType[]>) => {
-    //   state.allTracks = action.payload;
-
-    // },
     setfilteredTracks:(state, action:PayloadAction<TrackType[]>)=>{
       state.filteredTracks = action.payload;
     },
@@ -112,7 +102,6 @@ const trackSlice = createSlice({
     setTrackState: (state, action: PayloadAction<TrackType[]>) => {
       state.tracks = action.payload;
       state.shuffledTracks = action.payload;
-      // state.allTracks = action.payload;
       state.filteredTracks = action.payload;
     },
     setThisTrack: (state, action: PayloadAction<TrackType>) => {
@@ -153,7 +142,6 @@ const trackSlice = createSlice({
 export const {
   setTrackState,
   setThisTrack,
-  // setAllTracks,
   setNextTrack,
   setPrevTrack,
   setIsShuffle,

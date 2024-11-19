@@ -16,33 +16,27 @@ const Login = () => {
   let err = useAppSelector((state) => state.auth.error);
 
   useEffect(()=>{
-    setLoginInput(localStorage.getItem('email') ?? '')
-    setPasswordInput(localStorage.getItem('password') ?? '')
     dispatch(setAuthState(true));
   },[])
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      localStorage.getItem('user');
       dispatch(setAuthState(true));
       const user = await dispatch(
-
         loginUser({
-          email:  localStorage.getItem('email') ?? '',
-          password: localStorage.getItem('password') ?? '',
+          email:  loginInput,
+          password: passwordInput,
         })
       ).unwrap();
-      console.log(user)
       localStorage.setItem('user', JSON.stringify(user))
       await dispatch(
         Token({
-          email:  localStorage.getItem('email') ?? '',
-          password: localStorage.getItem('password') ?? '',
+          email:  loginInput,
+          password: passwordInput,
         })
       ).unwrap();
       dispatch(errDel(''))
-      console.log()
       navigate.push("/Main");
     } catch (error) {
       if (error instanceof Error) {
