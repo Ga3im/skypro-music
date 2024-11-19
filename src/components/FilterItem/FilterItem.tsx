@@ -11,87 +11,78 @@ type ItemProp = {
   list: string[];
   id: string;
   activeFilter: string | null;
-  setActiveFilter:  (id:string | null) => void;
+  setActiveFilter: (id: string | null) => void;
   selected: string[] | string;
-}
+};
 
-export const FilterItem = React.memo( ({
-  title,
-  list,
-  id,
-  selected,
-  setActiveFilter,
-  activeFilter,
-}: ItemProp) => {
-  const dispatch = useAppDispatch();
+export const FilterItem = React.memo(
+  ({ title, list, id, selected, setActiveFilter, activeFilter }: ItemProp) => {
+    const dispatch = useAppDispatch();
 
-  const openFindFilter = () => {
-    setActiveFilter(activeFilter === id ? null : id);
-  }
+    const openFindFilter = () => {
+      setActiveFilter(activeFilter === id ? null : id);
+    };
 
-  const filterBtn = (item: string) => {
+    const filterBtn = (item: string) => {
+      if (selected instanceof Array) {
+        dispatch(
+          setFilters({
+            [id]: selected.includes(item)
+              ? selected.filter((el: string) => el !== item)
+              : [...selected, item],
+          })
+        );
+      }
 
-console.log(item)
-if (selected instanceof Array) {
-  dispatch(
-    setFilters({
-      [id]: selected.includes(item)
-        ? selected.filter((el: string) => el !== item)
-        : [...selected, item],
-    })
-  );
-}
+      if (id === "date") {
+        dispatch(setFilters({ date: item }));
+        return;
+      }
+    };
 
-if (id === "date") {
-  dispatch(setFilters({ date: item }));
-
-}
-
-  };
-
-  return (
-    <>
-      <div className={s.contentBlock}>
-        {activeFilter && activeFilter === id ? (
-          <div
-            onClick={openFindFilter}
-            className={classNames(s.filterButtonActive, s.btnText)}
-          >
-            {title}
-          </div>
-        ) : (
-          <div
-            onClick={openFindFilter}
-            className={classNames(s.filterButton, s.btnText)}
-          >
-            {title}
-          </div>
-        )}
-
-        {activeFilter === id && (
-          <div className={s.listt}>
-            <div className={s.list}>
-              {list.map((i) => (
-                <p
-                  onClick={() => filterBtn(i)}
-                  key={i}
-                  className={classNames(s.listName, {
-                    [s.listNameActive]: selected.includes(i),
-                  })}
-                >
-                  {i}
-                </p>
-              ))}
+    return (
+      <>
+        <div className={s.contentBlock}>
+          {activeFilter && activeFilter === id ? (
+            <div
+              onClick={openFindFilter}
+              className={classNames(s.filterButtonActive, s.btnText)}
+            >
+              {title}
             </div>
+          ) : (
+            <div
+              onClick={openFindFilter}
+              className={classNames(s.filterButton, s.btnText)}
+            >
+              {title}
+            </div>
+          )}
+
+          {activeFilter === id && (
+            <div className={s.listt}>
+              <div className={s.list}>
+                {list.map((i) => (
+                  <p
+                    onClick={() => filterBtn(i)}
+                    key={i}
+                    className={classNames(s.listName, {
+                      [s.listNameActive]: selected.includes(i),
+                    })}
+                  >
+                    {i}
+                  </p>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+        {activeFilter === id && (
+          <div className={s.count}>
+            <p>{list.length}</p>
           </div>
         )}
-      </div>
-      {activeFilter === id && (
-        <div className={s.count}>
-          <p>{list.length}</p>
-        </div>
-      )}
-    </>
-  );
-}
-)
+      </>
+    );
+  }
+);

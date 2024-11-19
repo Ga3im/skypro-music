@@ -3,14 +3,10 @@ import s from "@/components/MusicFilter/MusicFilter.module.css";
 import React from "react";
 import { FilterItem } from "../FilterItem/FilterItem";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { setResetFilter, setTrackState } from "@/store/feautures/tracksSlice";
-
-type prop = {
-  search: string | undefined 
-}
+import { setFilters, setResetFilter, setTrackState } from "@/store/feautures/tracksSlice";
 
 
-export const MusicFilter = ({search}: prop) => {
+export const MusicFilter = () => {
   const [activeFilter, setActiveFilter] = React.useState<string | null>(null);
 
 
@@ -28,11 +24,6 @@ export const MusicFilter = ({search}: prop) => {
   const {tracks} = useAppSelector((state)=> state.tracksSlice)
   const dispatch = useAppDispatch();
   
-  const resetSearchBtn = () => {
-    dispatch(setTrackState(tracks))
-    dispatch(setResetFilter())
-  }
-
   const filterOptions = ["По умолчанию", "Сначала новые", "Сначала старые"];
   const filters = [
     {
@@ -60,6 +51,12 @@ export const MusicFilter = ({search}: prop) => {
       )
     },
   ];
+
+  const resetSearchBtn = () => {
+    dispatch(setTrackState(tracks))
+  }
+
+  
 
   return (
     <div className={s.centerblockFilter}>

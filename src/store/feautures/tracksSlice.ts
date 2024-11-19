@@ -39,11 +39,15 @@ const trackSlice = createSlice({
   name: "track",
   initialState,
   reducers: {
-    setResetFilter:(state)=>{
-      state.activeFilters.search = '';
+    setResetFilter:(state, action:PayloadAction<{genres?:string[], authors?:string[], date?:string, search?:string}>)=>{
+      let { genres, authors, date} = action.payload;
+      
+      authors = [];
+
+
     },
     setFilters:(state, action:PayloadAction<{genres?:string[], authors?:string[], date?:string, search?:string}>)=>{
-      const { genres, authors, date, search} = action.payload;
+      const { genres, authors, date} = action.payload;
       
       state.activeFilters.authors = authors ?? state.activeFilters.authors;
       state.activeFilters.genres = genres ?? state.activeFilters.genres;
