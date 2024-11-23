@@ -4,24 +4,19 @@ import s from "@/app/Main/Main.module.css";
 import { Navigation } from "@/components/Navigation/Navigation";
 import { Player } from "@/components/Player/Player";
 import { Sidebar } from "@/components/Sidebar/Sidebar";
-import {
-  setFavoriteTracks,
-} from "@/store/feautures/tracksSlice";
+import { setFavoriteTracks } from "@/store/feautures/tracksSlice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect } from "react";
 type layoutProps = {
   children: ReactNode;
 };
 
 export default function Layout({ children }: layoutProps) {
   const { thisTrack } = useAppSelector((state) => state.tracksSlice);
-  const { token } = useAppSelector((state) => state.auth);
+  const { token } = useAppSelector((store)=> store.auth)
   const dispatch = useAppDispatch();
-  const [err, setErr] = useState<string | null>(null);
-
+  
   useEffect(() => {
-    const localuser  = localStorage.getItem('user');
-    console.log(localuser)
     const getData = async () => {
       try {
         if (token?.access) {
@@ -30,13 +25,13 @@ export default function Layout({ children }: layoutProps) {
         }
       } catch (error) {
         if (error instanceof Error) {
-          setErr(error.message);
+          console.log(error.message);
         }
       }
     };
     getData();
-  }, [token?.access]);
-  
+  }, [dispatch, token?.access]);
+
   return (
     <div className={s.wrapper}>
       <div className={s.container}>

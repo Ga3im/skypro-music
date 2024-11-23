@@ -10,7 +10,7 @@ export default function Page({ params }:{params: {id: string}}) {
   const dispatch = useAppDispatch();
   const [playlistName, setPlaylistName] = useState<string>();
 
-  useEffect(() => {
+  useEffect(() => {  
     const getData = async () => {
       try {
         const arr: TrackType[] = [];

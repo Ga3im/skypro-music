@@ -9,42 +9,39 @@ import {
 import React, { MouseEvent, useState } from "react";
 import { deleteTrack, likeTrack } from "@/api/api";
 
-export const Track =
- React.memo( 
-  ({ track }: { track: TrackType }) => {
+export const Track = ({ track }: { track: TrackType }) => {
   let [isLike, setIsLike] = useState<boolean>();
   let minutes: number = Math.floor(track.duration_in_seconds / 60);
   let seconds: number = track.duration_in_seconds % 60;
 
   const dispatch = useAppDispatch();
-  let { isPlaying, thisTrack, myPlaylist} = useAppSelector(
+  let { isPlaying, thisTrack, myPlaylist } = useAppSelector(
     (state) => state.tracksSlice
   );
   const { token, authState } = useAppSelector((state) => state.auth);
 
-    isLike = myPlaylist.some((favTrack) => favTrack._id === track._id);
+  isLike = myPlaylist.some((favTrack) => favTrack._id === track._id);
 
-    const likeMusic = React.useCallback((e: MouseEvent<SVGElement>) => {
-      e.stopPropagation();
-      if (authState) {
-        let trackId: number  = track._id;
-        let access: string = token?.access ?? '';
-        if (myPlaylist.some((favTrack) => favTrack._id === track._id)) {
-          deleteTrack(trackId, access);
-          setIsLike(false);
-          dispatch(setAddLike(track));
-        } else {
-          likeTrack(trackId, access);
-          dispatch(setAddLike(track));
-          setIsLike(true);
-        }
+  const likeMusic = (e: MouseEvent<SVGElement>) => {
+    e.stopPropagation();
+    if (authState) {
+      let trackId: number = track._id;
+      let access: string = token?.access ?? "";
+      if (myPlaylist.some((favTrack) => favTrack._id === track._id)) {
+        deleteTrack(trackId, access);
+        setIsLike(false);
+        dispatch(setAddLike(track));
+      } else {
+        likeTrack(trackId, access);
+        dispatch(setAddLike(track));
+        setIsLike(true);
       }
-      else{
-        alert('Авторизуйтесь, чтобы поставить лайк')
-      }
-    },[authState, myPlaylist, dispatch, token?.access, track])
+    } else {
+      alert("Авторизуйтесь, чтобы поставить лайк");
+    }
+  };
 
-  const playTrack = React.useCallback((track: TrackType, e:MouseEvent<HTMLDivElement>) => {
+  const playTrack = (track: TrackType, e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     dispatch(setThisTrack(track));
     if (isPlaying) {
@@ -52,8 +49,8 @@ export const Track =
     } else {
       dispatch(setPlay((isPlaying = true)));
     }
-  },[track, isPlaying]
-) 
+  };
+
   return (
     <div
       onClick={(e) => playTrack(track, e)}
@@ -108,5 +105,4 @@ export const Track =
       </div>
     </div>
   );
-}
-)
+};

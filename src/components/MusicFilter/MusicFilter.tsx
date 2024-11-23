@@ -10,7 +10,7 @@ export const MusicFilter = () => {
   const [activeFilter, setActiveFilter] = React.useState<string | null>(null);
 
 
-  const getUniqValues = React.useCallback( <T, K extends keyof T> (
+  const getUniqValues =  <T, K extends keyof T> (
     items: T[],
     key: K
   ): string[] => {
@@ -19,7 +19,7 @@ export const MusicFilter = () => {
       uniqValues.add(String(item[key]));
     });
     return Array.from(uniqValues);
-  },[])
+  }
 
   const {tracks} = useAppSelector((state)=> state.tracksSlice)
   const dispatch = useAppDispatch();

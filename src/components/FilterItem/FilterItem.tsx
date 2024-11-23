@@ -3,8 +3,7 @@ import classNames from "classnames";
 import s from "./FilterItem.module.css";
 import { useAppDispatch } from "@/store/store";
 import { setFilters } from "@/store/feautures/tracksSlice";
-import { TrackType } from "@/types/tracks";
-import React, { useCallback } from "react";
+import React from "react";
 
 type ItemProp = {
   title: string;
