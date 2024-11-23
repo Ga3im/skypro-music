@@ -14,7 +14,7 @@ type ItemProp = {
   selected: string[] | string;
 };
 
-export const FilterItem = React.memo(
+export const FilterItem =
   ({ title, list, id, selected, setActiveFilter, activeFilter }: ItemProp) => {
     const dispatch = useAppDispatch();
 
@@ -84,4 +84,4 @@ export const FilterItem = React.memo(
       </>
     );
   }
-);
+

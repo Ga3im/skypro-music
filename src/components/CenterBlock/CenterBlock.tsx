@@ -3,8 +3,8 @@ import s from "@/components/CenterBlock/CenterBlock.module.css";
 import classNames from "classnames";
 import { Playlist } from "../Playlist/Playlist";
 import { MusicFilter } from "@/components/MusicFilter/MusicFilter";
-import {  useState } from "react";
-import { useAppDispatch } from "@/store/store";
+import {  useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/store/store";
 import { setFilters } from "@/store/feautures/tracksSlice";
 
 type CenterBlockTypes = {
@@ -14,6 +14,7 @@ type CenterBlockTypes = {
 export const CenterBlock = ({ title }: CenterBlockTypes) => {
   const dispatch = useAppDispatch();
   const [err, setErr] = useState<string | null>(null);
+
   return (
     <div className="main__centerblock centerblock">
       <div className={s.centerblockSearch}>
