@@ -125,7 +125,7 @@ export const Player = ({ thisTrack }: props) => {
     } else {
       audioRef.current?.pause();
     }
-  }, [isPlaying]);
+  }, [myPlaylist, isPlaying, thisTrack._id]);
   return (
     <>
       <audio

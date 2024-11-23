@@ -35,7 +35,7 @@ export default function Page({ params }:{params: {id: string}}) {
       
     };
     getData();
-  }, []);
+  }, [dispatch, params.id]);
 
   return <CenterBlock title={playlistName} />;
 }

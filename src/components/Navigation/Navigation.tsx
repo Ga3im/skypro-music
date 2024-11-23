@@ -11,20 +11,20 @@ export const Navigation = () => {
   const { authState } = useAppSelector((state) => state.auth);
   const nav = useRouter();
 
-  const main = ()=>{
-    nav.push('/Main')
-  }
+  const main = () => {
+    nav.push("/Main");
+  };
 
-  const logout = ()=>{
-    nav.push('/Login')
-    localStorage.removeItem('email')
-    localStorage.removeItem('password')
-  }
+  const logout = () => {
+    nav.push("/Login");
+    localStorage.removeItem("email");
+    localStorage.removeItem("password");
+  };
 
   const openNav = () => {
     setNavIsOpen(!navIsOpen);
   };
-  
+
   return (
     <nav className={s.mainNav}>
       <div className={s.navLogo}>
@@ -42,21 +42,29 @@ export const Navigation = () => {
         <span className={s.burgerLine}></span>
         <span className={s.burgerLine}></span>
       </div>
-      
+
       {navIsOpen && (
         <div className={s.navMenu}>
           <ul className={s.menuList}>
             <li className={s.menuItem}>
-              <Link href={'/Main'} className={s.menuLink}>
+              <Link href={"/Main"} className={s.menuLink}>
                 Главное
               </Link>
             </li>
             <li className={s.menuItem}>
-              <Link href={'/Main/Favorite'} className={s.menuLink}>
+              <Link href={"/Main/Favorite"} className={s.menuLink}>
                 Мой плейлист
               </Link>
             </li>
-            <li className={s.menuItem}>{authState ? <p onClick={logout}>Выйти</p> : <Link className={s.menuLink} href={'/Login'}>Войти</Link> }</li>
+            <li className={s.menuItem}>
+              {authState ? (
+                <p onClick={logout}>Выйти</p>
+              ) : (
+                <Link className={s.menuLink} href={"/Login"}>
+                  Войти
+                </Link>
+              )}
+            </li>
           </ul>
         </div>
       )}

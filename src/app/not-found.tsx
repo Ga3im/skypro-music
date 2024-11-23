@@ -2,6 +2,7 @@
 import { Navigation } from "@/components/Navigation/Navigation";
 import s from "./NotFound.module.css";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function NotFound() {
   const navigate = useRouter();
@@ -36,7 +37,7 @@ export default function NotFound() {
         <main className={s.centerMain}>
           <h1 className={s.p404}>404</h1>
           <p className={s.page}>
-            Страница не найдена <img src="/smile_crying.png" alt="" />{" "}
+            Страница не найдена <Image height={52} width={52} src="/smile_crying.png" alt="" />{" "}
           </p>
           <p className={s.pageInfo}>
             Возможно, она была удалена или перенесена на другой адрес

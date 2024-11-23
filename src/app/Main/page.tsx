@@ -26,6 +26,6 @@ export default function MainPage() {
       }
     }
     getData();
-  }, []);
+  },[dispatch, token?.access]);
   return <CenterBlock title={"Треки"} />;
 }

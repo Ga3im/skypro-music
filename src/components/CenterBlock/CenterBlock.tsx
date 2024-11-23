@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { Playlist } from "../Playlist/Playlist";
 import { MusicFilter } from "@/components/MusicFilter/MusicFilter";
 import {  useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/store/store";
+import { useAppDispatch } from "@/store/store";
 import { setFilters } from "@/store/feautures/tracksSlice";
 
 type CenterBlockTypes = {
@@ -14,8 +14,6 @@ type CenterBlockTypes = {
 export const CenterBlock = ({ title }: CenterBlockTypes) => {
   const dispatch = useAppDispatch();
   const [err, setErr] = useState<string | null>(null);
-  const [sear, setSear] = useState<string>()
-  const search = useAppSelector((s)=>s.tracksSlice.activeFilters.search)
   return (
     <div className="main__centerblock centerblock">
       <div className={s.centerblockSearch}>
@@ -24,7 +22,6 @@ export const CenterBlock = ({ title }: CenterBlockTypes) => {
         </svg>
         <input
           onChange={(e) =>{ 
-            setSear(e.target.value) 
             dispatch(setFilters({search: e.target.value}))}}
           className={s.searchText}
           type="search"
@@ -33,7 +30,7 @@ export const CenterBlock = ({ title }: CenterBlockTypes) => {
         />
       </div>
       <h2 className={s.centerblockH2}>{title}</h2>
-      <MusicFilter search={sear}/>
+      <MusicFilter/>
       <div className={s.centerblockContent}>
         <div className={s.contentTitle}>
           <div className={classNames(s.playlistTitleCol, s.col01)}>трек</div>

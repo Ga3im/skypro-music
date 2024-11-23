@@ -3,7 +3,7 @@ import s from "@/components/MusicFilter/MusicFilter.module.css";
 import React from "react";
 import { FilterItem } from "../FilterItem/FilterItem";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { setFilters, setResetFilter, setTrackState } from "@/store/feautures/tracksSlice";
+import { setTrackState } from "@/store/feautures/tracksSlice";
 
 
 export const MusicFilter = () => {

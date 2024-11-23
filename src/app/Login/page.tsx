@@ -17,7 +17,7 @@ const Login = () => {
 
   useEffect(()=>{
     dispatch(setAuthState(true));
-  },[])
+  },[dispatch])
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

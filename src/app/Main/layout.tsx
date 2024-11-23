@@ -13,7 +13,7 @@ type layoutProps = {
   children: ReactNode;
 };
 
-export default function layout({ children }: layoutProps) {
+export default function Layout({ children }: layoutProps) {
   const { thisTrack } = useAppSelector((state) => state.tracksSlice);
   const { token } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
@@ -35,7 +35,7 @@ export default function layout({ children }: layoutProps) {
       }
     };
     getData();
-  }, []);
+  }, [token?.access]);
   
   return (
     <div className={s.wrapper}>

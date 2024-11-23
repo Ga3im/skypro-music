@@ -39,7 +39,10 @@ export const Track =
           setIsLike(true);
         }
       }
-    },[])
+      else{
+        alert('Авторизуйтесь, чтобы поставить лайк')
+      }
+    },[authState, myPlaylist, dispatch, token?.access, track])
 
   const playTrack = React.useCallback((track: TrackType, e:MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -49,7 +52,7 @@ export const Track =
     } else {
       dispatch(setPlay((isPlaying = true)));
     }
-  },[]
+  },[track, isPlaying]
 ) 
   return (
     <div
