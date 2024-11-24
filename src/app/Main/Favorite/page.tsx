@@ -13,20 +13,20 @@ import { useEffect } from "react";
 export default function FavoritePage() {
   const dispatch = useAppDispatch();
   let { myPlaylist } = useAppSelector((state) => state.tracksSlice);
-  dispatch(setTrackState(myPlaylist));
+  dispatch(setFavoriteTracks(myPlaylist));
   const { token } = useAppSelector((store) => store.auth);
   const router = useRouter();
+
+  if (!token?.access) {
+    router.push('/')
+  }
 
   useEffect(() => {
     const getData = async () => {
       try {
         if (token?.access) {
           const res = await getFavoriteTracks(token.access);
-          dispatch(setFavoriteTracks(res));
-        }
-        else{
-          alert('Авторизуйтесь, чтобы увидеть Избранные треки');
-         router.push('/');
+          dispatch(setTrackState(res));
         }
       } catch (error) {
         if (error instanceof Error) {

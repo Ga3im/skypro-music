@@ -2,12 +2,11 @@
 import {  getTracks } from "@/api/api";
 import { CenterBlock } from "@/components/CenterBlock/CenterBlock";
 import {  setTrackState } from "@/store/feautures/tracksSlice";
-import { useAppDispatch, useAppSelector } from "@/store/store";
+import { useAppDispatch } from "@/store/store";
 import { useEffect, useState } from "react";
 
 export default function MainPage() {
   const dispatch = useAppDispatch();
-  const { token } = useAppSelector((state) => state.auth);
   const [err, setErr] = useState<string | null>(null);
 
   useEffect(() => {

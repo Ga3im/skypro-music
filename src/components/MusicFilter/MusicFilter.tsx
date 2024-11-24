@@ -1,6 +1,6 @@
 "use client"
 import s from "@/components/MusicFilter/MusicFilter.module.css";
-import React from "react";
+import React, { useMemo } from "react";
 import { FilterItem } from "../FilterItem/FilterItem";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { setTrackState } from "@/store/feautures/tracksSlice";
@@ -24,35 +24,38 @@ export const MusicFilter = () => {
   
 
   const {tracks} = useAppSelector((state)=> state.tracksSlice)
-  const dispatch = useAppDispatch();
+  const authors = useAppSelector((store)=>
+    store.tracksSlice.activeFilters.authors
+  )
+  const date = useAppSelector((store)=>
+    store.tracksSlice.activeFilters.date
+  )
+  const genres = useAppSelector((store)=>
+    store.tracksSlice.activeFilters.genres
+  )
+    const dispatch = useAppDispatch();
   
   const filterOptions = ["По умолчанию", "Сначала новые", "Сначала старые"];
-  const filters = [
+  const filters = useMemo(()=> [
     {
       title: "испольнителю",
       key: "authors",
       list: getUniqValues(tracks, "author"),
-      selected: useAppSelector((store)=>
-        store.tracksSlice.activeFilters.authors
-      )
+      selected: authors
     },
     {
       title: "году выпуска",
       key: "date",
       list: filterOptions,
-      selected: useAppSelector((store)=>
-        store.tracksSlice.activeFilters.date
-      )
+      selected: date
     },
     {
       title: "жанру",
       key: "genres",
       list: getUniqValues(tracks, "genre"),
-      selected: useAppSelector((store)=>
-        store.tracksSlice.activeFilters.genres
-      )
+      selected: genres
     },
-  ];
+  ],[filterOptions, genres, date, authors, tracks])
 
   const resetSearchBtn = () => {
     dispatch(setTrackState(tracks))
