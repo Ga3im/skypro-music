@@ -9,6 +9,7 @@ import Link from "next/link";
 export const Navigation = () => {
   const [navIsOpen, setNavIsOpen] = useState(false);
   const { authState } = useAppSelector((state) => state.auth);
+  const { token } = useAppSelector((state) => state.auth);
   const nav = useRouter();
 
   const main = () => {
@@ -51,11 +52,16 @@ export const Navigation = () => {
                 Главное
               </Link>
             </li>
-            <li className={s.menuItem}>
-              <Link href={"/Main/Favorite"} className={s.menuLink}>
-                Мой плейлист
-              </Link>
-            </li>
+            {token?.access ? (
+              <li className={s.menuItem}>
+                <Link href={"/Main/Favorite"} className={s.menuLink}>
+                  Мой плейлист
+                </Link>
+              </li>
+            ) : (
+              ""
+            )}
+
             <li className={s.menuItem}>
               {authState ? (
                 <p onClick={logout}>Выйти</p>
