@@ -21,10 +21,12 @@ import {
   setShuffle,
 } from "@/store/feautures/tracksSlice";
 import { deleteTrack, likeTrack } from "@/api/api";
+import { timeTrack } from "@/utils/formatTime";
 
 type props = {
   thisTrack: TrackType;
 };
+
 
 export const Player = ({ thisTrack }: props) => {
   const [ isLike, setIsLike] = useState<boolean>()
@@ -114,9 +116,6 @@ export const Player = ({ thisTrack }: props) => {
       }
     }
   };
-
-  let minutes = Math.floor(progress.duration / 60);
-  let seconds = Math.floor(progress.duration % 60);
 
   useEffect(() => {
     setIsLike(myPlaylist.some((favTrack) => favTrack._id === thisTrack._id));
@@ -254,14 +253,11 @@ export const Player = ({ thisTrack }: props) => {
             <div className={s.timeAndVolume}>
               <div className={s.trackTime}>
                 <p>
-                  {Math.floor(progress.currentTime / 60)}:
-                  {Math.floor(progress.currentTime % 60)
-                    .toString()
-                    .padStart(2, "0")}{" "}
+                  {timeTrack(progress.currentTime)}
                   /
                 </p>
                 <p className={s.beforeTime}>
-                  {minutes}:{seconds.toString().padStart(2, "0")}
+                  {timeTrack(progress.duration)}
                 </p>
               </div>
 

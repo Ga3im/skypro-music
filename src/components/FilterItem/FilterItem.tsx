@@ -76,9 +76,9 @@ export const FilterItem =
             </div>
           )}
         </div>
-        {activeFilter === id && (
+        {activeFilter === id && title !== 'году выпуска' && (
           <div className={s.count}>
-            <p>{list.length}</p>
+            <p>{selected.length}</p>
           </div>
         )}
       </>
