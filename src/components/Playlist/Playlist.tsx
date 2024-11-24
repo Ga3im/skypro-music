@@ -3,7 +3,7 @@ import { Track } from "../Track/Track";
 import {  useAppSelector } from "@/store/store";
 import React, { useMemo } from "react";
 
-export const Playlist = React.memo(() => {
+export const Playlist =() => {
   const { filteredTracks } = useAppSelector((state) => state.tracksSlice);
  
   return (
@@ -16,4 +16,3 @@ export const Playlist = React.memo(() => {
     </>
   );
 }
-)

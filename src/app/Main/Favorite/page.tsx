@@ -35,7 +35,7 @@ export default function FavoritePage() {
       }
     };
     getData();
-  }, [dispatch, token?.access]);  
+  }, [dispatch, router, token?.access]);  
 
   return <CenterBlock title={"Избранное"} />;
 }
