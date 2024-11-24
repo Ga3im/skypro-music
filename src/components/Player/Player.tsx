@@ -68,12 +68,12 @@ export const Player = ({ thisTrack }: props) => {
   };
 
   const onRepeat = () => {
-    const audio  = audioRef.current;
-    let loopAudio = audio?.loop
-    if (repeat) {
-      loopAudio = false;
+    if (repeat && audioRef.current) {
+      audioRef.current.loop = false;
     } else {
-      loopAudio = true;
+      if (audioRef.current) {
+      audioRef.current.loop = true;     
+      }
     }
     setRepeat(!repeat);
   };

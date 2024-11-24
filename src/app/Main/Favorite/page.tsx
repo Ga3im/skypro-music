@@ -25,7 +25,7 @@ export default function FavoritePage() {
           dispatch(setFavoriteTracks(res));
         }
         else{
-          alert('авторизуйтесь');
+          alert('Авторизуйтесь, чтобы увидеть Избранные треки');
          router.push('/');
         }
       } catch (error) {
