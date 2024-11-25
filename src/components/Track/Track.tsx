@@ -21,6 +21,7 @@ export const Track = ({ track }: { track: TrackType }) => {
   const { token, authState } = useAppSelector((state) => state.auth);
 
   isLike = myPlaylist.some((favTrack) => favTrack._id === track._id);
+  console.log(isLike)
 
   const likeMusic = (e: MouseEvent<SVGElement>) => {
     e.stopPropagation();

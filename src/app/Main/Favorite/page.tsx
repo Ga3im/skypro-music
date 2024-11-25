@@ -9,7 +9,6 @@ import { useAppDispatch, useAppSelector } from "@/store/store";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-
 export default function FavoritePage() {
   const dispatch = useAppDispatch();
   let { myPlaylist } = useAppSelector((state) => state.tracksSlice);
@@ -18,7 +17,7 @@ export default function FavoritePage() {
   const router = useRouter();
 
   if (!token?.access) {
-    router.push('/')
+    router.push("/");
   }
 
   useEffect(() => {
@@ -35,7 +34,7 @@ export default function FavoritePage() {
       }
     };
     getData();
-  }, [dispatch, router, token?.access]);  
+  }, [dispatch, router, token?.access]);
 
   return <CenterBlock title={"Избранное"} />;
 }
