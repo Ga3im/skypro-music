@@ -19,7 +19,6 @@ export default function FavoritePage() {
   if (!token?.access) {
     router.push("/");
   }
-
   useEffect(() => {
     const getData = async () => {
       try {
