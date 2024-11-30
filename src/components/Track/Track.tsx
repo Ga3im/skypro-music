@@ -10,11 +10,11 @@ import React, { MouseEvent, useState } from "react";
 import { deleteTrack, likeTrack } from "@/api/api";
 
 export const Track = ({ track }: { track: TrackType }) => {
+  const dispatch = useAppDispatch();
   let [isLike, setIsLike] = useState<boolean>();
   let minutes: number = Math.floor(track.duration_in_seconds / 60);
   let seconds: number = track.duration_in_seconds % 60;
 
-  const dispatch = useAppDispatch();
   let { isPlaying, thisTrack, myPlaylist } = useAppSelector(
     (state) => state.tracksSlice
   );

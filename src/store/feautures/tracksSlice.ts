@@ -130,6 +130,9 @@ const trackSlice = createSlice({
       ) {
         return {
           ...state,
+          filteredTracks: state.filteredTracks.filter(
+            (i) => i._id !== action.payload._id
+          ),
           myPlaylist: state.myPlaylist.filter(
             (i) => i._id !== action.payload._id
           ),
@@ -137,7 +140,8 @@ const trackSlice = createSlice({
       } else {
         return {
           ...state,
-          myPlaylist: [...state.myPlaylist, action.payload]
+          myPlaylist: [...state.myPlaylist, action.payload],
+          filteredTracks: [...state.filteredTracks, action.payload],
         };
       }
     },
