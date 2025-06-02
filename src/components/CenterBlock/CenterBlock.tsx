@@ -3,13 +3,16 @@ import s from "@/components/CenterBlock/CenterBlock.module.css";
 import classNames from "classnames";
 import { Playlist } from "../Playlist/Playlist";
 import { MusicFilter } from "@/components/MusicFilter/MusicFilter";
-import {  useState } from "react";
+import {  useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import { setFilters } from "@/store/feautures/tracksSlice";
 
 type CenterBlockTypes = {
-  title: string;
+  title: string | undefined;
 };
 
 export const CenterBlock = ({ title }: CenterBlockTypes) => {
+  const dispatch = useAppDispatch();
   const [err, setErr] = useState<string | null>(null);
 
   return (
@@ -19,6 +22,8 @@ export const CenterBlock = ({ title }: CenterBlockTypes) => {
           <use xlinkHref="/icon/sprite.svg#icon-search"></use>
         </svg>
         <input
+          onChange={(e) =>{ 
+            dispatch(setFilters({search: e.target.value}))}}
           className={s.searchText}
           type="search"
           placeholder="Поиск"
@@ -26,7 +31,7 @@ export const CenterBlock = ({ title }: CenterBlockTypes) => {
         />
       </div>
       <h2 className={s.centerblockH2}>{title}</h2>
-      <MusicFilter />
+      <MusicFilter/>
       <div className={s.centerblockContent}>
         <div className={s.contentTitle}>
           <div className={classNames(s.playlistTitleCol, s.col01)}>трек</div>

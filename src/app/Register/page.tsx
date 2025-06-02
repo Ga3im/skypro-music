@@ -32,12 +32,13 @@ const Register = () => {
           password: passwordInput,
         })
       ).unwrap();
-      await dispatch(
-        loginUser({
+      const user = await dispatch(
+       loginUser({
           email: loginInput,
           password: passwordInput,
         })
       ).unwrap();
+      localStorage.setItem('user', JSON.stringify(user))
       await dispatch(
         Token({
           email: loginInput,
@@ -46,30 +47,34 @@ const Register = () => {
       ).unwrap();
       dispatch(errDel(""));
       navigate.push("/Main");
-    } catch (error: any) {
-      if (error.message === "Неправильный формат Email" && loginInput === "") {
-        dispatch(errDel("Введите логин"));
-      }
-      if (
-        error.message === "Неправильный формат Email" &&
-        passwordInput === "" &&
-        repeatPassword === ""
-      ) {
-        dispatch(errDel("Введите пароль"));
-      }
-      if (
-        error.message === "Неправильный формат Email" &&
-        passwordInput === "" &&
-        loginInput === ""
-      ) {
-        dispatch(errDel("Введите логин и пароль"));
-      }
+    } catch (error) {
       if (passwordInput != repeatPassword) {
         dispatch(errDel("Пароли не совпали"));
         if (repeatPassword === "") {
           dispatch(errDel("Подтвердите пароль"));
         }
       }
+      if (error instanceof Error) {
+        if (error.message === "Неправильный формат Email" && loginInput === "") {
+          dispatch(errDel("Введите логин"));
+        }
+        if (
+          error.message === "Неправильный формат Email" &&
+          passwordInput === "" &&
+          repeatPassword === ""
+        ) {
+          dispatch(errDel("Введите пароль"));
+        }
+        if (
+          error.message === "Неправильный формат Email" &&
+          passwordInput === "" &&
+          loginInput === ""
+        ) {
+          dispatch(errDel("Введите логин и пароль"));
+        }
+     
+      }
+   
     }
   };
 

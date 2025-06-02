@@ -1,9 +1,15 @@
 import { getToken, regUser, regUserType, signinUser } from "@/api/api";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+export type userType = {
+  email: string,
+  username: string,
+  _id: number,
+}
+
 export type AuthStateType = {
   authState: boolean;
-  user: string | null;
+  user: userType | null;
   token: TokensType | null;
   error:string;
 };
@@ -34,7 +40,7 @@ export const Token = createAsyncThunk(
   }
 );
 
-const initialState: AuthStateType = {
+export const initialState: AuthStateType = {
   authState: false,
   user: null,
   token: null,

@@ -2,17 +2,20 @@ import Image from "next/image";
 import s from "./Sidebar.module.css";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { logout, setAuthState, tokenDel } from "@/store/feautures/authSlice";
+import { logout, setAuthState, tokenDel, userType } from "@/store/feautures/authSlice";
 import { setTrackState } from "@/store/feautures/tracksSlice";
 import Link from "next/link";
 
 export const Sidebar = () => {
   const nav = useRouter();
-  const user: any = useAppSelector((state) => state.auth.user);
+  const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
-  const handleLogin = () => {
+
+  const handleLogout = () => {
     dispatch(setAuthState(false));
     dispatch(logout());
+    localStorage.removeItem('email')
+    localStorage.removeItem('password')
     dispatch(tokenDel());
     nav.push("/Login");
     dispatch(setTrackState([]));
@@ -21,7 +24,7 @@ export const Sidebar = () => {
     <div className="main__sidebar sidebar">
       <div className={s.sidebarPersonal}>
         <p className={s.sidebarPersonalName}>{user?.username}</p>
-        <div onClick={handleLogin} className={s.sidebarIcon}>
+        <div onClick={handleLogout} className={s.sidebarIcon}>
           <svg>
             <use xlinkHref="/icon/sprite.svg#logout"></use>
           </svg>
@@ -30,7 +33,7 @@ export const Sidebar = () => {
       <div className={s.sidebarBlock}>
         <div className={s.sidebarList}>
           <div className={s.sidebarItem}>
-            <Link href={"/Main/DaylyPlaylist"} className={s.sidebarLink}>
+            <Link href={"/Main/2"} className={s.sidebarLink}>
               <Image
                 className={s.sidebarImg}
                 src="/playlist01.png"
@@ -41,7 +44,7 @@ export const Sidebar = () => {
             </Link>
           </div>
           <div className={s.sidebarItem}>
-            <Link  className={s.sidebarLink} href="/Main/100DanceHits">
+            <Link  className={s.sidebarLink} href="/Main/3">
               <Image
                 className={s.sidebarImg}
                 src="/playlist02.png"
@@ -52,7 +55,7 @@ export const Sidebar = () => {
             </Link>
           </div>
           <div className={s.sidebarItem}>
-            <Link className={s.sidebarLink} href="/Main/IndieMusic">
+            <Link className={s.sidebarLink} href="/Main/4">
               <Image
                 className={s.sidebarImg}
                 src="/playlist03.png"

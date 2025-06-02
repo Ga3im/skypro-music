@@ -1,34 +1,39 @@
 "use client";
 import { getFavoriteTracks } from "@/api/api";
 import { CenterBlock } from "@/components/CenterBlock/CenterBlock";
-import { setFavoriteTracks, setTrackState } from "@/store/feautures/tracksSlice";
+import {
+  setFavoriteTracks,
+  setTrackState,
+} from "@/store/feautures/tracksSlice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function FavoritePage() {
-
   const dispatch = useAppDispatch();
-  let { myPlaylist} = useAppSelector((state) => state.tracksSlice);
-  dispatch(setTrackState(myPlaylist));
-  const { token } = useAppSelector((state) => state.auth);
-  const [err, setErr] = useState<string | null>(null);
+  let { myPlaylist } = useAppSelector((state) => state.tracksSlice);
+  dispatch(setFavoriteTracks(myPlaylist));
+  const { token } = useAppSelector((store) => store.auth);
+  const router = useRouter();
 
-
+  if (!token?.access) {
+    router.push("/");
+  }
   useEffect(() => {
     const getData = async () => {
       try {
         if (token?.access) {
           const res = await getFavoriteTracks(token.access);
-          dispatch(setFavoriteTracks(res));
+          dispatch(setTrackState(res));
         }
       } catch (error) {
         if (error instanceof Error) {
-          setErr(error.message);
+          console.log(error.message);
         }
       }
     };
     getData();
-  }, []);
+  }, [dispatch, router, token?.access]);
 
   return <CenterBlock title={"Избранное"} />;
 }

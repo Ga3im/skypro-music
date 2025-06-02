@@ -112,6 +112,26 @@ export const getFavoriteTracks = async (access: string) => {
   return response.json().then((tracksData) => tracksData.data);
 };
 
+export const getSelectionTracks = async () => {
+  const response = await fetch(`${BASE_URL}/catalog/selection/all`, {
+    method: "GET",
+  });
+  if (!response.ok) {
+    throw new Error("Ошибка");
+  }
+  return response.json().then((tracksData) => tracksData.data);
+};
+
+export const getSelectionTracksId = async ( id: number) => {
+  const response = await fetch(`${BASE_URL}/catalog/selection/${id}`, {
+    method: "GET",
+  });
+  if (!response.ok) {
+    throw new Error("Ошибка");
+  }
+  return response.json().then((tracksData) => tracksData.data);
+};
+
 export const likeTrack = async (trackId: number, access: string) => {
   const res = await fetch(`${BASE_URL}/catalog/track/${trackId}/favorite/`, {
     method: "POST",

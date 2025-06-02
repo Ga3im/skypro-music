@@ -15,40 +15,49 @@ const Login = () => {
   const navigate = useRouter();
   let err = useAppSelector((state) => state.auth.error);
 
+  useEffect(()=>{
+    dispatch(setAuthState(true));
+  },[dispatch])
+
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       dispatch(setAuthState(true));
-      await dispatch(
+      const user = await dispatch(
         loginUser({
-          email: loginInput,
+          email:  loginInput,
           password: passwordInput,
         })
       ).unwrap();
+      localStorage.setItem('user', JSON.stringify(user))
       await dispatch(
         Token({
-          email: loginInput,
+          email:  loginInput,
           password: passwordInput,
         })
       ).unwrap();
       dispatch(errDel(''))
       navigate.push("/Main");
-    } catch (error: any) {
-      if (error.message === "Данные в неверном формате." && loginInput === "") {
-        dispatch (errDel("Введите логин"))
-      }
-      if (error.message === "Данные в неверном формате." && passwordInput === "") {
-        dispatch (errDel("Введите пароль"))
-      }
-      if (
-        error.message === "Данные в неверном формате." &&
-        passwordInput === "" &&
-        loginInput === ""
-      ) {
-        dispatch (errDel("Введите логин и пароль")) ;
-      }
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.message === "Данные в неверном формате." && loginInput === "") {
+          dispatch (errDel("Введите логин"))
+        }
+        if (error.message === "Данные в неверном формате." && passwordInput === "") {
+          dispatch (errDel("Введите пароль"))
+        }
+        if (
+          error.message === "Данные в неверном формате." &&
+          passwordInput === "" &&
+          loginInput === ""
+        ) {
+          dispatch (errDel("Введите логин и пароль")) ;
+        }
+      }   
     }
   };
+
+
   return (
     <div className={s.wrapper}>
       <div className={s.containerCenter}>
